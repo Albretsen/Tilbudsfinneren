@@ -1,1 +1,69 @@
-Hello Hallvard, du er flink :)!
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title>Tilbudsfinneren</title>
+	    
+        <link href="style.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+
+        <div class="container" onclick="animateHamburger(this), openNav()">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Clients</a>
+            <a href="#">Contact</a>
+          </div>
+
+          
+
+		<div id="loginMenu" style="display: none;">
+            <div style="font-size:12vw;">Velkommen</div>
+            <div class="imageCrop">
+                <img class="profilePic" src="https://freepikpsd.com/wp-content/uploads/2019/10/default-profile-image-png-1-Transparent-Images.png"/>
+            </div>
+            <input type="text" class="loginInput"/>
+            <input type="text" id="inputPassword" class="loginInput"/>
+            <br />
+            <div>
+            <input type="checkbox" id="rememberMe">
+            <label for="rememberMe">Husk meg</label>
+            <ins style="margin-left:20vw">Glemt passord</ins>
+            </div>
+            <br />
+            
+            <button id="loginBtn">LOGG INN</button>
+
+            <p id="noLogin">Gå videre uten bruker</p>
+        </div>
+
+        <div id="listMenu">
+            <div class="listItem">
+                <img class="listImage" src="images/placeholder.jpg"/>
+                <br />
+                <ins id="1-name">Coca Cola</ins>
+                <br />
+                <ins id="1-desc">Coca Cola is a drink</ins>
+            </div>
+
+            <div class="listItem">
+                <img class="listImage" src="images/placeholder.jpg"/>
+                <br />
+                <ins id="1-name">Coca Cola</ins>
+                <br />
+                <ins id="1-desc">Coca Cola is a drink</ins>
+            </div>
+        </div>
+
+    </body>
+    <script src="main.js"></script>
+</html>
+
