@@ -1,6 +1,11 @@
+@font-face {
+  font-family:MontserratDownload;
+  src:url("montserrat.woff");
+}
+
 body {
   background-color: #62959C;
-  font-family: Montserrat;
+  font-family:Montserrat, MontserratDownload, Monospace;
   color: white; /* Dictates font color */
 }
 
@@ -9,7 +14,6 @@ ins {
 }
 
 input[type=text] { /* Affects all text inputs */
-  font-family: Montserrat;
   width: 90%;
   padding: 12px 20px 12px 40px;
   margin: 8px 0;

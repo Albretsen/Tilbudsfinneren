@@ -19,6 +19,20 @@ db.collection("week15").get().then((querySnapshot) => {
     });
 });
 
+
+// name: product_name_text,
+// before_price: before_price_text,
+// sale_price: sale_price_text,
+// item_count: item_count_text,
+// combined_price: combined_price_text,
+// gtin: gtin_text,
+// image: image_text,
+// description: description_text
+
+
+
+
+
 function animateHamburger(x) { // Activates the css animation for the hamburger menu
     x.classList.toggle("change");
 }
