@@ -36,6 +36,7 @@ button {
   background-color: white;
 }
 
+
 /* Circular image frame */
 .imageCrop {
   width: 100px;
@@ -89,9 +90,7 @@ button {
 }
 
 
-
-
-
+/* Sidebar navigation style with animation */
 .sidenav {
   height: 100%;
   width: 0;
@@ -131,11 +130,44 @@ button {
   .sidenav a {font-size: 18px;}
 }
 
-.listItem{
-  float: left;
+
+/* List item styles */
+.listItem {
+  display: inline-block;
+  width: 44%;
+  border: 1px solid gray;
+  border-radius: 8px;
+  background-color:white;
+  color:black;
+  padding:2vw;
 }
 
+.listName {
+  font-size: 6vw;
+}
+
+.listDesc, .listNewPrice, .listBeforePrice {
+  font-size: 4vw;
+}
+
+/* .listNewPrice {
+  font-size: 5vw;
+} */
+
 .listImage {
-  width: 50%;
+  width: 100%;
+  height: 40vw;
+  border-radius: 8px;
+  margin-bottom:-6vw;
+}
+
+.listStoreLogo {
+  width: 68%;
+  height: 6vw;
+}
+
+.listBeforePrice {
+	float:right;
+	margin-right:3px;
 }
 
