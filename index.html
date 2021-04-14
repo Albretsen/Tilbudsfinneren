@@ -1,86 +1,92 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    	<meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <title>Tilbudsfinneren</title>
-	    
-        <link href="style.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>
 
-        <div class="container" onclick="animateHamburger(this), openNav()">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Tilbudsfinneren</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+    <div class="container" onclick="animateHamburger(this), openNav()">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+    </div>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+    </div>
+
+
+
+    <div id="loginMenu" style="display: none;">
+        <div style="font-size:12vw;">Velkommen</div>
+        <div class="imageCrop">
+            <img class="profilePic"
+                src="https://freepikpsd.com/wp-content/uploads/2019/10/default-profile-image-png-1-Transparent-Images.png" />
         </div>
-
-        <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="#">About</a>
-            <a href="#">Services</a>
-            <a href="#">Clients</a>
-            <a href="#">Contact</a>
-          </div>
-
-          
-
-		<div id="loginMenu" style="display: none;">
-            <div style="font-size:12vw;">Velkommen</div>
-            <div class="imageCrop">
-                <img class="profilePic" src="https://freepikpsd.com/wp-content/uploads/2019/10/default-profile-image-png-1-Transparent-Images.png"/>
-            </div>
-            <input type="text" class="loginInput"/>
-            <input type="text" id="inputPassword" class="loginInput"/>
-            <br />
-            <div>
+        <input type="text" class="loginInput" />
+        <input type="text" id="inputPassword" class="loginInput" />
+        <br />
+        <div>
             <input type="checkbox" id="rememberMe">
             <label for="rememberMe">Husk meg</label>
             <ins style="margin-left:20vw">Glemt passord</ins>
-            </div>
+        </div>
+        <br />
+
+        <button id="loginBtn">LOGG INN</button>
+
+        <p id="noLogin">Gå videre uten bruker</p>
+    </div>
+
+    <div id="listMenu">
+        <section id="listAnchor"></section>
+        <div class="listItem">
+            <img class="listImage" src="images/placeholder.jpg" />
+            <img class="listStoreLogo" src="images/sparLogo.png" />
             <br />
-            
-            <button id="loginBtn">LOGG INN</button>
-
-            <p id="noLogin">Gå videre uten bruker</p>
+            <ins class="listName" id="1-name">Coca Cola</ins>
+            <br />
+            <ins class="listNewPrice" id="1-newPrice">24.99,-</ins>
+            <ins class="listBeforePrice" id="1-beforePrice">Før: 34.99,-</ins>
+            <br />
+            <ins class="listDesc" id="1-desc">Example of product description</ins>
         </div>
 
-        <div id="listMenu">
-            <div class="listItem">
-                <img class="listImage" src="images/placeholder.jpg"/>
-                <img class="listStoreLogo" src="images/sparLogo.png"/>
-                <br />
-                <ins class="listName" id="1-name">Coca Cola</ins>
-                <br />
-                <ins class="listNewPrice" id="1-newPrice">24.99,-</ins>
-                <ins class="listBeforePrice" id="1-beforePrice">Før: 34.99,-</ins>
-                <br />
-                <ins class="listDesc" id="1-desc">Example of product description</ins>
-            </div>
-
-            <div class="listItem">
-                <img class="listImage" src="images/placeholder2.jpg"/>
-                <img class="listStoreLogo" src="images/sparLogo.png"/>
-                <br />
-                <ins class="listName" id="1-name">Brokkoli</ins>
-                <br />
-                <ins class="listDesc" id="1-desc">Example of product description</ins>
-            </div>
+        <div class="listItem">
+            <img class="listImage" src="images/placeholder2.jpg" />
+            <img class="listStoreLogo" src="images/sparLogo.png" />
+            <br />
+            <ins class="listName" id="1-name">Brokkoli</ins>
+            <br />
+            <ins class="listDesc" id="1-desc">Example of product description</ins>
         </div>
 
-    </body>
-    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+        <button>LAST MER</button>
+    </div>
 
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-app.js"></script>
+</body>
+<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
 
-    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-    <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-analytics.js"></script>
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-app.js"></script>
 
-    <!-- Add Firebase products that you want to use -->
-    <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-firestore.js"></script>
-    <script src="main.js"></script>
+<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+<script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-analytics.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-firestore.js"></script>
+<script src="main.js"></script>
+
 </html>
-

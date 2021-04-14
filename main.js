@@ -1,3 +1,6 @@
+/*=====================================================================================
+								    FIREBASE SETUP
+=======================================================================================*/
 var firebaseConfig = {
     apiKey: "AIzaSyC9a6_YhqBctHl4Ue6MNb8cfFdpo9ODyPE",
     authDomain: "tilbudsfinneren.firebaseapp.com",
@@ -14,21 +17,21 @@ var db = firebase.firestore();
 
 db.collection("week15").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
-        //console.log(`${doc.id} => ${doc.data()}`);
-        console.log("DATA: " + doc.data().name);
+
+        createListItem(doc.data().name, doc.data().image, doc.data().before_price, doc.data().sale_price, doc.data().combined_price, doc.data().item_count, doc.data().description);
+        
+        if(doc.data().item_count != "") { console.log(doc.data().combined_price, doc.data().sale_price) }
+        //console.log("DATA: " + doc.data().combined_price, doc.data().item_count);
     });
 });
 
 
-// name: product_name_text,
-// before_price: before_price_text,
-// sale_price: sale_price_text,
-// item_count: item_count_text,
-// combined_price: combined_price_text,
-// gtin: gtin_text,
-// image: image_text,
-// description: description_text
-
+/*=====================================================================================
+									 HELPER FUNCTIONS
+=======================================================================================*/
+const byId = function(id) { // Shortcut
+	return document.getElementById(id);
+}
 
 
 
@@ -36,8 +39,6 @@ db.collection("week15").get().then((querySnapshot) => {
 function animateHamburger(x) { // Activates the css animation for the hamburger menu
     x.classList.toggle("change");
 }
-
-
 
 function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -52,8 +53,27 @@ function closeNav() {
 /*=====================================================================================
 									 Discount list
 =======================================================================================*/
-function createListItem() { // Taken from other game of mine, serves just as example
-    var str = document.createElement('section');
-    str.innerHTML = '<img draggable="false" onclick="oreFloat()" id="ore' + oreNum + '" class="ore" src="images/' + amounts[0][oresDisplayed] + '.png"/><br /><section id="oreText">+' + amounts[1][oresDisplayed] + ' ' + amounts[0][oresDisplayed] + '!</section>';
-    byId("oreAnchor").append(str);
+
+// REFERENCE
+// name: DONE
+// before_price: DONE
+// sale_price: DONE
+// item_count: DONE
+// combined_price: DONE
+// gtin:
+// image: DONE
+// description: DONE
+
+function createListItem(name, image, beforePrice, salePrice, combinedPrice, itemCount, description) { //
+    if (itemCount != '') {
+        salePrice = combinedPrice
+    }
+
+
+    var str = document.createElement('DIV');
+    str.setAttribute("class", "listItem");
+    str.innerHTML =
+    '<img class="listImage" src="' +  image  + '" /><img class="listStoreLogo" src="images/sparLogo.png" /><br /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><ins class="listBeforePrice" id="1-beforePrice">' + beforePrice + '</ins><br /><ins class="listDesc" id="1-desc">' + description +'</ins>'
+
+    byId("listAnchor").append(str);
 }
