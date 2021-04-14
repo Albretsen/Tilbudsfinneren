@@ -139,6 +139,7 @@ button {
 .listItem {
   display: inline-block;
   width: 44%;
+  height: 60vw;
   border: 1px solid gray;
   border-radius: 8px;
   background-color:white;
@@ -147,7 +148,7 @@ button {
 }
 
 .listName {
-  font-size: 6vw;
+  font-size: 4vw;
 }
 
 .listDesc, .listNewPrice, .listBeforePrice {
@@ -168,10 +169,5 @@ button {
 .listStoreLogo {
   width: 68%;
   height: 6vw;
-}
-
-.listBeforePrice {
-	float:right;
-	margin-right:3px;
 }
 

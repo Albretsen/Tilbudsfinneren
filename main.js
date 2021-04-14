@@ -14,6 +14,16 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 
+db.collection("week15").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+
+        createListItem(doc.data().name, doc.data().image, doc.data().before_price, doc.data().sale_price, doc.data().combined_price, doc.data().item_count, doc.data().description);
+        
+        if(doc.data().item_count != "") { console.log(doc.data().combined_price, doc.data().sale_price) }
+        //console.log("DATA: " + doc.data().combined_price, doc.data().item_count);
+    });
+});
+
 /*=====================================================================================
 									 Authentication
 =======================================================================================*/
@@ -126,7 +136,7 @@ function closeNav() {
 
 
 /*=====================================================================================
-									 Discount list
+									 DISCOUNT LIST
 =======================================================================================*/
 
 // REFERENCE
@@ -148,7 +158,9 @@ function createListItem(name, image, beforePrice, salePrice, combinedPrice, item
     var str = document.createElement('DIV');
     str.setAttribute("class", "listItem");
     str.innerHTML =
-    '<img class="listImage" src="' +  image  + '" /><img class="listStoreLogo" src="images/sparLogo.png" /><br /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><ins class="listBeforePrice" id="1-beforePrice">' + beforePrice + '</ins><br /><ins class="listDesc" id="1-desc">' + description +'</ins>'
+    '<img class="listImage" src="' +  image  + '" /><img class="listStoreLogo" src="images/sparLogo.png" /><br /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><br /><ins class="listBeforePrice" id="1-beforePrice">Før:' + beforePrice + '</ins>'
+
+    // <br /><ins class="listDesc" id="1-desc">' + description +'</ins> REMOVED THE DESCRIPTION DUE TO SPACING ISSUES
 
     byId("listAnchor").append(str);
 }
