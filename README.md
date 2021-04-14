@@ -1,2 +1,2 @@
 # Tilbudsfinneren
-En app for å lette finne tilbud!
+En app for å lett finne tilbud!
