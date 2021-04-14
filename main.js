@@ -12,8 +12,83 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
 var db = firebase.firestore();
+
+/*=====================================================================================
+									 Authentication
+=======================================================================================*/
+/*
+We are currently only authenticating using email/password, but will expand to Google and
+FaceBook sign in buttons later.
+*/
+function SignUpEmail(email, password) {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Signed in 
+            var user = userCredential.user;
+            console.log("USER: " + user);
+            AddUserToDatabase(user.uid, email);
+            // ...
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ..
+        });
+}
+
+function SignInEmail(email, password) {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Signed in
+            var user = userCredential.user;
+            // ...
+        })
+        .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+        });
+}
+
+function AddUserToDatabase(id, email_) {
+    console.log("TEST1: " + id);
+    db.collection("users").doc(id).set({
+        email: email_
+    })
+    .then(() => {
+        console.log("Document successfully written!");
+    })
+    .catch((error) => {
+        console.error("Error writing document: ", error);
+    });
+    console.log("TEST2");
+}
+
+
+function GetCurrentUser() {
+    return firebase.auth().currentUser;
+}
+
+// DO NOT REMOVE!!!!!!!!!!!!!!!!!
+/*var provider = new firebase.auth.GoogleAuthProvider();
+
+function SignInGoogle() {
+    firebase.auth().signInWithPopup(provider).then(function (userCredential) {
+        // code which runs on success
+        console.log("SUCCESS")
+    }).catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        console.log(errorCode);
+        alert(errorCode);
+
+        var errorMessage = error.message;
+        console.log(errorMessage);
+        alert(errorMessage);
+    });
+}*/
+
+/*
 
 db.collection("week15").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
@@ -23,7 +98,7 @@ db.collection("week15").get().then((querySnapshot) => {
         if(doc.data().item_count != "") { console.log(doc.data().combined_price, doc.data().sale_price) }
         //console.log("DATA: " + doc.data().combined_price, doc.data().item_count);
     });
-});
+});*/
 
 
 /*=====================================================================================
