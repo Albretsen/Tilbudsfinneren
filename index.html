@@ -27,13 +27,13 @@
 
 
 
-    <div id="loginMenu" style="display: none;">
+    <div id="loginMenu">
         <div style="font-size:12vw;">Velkommen</div>
         <div class="imageCrop">
             <img class="profilePic"
                 src="https://freepikpsd.com/wp-content/uploads/2019/10/default-profile-image-png-1-Transparent-Images.png" />
         </div>
-        <input type="text" class="loginInput" />
+        <input type="text" id="inputEmail" class="loginInput" />
         <input type="text" id="inputPassword" class="loginInput" />
         <br />
         <div>
@@ -43,7 +43,7 @@
         </div>
         <br />
 
-        <button id="loginBtn">LOGG INN</button>
+        <button onclick="SignInEmail()" id="loginBtn">LOGG INN</button>
 
         <p id="noLogin">Gå videre uten bruker</p>
     </div>
@@ -51,7 +51,7 @@
     <div id="listMenu">
         <section id="listAnchor"></section>
 
-        <button>LAST MER</button>
+        <button onclick="getAllDiscounts()">LAST MER</button>
     </div>
 
 </body>
