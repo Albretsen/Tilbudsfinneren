@@ -210,7 +210,7 @@ button {
   bottom: -5vw;
   left: 0;
   text-align: center;
-  font-size: 8vw;
+  font-size: 4vw;
   color:black;
   background-color: #E3D0B9;
   overflow-x: hidden;
@@ -221,6 +221,6 @@ button {
 }
 
 .smallText {
-  font-size: 4vw;
+  font-size: 3vw;
   color: gray;
 }
