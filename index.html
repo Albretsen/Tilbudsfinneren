@@ -27,32 +27,34 @@
 
 
 
-    <div id="loginMenu">
+    <div class="menu" id="loginMenu">
         <div style="font-size:12vw;">Velkommen</div>
         <div class="imageCrop">
             <img class="profilePic"
                 src="https://freepikpsd.com/wp-content/uploads/2019/10/default-profile-image-png-1-Transparent-Images.png" />
         </div>
-        <input type="text" id="inputEmail" class="loginInput" />
-        <input type="text" id="inputPassword" class="loginInput" />
+        <input value="test@email.com" type="text" id="inputEmail" class="loginInput" />
+        <input value="123456" type="text" id="inputPassword" class="loginInput" />
         <br />
         <div>
-            <input type="checkbox" id="rememberMe">
-            <label for="rememberMe">Husk meg</label>
-            <ins style="margin-left:20vw">Glemt passord</ins>
+            <ins style="margin-left:50vw">Glemt passord</ins>
         </div>
         <br />
 
         <button onclick="SignInEmail()" id="loginBtn">LOGG INN</button>
+        <!-- <br /> -->
+        <button onclick="" id="">LAG BRUKER</button>
 
         <p id="noLogin">Gå videre uten bruker</p>
     </div>
 
-    <div id="listMenu">
+    <div class="menu" id="listMenu" style="display: none;">
         <section id="listAnchor"></section>
 
         <button onclick="getAllDiscounts()">LAST MER</button>
     </div>
+
+    <div onclick="hidePopup()" id="popup"></div>
 
 </body>
 <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->

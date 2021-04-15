@@ -44,13 +44,14 @@ function SignInEmail() {
         .then((userCredential) => {
             // Signed in
             var user = userCredential.user;
+            switchMenu('listMenu');
             console.log('success');
             // ...
         })
         .catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
-            console.log(errorMessage)
+            popup(errorMessage);
         });
 }
 
@@ -106,25 +107,46 @@ db.collection("week15").get().then((querySnapshot) => {
 
 
 /*=====================================================================================
-									 HELPER FUNCTIONS
+									 MISCELLANEOUS
 =======================================================================================*/
 const byId = function(id) { // Shortcut
 	return document.getElementById(id);
 }
 
-
-
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function animateHamburger(x) { // Activates the css animation for the hamburger menu
     x.classList.toggle("change");
 }
 
 function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
+    byId("mySidenav").style.width = "250px";
 }
   
 function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
+    byId("mySidenav").style.width = "0";
+}
+
+async function popup(text) {
+    byId("popup").innerHTML = text + '<br /><ins class="smallText">Trykk for å fjerne</ins>';
+    byId("popup").style.height = (35 + (text.length/5)) + "vw"; // Popup height is determiend by text length
+    var time = 1000 + text.length * 100; // Popup duration is determiend by text length
+    await sleep(time);
+    hidePopup();
+}
+
+function hidePopup() { // Separate function because it can be called from more than one place
+    byId("popup").style.height = "0";
+}
+
+function switchMenu(menuId) {
+    var menus = document.getElementsByClassName("menu");
+    for(var i = 0; i < menus.length; i++) {
+        menus[i].style.display = 'none';
+    }
+    byId(menuId).style.display = 'block';
 }
 
 
@@ -161,20 +183,12 @@ function createListItem(name, image, beforePrice, salePrice, combinedPrice, item
         salePrice = combinedPrice
     }
 
-    if(itemsMade < 30) {
-        var str = document.createElement('DIV');
-        str.setAttribute("class", "listItem");
-        str.innerHTML =
-        '<img class="listImage" src="' +  image  + '" /><img class="listStoreLogo" src="images/sparLogo.png" /><br /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><br /><ins class="listBeforePrice" id="1-beforePrice">Før:' + beforePrice + '</ins>'
-    
-        // <br /><ins class="listDesc" id="1-desc">' + description +'</ins> REMOVED THE DESCRIPTION DUE TO SPACING ISSUES
-    
-        byId("listAnchor").append(str);
+    var str = document.createElement('DIV');
+    str.setAttribute("class", "listItem");
+    str.innerHTML =
+        '<img class="listImage" src="' + image + '" /><img class="listStoreLogo" src="images/sparLogo.png" /><br /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><br /><ins class="listBeforePrice" id="1-beforePrice">Før:' + beforePrice + '</ins>'
 
-        itemsMade++;
-    } else {
-       // itemsMade = 0;
-    }
+    // <br /><ins class="listDesc" id="1-desc">' + description +'</ins> REMOVED THE DESCRIPTION DUE TO SPACING ISSUES
 
-
+    byId("listAnchor").append(str);
 }
