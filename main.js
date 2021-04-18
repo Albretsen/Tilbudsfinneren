@@ -12,7 +12,6 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-var db = firebase.firestore();
 
 /*=====================================================================================
 									 Authentication
@@ -55,20 +54,6 @@ function SignInEmail() {
         });
 }
 
-function AddUserToDatabase(id, email_) {
-    console.log("TEST1: " + id);
-    db.collection("users").doc(id).set({
-        email: email_
-    })
-    .then(() => {
-        console.log("Document successfully written!");
-    })
-    .catch((error) => {
-        console.error("Error writing document: ", error);
-    });
-    console.log("TEST2");
-}
-
 
 function GetCurrentUser() {
     return firebase.auth().currentUser;
@@ -105,6 +90,29 @@ db.collection("week15").get().then((querySnapshot) => {
     });
 });*/
 
+/*=====================================================================================
+									 DATABASE
+=======================================================================================*/
+const db_base_url_with_http = "http://localhost:3000"
+
+function AddUserToDatabase(id, email_) {
+    const Http = new XMLHttpRequest();
+    const url = db_base_url_with_http + '/adduser/in_app_id/in_app@email.com';
+    Http.open("GET", url);
+    Http.send();
+
+    Http.onreadystatechange = (e) => {
+        console.log(Http.responseText)
+    }
+}
+
+function GetDiscountsFromDB() {
+
+}
+
+function GetItemUsingGTINFromDB(gtin) {
+    
+}
 
 /*=====================================================================================
 									 MISCELLANEOUS
