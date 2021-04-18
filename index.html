@@ -29,21 +29,36 @@
 
     <div class="menu" id="loginMenu">
         <div style="font-size:12vw;">Velkommen</div>
-        <div class="imageCrop">
-            <img class="profilePic"
-                src="https://freepikpsd.com/wp-content/uploads/2019/10/default-profile-image-png-1-Transparent-Images.png" />
+        <div class="bottomAlign">
+            <div class="imageCrop">
+                <img class="profilePic"
+                    src="https://freepikpsd.com/wp-content/uploads/2019/10/default-profile-image-png-1-Transparent-Images.png" />
+            </div>
+            <input value="test@email.com" type="text" id="inputEmail" class="loginInput" />
+            <input value="123456" type="text" id="inputPassword" class="loginInput" />
+            <br />
+            <div>
+                <ins style="margin-left:50vw">Glemt passord</ins>
+            </div>
+            <br />
+
+            <button onclick="SignInEmail()" id="loginBtn">LOGG INN</button>
+            <!-- <br /> -->
+            <button onclick="switchMenu('signupMenu')" id="">LAG BRUKER</button>
+
+            <p id="noLogin">Gå videre uten bruker</p>
         </div>
-        <input value="test@email.com" type="text" id="inputEmail" class="loginInput" />
-        <input value="123456" type="text" id="inputPassword" class="loginInput" />
-        <br />
-        <div>
-            <ins style="margin-left:50vw">Glemt passord</ins>
-        </div>
+    </div>
+
+    <div class="menu" id="signupMenu" style="display: none;">
+        <div style="font-size:12vw;">Lag ny bruker</div>
+
+        <input placeholder="EMAIL" type="text" id="inputSignupEmail" class="loginInput" />
+        <input placeholder="PASSORD" type="text" id="inputSignupPassword" class="loginInput" />
+        <input placeholder="BEKREFT PASSORD" type="text" id="inputSignupPasswordConfirm" class="loginInput" />
         <br />
 
-        <button onclick="SignInEmail()" id="loginBtn">LOGG INN</button>
-        <!-- <br /> -->
-        <button onclick="" id="">LAG BRUKER</button>
+        <button onclick="SignInEmail()" id="loginBtn">GÅ VIDERE</button>
 
         <p id="noLogin">Gå videre uten bruker</p>
     </div>
