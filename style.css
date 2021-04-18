@@ -35,9 +35,11 @@ ins {
 
 input[type=text] { /* Affects all text inputs */
   font-family:Montserrat, MontserratDownload, Monospace;
+  font-size: 4vw;
   width: 90%;
-  padding: 12px 20px 12px 40px;
-  margin: 8px 0;
+  height: 12vw;
+  padding: 6vw 10vw 6vw 10vw;
+  margin: 2vw 0;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -82,9 +84,14 @@ button {
   margin-right: auto;
 }
 
-#loginMenu {
+#loginMenu, #signupMenu {
   height: 100%;
   text-align: center;
+}
+
+.bottomAlign {
+  /* position: absolute; */
+  bottom: 10vw;
 }
 
 
@@ -195,14 +202,6 @@ button {
 
 
 #popup {
-  /* position: relative;
-  bottom: 0;
-  width: 80%;
-  background-color: #E3D0B9;
-  margin: auto;
-  height: 6vw;
-  border-radius: 8px; */
-
   height: 0;
   width: 100%;
   position: fixed;
@@ -210,7 +209,7 @@ button {
   bottom: -5vw;
   left: 0;
   text-align: center;
-  font-size: 8vw;
+  font-size: 4vw;
   color:black;
   background-color: #E3D0B9;
   overflow-x: hidden;
@@ -221,6 +220,6 @@ button {
 }
 
 .smallText {
-  font-size: 4vw;
+  font-size: 3vw;
   color: gray;
 }

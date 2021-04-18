@@ -139,7 +139,7 @@ function closeNav() {
 
 async function popup(text) {
     byId("popup").innerHTML = text + '<br /><ins class="smallText">Trykk for å fjerne</ins>';
-    byId("popup").style.height = (35 + (text.length/5)) + "vw"; // Popup height is determiend by text length
+    byId("popup").style.height = (12 + (text.length/7)) + "vw"; // Popup height is determiend by text length
     var time = 1000 + text.length * 100; // Popup duration is determiend by text length
     await sleep(time);
     hidePopup();
