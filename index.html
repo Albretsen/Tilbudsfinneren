@@ -6,19 +6,14 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Tilbudsfinneren</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 
-    <div class="container" onclick="animateHamburger(this), openNav()">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-    </div>
-
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div id="sidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn, fa fa-arrow-left" onclick="closeNav()"></a>
         <a href="#">About</a>
         <a href="#">Services</a>
         <a href="#">Clients</a>
@@ -28,14 +23,25 @@
 
 
     <div class="menu" id="loginMenu">
-        <div style="font-size:12vw;">Velkommen</div>
+        <h1 style="font-size:10vw;">Velkommen</h1>
         <div class="bottomAlign">
             <div class="imageCrop">
                 <img class="profilePic"
                     src="https://freepikpsd.com/wp-content/uploads/2019/10/default-profile-image-png-1-Transparent-Images.png" />
             </div>
-            <input value="test@email.com" type="text" id="inputEmail" class="loginInput" />
-            <input value="123456" type="text" id="inputPassword" class="loginInput" />
+            <br />
+            <div class="input-container">
+                <i class="fa fa-user icon"></i>
+                <input class="loginInput" id="inputEmail" type="text" placeholder="EMAIL" value="test@email.com"/>
+            </div>
+
+            <div class="input-container">
+                <i class="fa fa-lock icon"></i>
+                <input class="loginInput" id="inputPassword" type="text" placeholder="PASSORD" value="123456"/>
+            </div>
+
+            
+            
             <br />
             <div>
                 <ins style="margin-left:50vw">Glemt passord</ins>
@@ -51,17 +57,41 @@
     </div>
 
     <div class="menu" id="signupMenu" style="display: none;">
-        <div style="font-size:12vw;">Lag ny bruker</div>
+        <h1 style="font-size:10vw;">Lag ny bruker</h1>
 
-        <input placeholder="EMAIL" type="text" id="inputSignupEmail" class="loginInput" />
-        <input placeholder="PASSORD" type="text" id="inputSignupPassword" class="loginInput" />
-        <input placeholder="BEKREFT PASSORD" type="text" id="inputSignupPasswordConfirm" class="loginInput" />
+        <div class="input-container">
+            <i class="fa fa-user icon"></i>
+            <input placeholder="EMAIL" type="text" id="inputSignupEmail" class="loginInput" />
+        </div>
+
+        <div class="input-container">
+            <i class="fa fa-lock icon"></i>
+            <input placeholder="PASSORD" type="text" id="inputSignupPassword" class="loginInput" />
+        </div>
+
+        <div class="input-container">
+            <i class="fa fa-lock icon"></i>
+            <input placeholder="BEKREFT PASSORD" type="text" id="inputSignupPasswordConfirm" class="loginInput" />
+        </div>
+        
         <br />
 
-        <button onclick="SignInEmail()" id="loginBtn">GÅ VIDERE</button>
+        <button onclick="SignUpEmail()" id="loginBtn">GÅ VIDERE</button>
 
-        <p id="noLogin">Gå videre uten bruker</p>
     </div>
+
+    <div class="topBar">
+        <div class="container" onclick="openNav()">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+
+        <input placeholder="SØK" type="text" id="searchBar"></input>
+        
+    </div>
+
+
 
     <div class="menu" id="listMenu" style="display: none;">
         <section id="listAnchor"></section>

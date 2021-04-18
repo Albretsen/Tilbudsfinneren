@@ -7,7 +7,6 @@ body {
   /* background-color: #62959C; */
   font-family:Montserrat, MontserratDownload, Monospace;
   color: white; /* Dictates font color */
-
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
@@ -35,20 +34,47 @@ ins {
 
 input[type=text] { /* Affects all text inputs */
   font-family:Montserrat, MontserratDownload, Monospace;
-  font-size: 4vw;
-  width: 90%;
-  height: 12vw;
-  padding: 6vw 10vw 6vw 10vw;
-  margin: 2vw 0;
+  border: 0px solid #ccc;
   display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 6px;
   box-sizing: border-box;
-  background-image: url('https://image.flaticon.com/icons/png/512/61/61457.png'); /* Temporary image */
+}
+
+.input-container {
+  display: flex;
+  width: 100%;
+  margin-top: 4vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  font-size: 6vw;
+  color: black;
+  padding: 3vw;
+  min-width: 6vw;
+  background: white;
+  text-align: center;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.loginInput {
+  font-size: 4vw;
+  height: 12vw;
+  width: 70%;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  /* margin: 2vw 0;*/
+  padding: 2vw; 
+  /* padding: 6vw 10vw 6vw 10vw; */
+  /* background-image: url('https://image.flaticon.com/icons/png/512/61/61457.png'); Temporary image
   background-color: white;
   background-size: 5vw;
   background-position: 10px 10px; 
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
+  display: inline-block;
 }
 
 button {
@@ -95,33 +121,6 @@ button {
 }
 
 
-/* Hamburger menu with animation */
-.container {
-  display: inline-block;
-  text-align: left;
-}
-
-.bar1, .bar2, .bar3 {
-  width: 35px;
-  height: 5px;
-  border-radius: 5px;
-  background-color: white;
-  margin: 6px 0;
-  transition: 0.4s;
-}
-
-.change .bar1 {
-  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
-  transform: rotate(-45deg) translate(-9px, 6px);
-}
-
-.change .bar2 {opacity: 0;}
-
-.change .bar3 {
-  -webkit-transform: rotate(45deg) translate(-8px, -8px);
-  transform: rotate(45deg) translate(-8px, -8px);
-}
-
 
 /* Sidebar navigation style with animation */
 .sidenav {
@@ -131,9 +130,9 @@ button {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: white;
+  background-color: #E3D0B9;
   overflow-x: hidden;
-  transition: 0.5s;
+  transition: 0.3s;
   padding-top: 60px;
 }
 
@@ -153,9 +152,7 @@ button {
 .sidenav .closebtn {
   position: absolute;
   top: 0;
-  right: 25px;
   font-size: 36px;
-  margin-left: 50px;
 }
 
 @media screen and (max-height: 450px) {
@@ -222,4 +219,63 @@ button {
 .smallText {
   font-size: 3vw;
   color: gray;
+}
+
+.menu {
+  margin-top:15vw; /* Makes space for the top bar */
+}
+
+#searchBar {
+  position: absolute;
+  width: 16vw;
+  font-size: 4vw;
+  height: 10vw;
+  margin: auto;
+  display: inline-block;
+  top: 1vw;
+  right: 2vw;
+  padding-left: 3vw;
+  border-radius: 6px;
+  transition: width 0.4s ease-in-out;
+}
+
+#searchBar:focus {
+  width: 80vw;
+}
+
+.topBar {
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:100%;
+	height:12vw;
+  /* background-color: #62959C; */
+}
+
+
+/* Hamburger menu with animation */
+.container {
+  display: inline-block;
+  text-align: left;
+}
+
+.bar1, .bar2, .bar3 {
+  width: 13vw;
+  height: 2vw;
+  border-radius: 5px;
+  background-color: white;
+  margin: 1.5vw 1vw;
+  transition: 0.4s;
+}
+
+.change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
 }

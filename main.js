@@ -21,7 +21,15 @@ var db = firebase.firestore();
 We are currently only authenticating using email/password, but will expand to Google and
 FaceBook sign in buttons later.
 */
-function SignUpEmail(email, password) {
+function SignUpEmail() {
+    var email = byId('inputSignupEmail').value;
+    var password = byId('inputSignupPassword').value;
+    var passwordConfirm = byId('inputSignupPasswordConfirm').value;
+    if(password != passwordConfirm) {
+        popup('Passordene er ikke like.');
+        return;
+    }
+
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
             // Signed in 
@@ -33,6 +41,7 @@ function SignUpEmail(email, password) {
         .catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
+            popup(errorMessage);
             // ..
         });
 }
@@ -56,7 +65,6 @@ function SignInEmail() {
 }
 
 function AddUserToDatabase(id, email_) {
-    console.log("TEST1: " + id);
     db.collection("users").doc(id).set({
         email: email_
     })
@@ -66,7 +74,6 @@ function AddUserToDatabase(id, email_) {
     .catch((error) => {
         console.error("Error writing document: ", error);
     });
-    console.log("TEST2");
 }
 
 
@@ -122,12 +129,35 @@ function animateHamburger(x) { // Activates the css animation for the hamburger 
 }
 
 function openNav() {
-    byId("mySidenav").style.width = "250px";
+    byId("sidenav").style.width = "66vw";
+    // var menus = document.getElementsByClassName("menu");
+    // for(var i = 0; i < menus.length; i++) {
+    //     menus[i].style.filter = 'brightness(50%)';
+    // }
 }
   
 function closeNav() {
-    byId("mySidenav").style.width = "0";
+    byId("sidenav").style.width = "0";
 }
+
+function outsideClick(event, notelem)	{
+    var clickedOut = true, i, len = notelem.length;
+    for (i = 0;i < len;i++)  {
+        if (event.target == notelem[i] || notelem[i].contains(event.target)) {
+            clickedOut = false;
+        }
+    }
+    if (clickedOut) return true;
+    else return false;
+}
+
+var navMenu = document.getElementById("sidenav");
+window.addEventListener('click', function(e) {
+   if(outsideClick(e, navMenu) && byId("sidenav").style.width == "66vw") {
+       console.log('test')
+   		closeNav();
+   }
+});
 
 async function popup(text) {
     byId("popup").innerHTML = text + '<br /><ins class="smallText">Trykk for å fjerne</ins>';
