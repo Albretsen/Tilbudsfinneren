@@ -149,7 +149,7 @@ function closeNav() {
     byId("sidenav").style.width = "0";
 }
 
-function outsideClick(event, notelem)	{
+function outsideClick(event, notelem) {
     var clickedOut = true, i, len = notelem.length;
     for (i = 0;i < len;i++)  {
         if (event.target == notelem[i] || notelem[i].contains(event.target)) {
@@ -160,11 +160,11 @@ function outsideClick(event, notelem)	{
     else return false;
 }
 
-var navMenu = document.getElementById("sidenav");
+// Close side menu if clicked outside it, using function above
+var navMenu = [document.getElementById("sidenav"), document.getElementById("hamburger")];
 window.addEventListener('click', function(e) {
-   if(outsideClick(e, navMenu) && byId("sidenav").style.width == "66vw") {
-       console.log('test')
-   		closeNav();
+   if(outsideClick(e, navMenu)) {
+   	    closeNav();
    }
 });
 
@@ -187,8 +187,6 @@ function switchMenu(menuId) {
     }
     byId(menuId).style.display = 'block';
 }
-
-
 
 /*=====================================================================================
 									 DISCOUNT LIST
