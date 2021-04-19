@@ -40,11 +40,8 @@
                 <input class="loginInput" id="inputPassword" type="text" placeholder="PASSORD" value="123456"/>
             </div>
 
-            
-            
-            <br />
             <div>
-                <ins style="margin-left:50vw">Glemt passord</ins>
+                <ins class="subtext" style="margin-left:45vw">Glemt passord</ins>
             </div>
             <br />
 
@@ -52,7 +49,7 @@
             <!-- <br /> -->
             <button onclick="switchMenu('signupMenu')" id="">LAG BRUKER</button>
 
-            <p id="noLogin">Gå videre uten bruker</p>
+            <p class="subtext" id="noLogin">Gå videre uten bruker</p>
         </div>
     </div>
 
@@ -81,11 +78,7 @@
     </div>
 
     <div class="topBar">
-        <div class="container" onclick="openNav()">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-        </div>
+        <i id="hamburger" class="fa fa-bars hamburger" onclick="openNav()"></i>
 
         <input placeholder="SØK" type="text" id="searchBar"></input>
         

@@ -39,6 +39,10 @@ input[type=text] { /* Affects all text inputs */
   box-sizing: border-box;
 }
 
+input[type=text]:focus {
+  outline: none;
+}
+
 .input-container {
   display: flex;
   width: 100%;
@@ -52,10 +56,11 @@ input[type=text] { /* Affects all text inputs */
   color: black;
   padding: 3vw;
   min-width: 6vw;
+  min-height: 6vw;
   background: white;
   text-align: center;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
+  border-top-left-radius: 2vw;
+  border-bottom-left-radius: 2vw;
 }
 
 .loginInput {
@@ -64,37 +69,35 @@ input[type=text] { /* Affects all text inputs */
   width: 70%;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  /* margin: 2vw 0;*/
+  border-top-right-radius: 2vw;
+  border-bottom-right-radius: 2vw;
   padding: 2vw; 
-  /* padding: 6vw 10vw 6vw 10vw; */
-  /* background-image: url('https://image.flaticon.com/icons/png/512/61/61457.png'); Temporary image
-  background-color: white;
-  background-size: 5vw;
-  background-position: 10px 10px; 
-  background-repeat: no-repeat; */
   display: inline-block;
 }
 
 button {
   font-family:Montserrat, MontserratDownload, Monospace;
+  font-size: 4vw;
   color:black;
   width: 40%;
-  padding: 12px 20px;
+  height: 12vw;
   margin: 8px 0;
   display: inline-block;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 2vw;
   box-sizing: border-box;
   background-color: white;
+}
+
+.subtext {
+  font-size: 4vw;
 }
 
 
 /* Circular image frame */
 .imageCrop {
-  width: 100px;
-  height: 100px;
+  width: 30vw;
+  height: 30vw;
   position: relative;
   overflow: hidden;
   border-radius: 50%;
@@ -181,9 +184,6 @@ button {
   font-size: 4vw;
 }
 
-/* .listNewPrice {
-  font-size: 5vw;
-} */
 
 .listImage {
   width: 100%;
@@ -225,17 +225,23 @@ button {
   margin-top:15vw; /* Makes space for the top bar */
 }
 
+/* Hamburger menu*/
+.hamburger {
+  font-size: 12vw;
+  padding-left: 2vw;
+  padding-top: 0.2vw;
+}
+
 #searchBar {
   position: absolute;
   width: 16vw;
   font-size: 4vw;
   height: 10vw;
-  margin: auto;
   display: inline-block;
   top: 1vw;
   right: 2vw;
   padding-left: 3vw;
-  border-radius: 6px;
+  border-radius: 2vw;
   transition: width 0.4s ease-in-out;
 }
 
@@ -250,32 +256,4 @@ button {
 	width:100%;
 	height:12vw;
   /* background-color: #62959C; */
-}
-
-
-/* Hamburger menu with animation */
-.container {
-  display: inline-block;
-  text-align: left;
-}
-
-.bar1, .bar2, .bar3 {
-  width: 13vw;
-  height: 2vw;
-  border-radius: 5px;
-  background-color: white;
-  margin: 1.5vw 1vw;
-  transition: 0.4s;
-}
-
-.change .bar1 {
-  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
-  transform: rotate(-45deg) translate(-9px, 6px);
-}
-
-.change .bar2 {opacity: 0;}
-
-.change .bar3 {
-  -webkit-transform: rotate(45deg) translate(-8px, -8px);
-  transform: rotate(45deg) translate(-8px, -8px);
 }
