@@ -139,6 +139,10 @@ function animateHamburger(x) { // Activates the css animation for the hamburger 
 
 function openNav() {
     byId("sidenav").style.width = "66vw";
+    var buttons = document.getElementsByClassName("navButton");
+    for(var i = 0; i < buttons.length; i++) {
+        buttons[i].style.marginLeft = "0";
+    }
     // var menus = document.getElementsByClassName("menu");
     // for(var i = 0; i < menus.length; i++) {
     //     menus[i].style.filter = 'brightness(50%)';
@@ -147,6 +151,10 @@ function openNav() {
   
 function closeNav() {
     byId("sidenav").style.width = "0";
+    var buttons = document.getElementsByClassName("navButton");
+    for(var i = 0; i < buttons.length; i++) {
+        buttons[i].style.marginLeft = "-100vw";
+    }
 }
 
 function outsideClick(event, notelem) {
@@ -187,6 +195,10 @@ function switchMenu(menuId) {
     }
     byId(menuId).style.display = 'block';
 }
+
+// async function openCloseNav() {
+
+// }
 
 /*=====================================================================================
 									 DISCOUNT LIST
