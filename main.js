@@ -101,7 +101,7 @@ db.collection("week15").get().then((querySnapshot) => {
 /*=====================================================================================
 									 DATABASE
 =======================================================================================*/
-const db_base_url_with_http = "http://localhost:3000"
+const db_base_url_with_http = "http://18.224.108.235"
 
 function AddUserToDatabase(id, email_) {
     const Http = new XMLHttpRequest();
@@ -114,8 +114,19 @@ function AddUserToDatabase(id, email_) {
     }
 }
 
-function GetDiscountsFromDB() {
+function GetDiscountsFromDB(sort, query, shop, page) {
+    if(query == '') {
+        query = 'GzMsXN9CuJp3pRSXubvfX';
+    }
+    const Http = new XMLHttpRequest();
+    const url = db_base_url_with_http + '/db/all/' + sort + '/' + query + '/' + shop + '/' + page;
+    Http.open("GET", url);
+    Http.send();
 
+    Http.onreadystatechange = (e) => {
+        console.log(Http.responseText)
+        return Http.responseText;
+    }
 }
 
 function GetItemUsingGTINFromDB(gtin) {
@@ -131,10 +142,6 @@ const byId = function(id) { // Shortcut
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function animateHamburger(x) { // Activates the css animation for the hamburger menu
-    x.classList.toggle("change");
 }
 
 function openNav() {
@@ -196,9 +203,8 @@ function switchMenu(menuId) {
     byId(menuId).style.display = 'block';
 }
 
-// async function openCloseNav() {
 
-// }
+switchMenu('listMenu');
 
 /*=====================================================================================
 									 DISCOUNT LIST
@@ -214,16 +220,27 @@ function switchMenu(menuId) {
 // image: DONE
 // description: DONE
 
-var startAt = 0;
-function getAllDiscounts() {
-    console.log(startAt)
-    db.collection("week15").orderBy('name').startAt(startAt).limit(10).get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            createListItem(doc.data().name, doc.data().image, doc.data().before_price, doc.data().sale_price, doc.data().combined_price, doc.data().item_count, doc.data().description);
+// var startAt = 0;
+// function getAllDiscounts() {
+//     console.log(startAt)
+//     db.collection("week15").orderBy('name').startAt(startAt).limit(10).get().then((querySnapshot) => {
+//         querySnapshot.forEach((doc) => {
+//             createListItem(doc.data().name, doc.data().image, doc.data().before_price, doc.data().sale_price, doc.data().combined_price, doc.data().item_count, doc.data().description);
 
-        });
-    });
-    startAt += 10;
+//         });
+//     });
+//     startAt += 10;
+// }
+
+getAllDiscounts();
+function getAllDiscounts() {
+    var discounts = GetDiscountsFromDB('none', '', 'spar', '1');
+
+    for(var i = 0; i < discounts.length; i++) {
+        createListItem(discounts[i].name, discounts[i].image, discounts[i].before_price, discounts[i].sale_price, discounts[i].combined_price, discounts[i].item_count, discounts[i].description)
+    }
+    
+
 }
 
 var itemsMade = 0;
