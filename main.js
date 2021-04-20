@@ -114,7 +114,15 @@ function AddUserToDatabase(id, email_) {
     }
 }
 
-function GetDiscountsFromDB(sort, query, shop, page) {
+GetDiscountsFromDB();
+
+var page_ = 1;
+function GetDiscountsFromDB() {
+    var sort = "best_deal";
+    var query = "";
+    var shop = "spar";
+    var page = page_+"";
+
     if(query == '') {
         query = 'GzMsXN9CuJp3pRSXubvfX';
     }
@@ -124,8 +132,10 @@ function GetDiscountsFromDB(sort, query, shop, page) {
     Http.send();
 
     Http.onreadystatechange = (e) => {
-        console.log(Http.responseText)
-        return Http.responseText;
+        if (Http.readyState == 4 && Http.status == 200) {
+            getAllDiscounts(Http.responseText);
+            page_++;
+        }
     }
 }
 
@@ -232,15 +242,14 @@ switchMenu('listMenu');
 //     startAt += 10;
 // }
 
-getAllDiscounts();
-function getAllDiscounts() {
-    var discounts = GetDiscountsFromDB('none', '', 'spar', '1');
+function getAllDiscounts (data) {
+    var discounts = JSON.parse(data);
+    console.log(discounts);
 
     for(var i = 0; i < discounts.length; i++) {
         createListItem(discounts[i].name, discounts[i].image, discounts[i].before_price, discounts[i].sale_price, discounts[i].combined_price, discounts[i].item_count, discounts[i].description)
     }
     
-
 }
 
 var itemsMade = 0;
