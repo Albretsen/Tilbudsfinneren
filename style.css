@@ -203,6 +203,11 @@ button {
   height: 6vw;
 }
 
+.dropdownImage {
+  width: 100%;
+  height: 6vw;
+}
+
 
 #popup {
   height: 0;

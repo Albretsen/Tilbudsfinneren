@@ -116,11 +116,15 @@ function AddUserToDatabase(id, email_) {
 
 GetDiscountsFromDB();
 
+// Sort names:
+// best_deal
+// alphabetically
+
 var page_ = 1;
+var sort = "best_deal";
+var query = "";
+var shop = "spar";
 function GetDiscountsFromDB() {
-    var sort = "best_deal";
-    var query = "";
-    var shop = "spar";
     var page = page_+"";
 
     if(query == '') {
@@ -230,17 +234,13 @@ switchMenu('listMenu');
 // image: DONE
 // description: DONE
 
-// var startAt = 0;
-// function getAllDiscounts() {
-//     console.log(startAt)
-//     db.collection("week15").orderBy('name').startAt(startAt).limit(10).get().then((querySnapshot) => {
-//         querySnapshot.forEach((doc) => {
-//             createListItem(doc.data().name, doc.data().image, doc.data().before_price, doc.data().sale_price, doc.data().combined_price, doc.data().item_count, doc.data().description);
+window.onscroll = function() {
+    if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+        GetDiscountsFromDB();
+    }
+}
 
-//         });
-//     });
-//     startAt += 10;
-// }
+
 
 function getAllDiscounts (data) {
     var discounts = JSON.parse(data);
