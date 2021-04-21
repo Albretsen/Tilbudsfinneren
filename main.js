@@ -63,6 +63,14 @@ function SignInEmail() {
         });
 }
 
+function ResetPassword(emailAddress) {
+    firebase.auth().sendPasswordResetEmail(emailAddress).then(function () {
+        // Email sent.
+    }).catch(function (error) {
+        // An error happened.
+    });
+}
+
 function GetCurrentUser() {
     return firebase.auth().currentUser;
 }
@@ -118,7 +126,7 @@ GetDiscountsFromDB();
 
 var page_ = 1;
 function GetDiscountsFromDB() {
-    var sort = "best_deal";
+    var sort = "none";
     var query = "";
     var shop = "spar";
     var page = page_+"";
@@ -135,6 +143,23 @@ function GetDiscountsFromDB() {
         if (Http.readyState == 4 && Http.status == 200) {
             getAllDiscounts(Http.responseText);
             page_++;
+        }
+    }
+}
+
+function SearchAllItems(query) {
+    if(query == '') {
+        query = 'GzMsXN9CuJp3pRSXubvfX';
+    }
+    const Http = new XMLHttpRequest();
+    const url = db_base_url_with_http + '/search/' + query;
+    Http.open("GET", url);
+    Http.send();
+
+    Http.onreadystatechange = (e) => {
+        if (Http.readyState == 4 && Http.status == 200) {
+            // jsonResult is all the returned objects
+            var jsonResult = JSON.parse(Http.responseText);
         }
     }
 }
@@ -244,7 +269,6 @@ switchMenu('listMenu');
 
 function getAllDiscounts (data) {
     var discounts = JSON.parse(data);
-    console.log(discounts);
 
     for(var i = 0; i < discounts.length; i++) {
         createListItem(discounts[i].name, discounts[i].image, discounts[i].before_price, discounts[i].sale_price, discounts[i].combined_price, discounts[i].item_count, discounts[i].description)
