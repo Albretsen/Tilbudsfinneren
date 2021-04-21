@@ -122,9 +122,15 @@ function AddUserToDatabase(id, email_) {
     }
 }
 
-GetDiscountsFromDB();
+
+// Sort names:
+// best_deal
+// alphabetically
 
 var page_ = 1;
+var sort = "best_deal";
+var query = "";
+var shop = "spar";
 function GetDiscountsFromDB() {
     var sort = "none";
     var query = "";
@@ -255,19 +261,15 @@ switchMenu('listMenu');
 // image: DONE
 // description: DONE
 
-// var startAt = 0;
-// function getAllDiscounts() {
-//     console.log(startAt)
-//     db.collection("week15").orderBy('name').startAt(startAt).limit(10).get().then((querySnapshot) => {
-//         querySnapshot.forEach((doc) => {
-//             createListItem(doc.data().name, doc.data().image, doc.data().before_price, doc.data().sale_price, doc.data().combined_price, doc.data().item_count, doc.data().description);
+window.onscroll = function() {
+    if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+        GetDiscountsFromDB();
+    }
+}
 
-//         });
-//     });
-//     startAt += 10;
-// }
 
-function getAllDiscounts (data) {
+
+function getAllDiscounts(data) {
     var discounts = JSON.parse(data);
 
     for(var i = 0; i < discounts.length; i++) {
@@ -285,7 +287,7 @@ function createListItem(name, image, beforePrice, salePrice, combinedPrice, item
     var str = document.createElement('DIV');
     str.setAttribute("class", "listItem");
     str.innerHTML =
-        '<img class="listImage" src="' + image + '" /><img class="listStoreLogo" src="images/sparLogo.png" /><br /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><br /><ins class="listBeforePrice" id="1-beforePrice">Før:' + beforePrice + '</ins>'
+        '<img class="listImage" src="' + image + '" /><img class="listStoreLogo" src="images/spar.png" /><br /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><br /><ins class="listBeforePrice" id="1-beforePrice">Før:' + beforePrice + '</ins>'
 
     // <br /><ins class="listDesc" id="1-desc">' + description +'</ins> REMOVED THE DESCRIPTION DUE TO SPACING ISSUES
 
