@@ -132,9 +132,6 @@ var sort = "best_deal";
 var query = "";
 var shop = "spar";
 function GetDiscountsFromDB() {
-    var sort = "none";
-    var query = "";
-    var shop = "spar";
     var page = page_+"";
 
     if(query == '') {
