@@ -128,7 +128,7 @@ function AddUserToDatabase(id, email_) {
 // alphabetically
 
 var page_ = 1;
-var sort = "best_deal";
+var sort = "none";
 var query = "";
 var shop = "spar";
 function GetDiscountsFromDB() {
@@ -182,25 +182,49 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function openNav() {
-    byId("sidenav").style.width = "66vw";
-    var buttons = document.getElementsByClassName("navButton");
-    for(var i = 0; i < buttons.length; i++) {
-        buttons[i].style.marginLeft = "0";
-    }
-    // var menus = document.getElementsByClassName("menu");
-    // for(var i = 0; i < menus.length; i++) {
-    //     menus[i].style.filter = 'brightness(50%)';
-    // }
-}
-  
-function closeNav() {
-    byId("sidenav").style.width = "0";
-    var buttons = document.getElementsByClassName("navButton");
-    for(var i = 0; i < buttons.length; i++) {
-        buttons[i].style.marginLeft = "-100vw";
+// async function tutorialPulsate(elem, type) {
+//     console.log(byId(elem).style.fontSize)
+//     // byId(elem).style;
+// }
+
+var filterOpen = false;
+function openFilter() {
+    if(!filterOpen) {
+        byId('filterBar').style.top = '12vw';
+        byId('filtersIcon').style.color = 'gray';
+        filterOpen = true;
+    } else {
+        byId('filterBar').style.top = '0';
+        byId('filtersIcon').style.color = 'white';
+        filterOpen = false;
     }
 }
+
+var navOpen = false;
+function openCloseNav(close) {
+    if(!navOpen && !close) {
+        byId("sidenav").style.width = "66vw";
+        var buttons = document.getElementsByClassName("navButton");
+        for(var i = 0; i < buttons.length; i++) {
+            buttons[i].style.marginLeft = "0";
+        }
+        byId('hamburger').className = 'fa fa-arrow-left hamburger';
+        // var menus = document.getElementsByClassName("menu");
+        // for(var i = 0; i < menus.length; i++) {
+        //     menus[i].style.filter = 'brightness(50%)';
+        // }
+        navOpen = true;
+    } else {
+        byId("sidenav").style.width = "0";
+        var buttons = document.getElementsByClassName("navButton");
+        for(var i = 0; i < buttons.length; i++) {
+            buttons[i].style.marginLeft = "-100vw";
+        }
+        byId('hamburger').className = 'fa fa-bars hamburger';
+        navOpen = false;
+    }
+}
+
 
 function outsideClick(event, notelem) {
     var clickedOut = true, i, len = notelem.length;
@@ -217,7 +241,7 @@ function outsideClick(event, notelem) {
 var navMenu = [document.getElementById("sidenav"), document.getElementById("hamburger")];
 window.addEventListener('click', function(e) {
    if(outsideClick(e, navMenu)) {
-   	    closeNav();
+   	    openCloseNav(true);
    }
 });
 
@@ -258,11 +282,11 @@ switchMenu('listMenu');
 // image: DONE
 // description: DONE
 
-window.onscroll = function() {
-    if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
-        GetDiscountsFromDB();
-    }
-}
+// window.onscroll = function() {
+//     if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+//         GetDiscountsFromDB();
+//     }
+// }
 
 
 

@@ -13,7 +13,6 @@
 <body>
 
     <div id="sidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn fa fa-arrow-left navButton" onclick="closeNav()"></a>
         <a href="#" class="navButton"><i class="fa fa-user navIcon"></i></i> Brukerside</a>
         <a href="#" class="navButton"><i class="fa fa-comment navIcon"></i>Kontakt oss</a>
         <a href="#" class="navButton"><i class="fa fa-user navIcon"></i> Clients</a>
@@ -78,8 +77,38 @@
 
     </div>
 
+    <div id="filterBar" class="filterBar">
+
+        <div class="dropdown">
+            <button id="dropBtn" class="dropbtn">Velg butikk</button>
+            <div class="dropdown-content">
+            <a onclick="chooseStore('bunnpris')" href="#"><img class="dropdownImage" src="images/bunnpris.jpg"></a>
+            <a onclick="chooseStore('coop')" href="#"><img class="dropdownImage" src="images/coop.png"></a>
+            <a onclick="chooseStore('joker')" href="#"><img class="dropdownImage" src="images/joker.jpg"></a>
+            <a onclick="chooseStore('kiwi')" href="#"><img class="dropdownImage" src="images/kiwi.jpg"></a>
+            <a onclick="chooseStore('meny')" href="#"><img class="dropdownImage" src="images/meny.jpg"></a>
+            <a onclick="chooseStore('rema')" href="#"><img class="dropdownImage" src="images/rema.png"></a>
+            <a onclick="chooseStore('spar')" href="#"><img class="dropdownImage" src="images/spar.png"></a>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="bottomBar">
+        <i id="discountsIcon" class="fa fa-shopping-cart hamburger" onclick=""></i>
+        <i id="favoritesIcon" class="fa fa-heart hamburger" onclick=""></i>
+        <i id="userpageIcon" class="fa fa-user hamburger" onclick=""></i>
+    </div>
+
+    <div class="labelBar">
+        <ins id="discountsLabel" class="label">Tilbud</ins>
+        <ins id="favoritesLabel" class="label">Favoritter</ins>
+        <ins id="userpageLabel" class="label">Profil</ins>
+    </div>
+
     <div class="topBar">
-        <i id="hamburger" class="fa fa-bars hamburger" onclick="openNav()"></i>
+        <i id="hamburger" class="fa fa-bars hamburger" onclick="openCloseNav()"></i>
+        <i id="filtersIcon" class="fa fa-filter hamburger" onclick="openFilter()"></i>
 
         <input placeholder="SØK" type="text" id="searchBar"></input>
         
@@ -88,33 +117,6 @@
 
 
     <div class="menu" id="listMenu" style="display: none;">
-
-        <div class="dropdown">
-            <button class="dropbtn">Dropdown</button>
-            <div class="dropdown-content">
-            <a onclick="chooseStore('bunnpris')" href="#"><img class="dropdownImage" src="images/bunnpris.jpg"></a>
-            <a onclick="chooseStore('coop')" href="#"><img class="dropdownImage" src="images/coop.png"></a>
-            <a onclick="chooseStore('joker')" href="#"><img class="dropdownImage" src="images/joker.jpg"></a>
-            <a onclick="chooseStore('kiwi')" href="#"><img class="dropdownImage" src="images/kiwi.jpg"></a>
-            <a onclick="chooseStore('meny')" href="#"><img class="dropdownImage" src="images/meny.jpg"></a>
-            <a onclick="chooseStore('rema')" href="#"><img class="dropdownImage" src="images/rema.png"></a>
-            <a onclick="chooseStore('spar')" href="#"><img class="dropdownImage" src="images/spar.png"></a>
-            </div>
-        </div>
-
-        <div class="dropdown">
-            <button class="dropbtn">Dropdown</button>
-            <div class="dropdown-content">
-            <a onclick="chooseStore('bunnpris')" href="#"><img class="dropdownImage" src="images/bunnpris.jpg"></a>
-            <a onclick="chooseStore('coop')" href="#"><img class="dropdownImage" src="images/coop.png"></a>
-            <a onclick="chooseStore('joker')" href="#"><img class="dropdownImage" src="images/joker.jpg"></a>
-            <a onclick="chooseStore('kiwi')" href="#"><img class="dropdownImage" src="images/kiwi.jpg"></a>
-            <a onclick="chooseStore('meny')" href="#"><img class="dropdownImage" src="images/meny.jpg"></a>
-            <a onclick="chooseStore('rema')" href="#"><img class="dropdownImage" src="images/rema.png"></a>
-            <a onclick="chooseStore('spar')" href="#"><img class="dropdownImage" src="images/spar.png"></a>
-            </div>
-        </div>
-
         <section id="listAnchor"></section>
 
         <button onclick="GetDiscountsFromDB()">LAST MER</button>
