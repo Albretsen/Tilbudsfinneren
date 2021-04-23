@@ -266,10 +266,19 @@ function switchMenu(menuId) {
         menus[i].style.display = 'none';
     }
     byId(menuId).style.display = 'block';
+
+    if(menuId != 'signupMenu') {
+        document.body.className = 'noBackground';
+        if(menuId == 'loginMenu'){
+            console.log('test')
+            document.body.className = 'loginBackground';
+        }
+    }
 }
 
 
 switchMenu('listMenu');
+GetDiscountsFromDB();
 
 /*=====================================================================================
 									 DISCOUNT LIST
@@ -311,7 +320,7 @@ function createListItem(name, image, beforePrice, salePrice, combinedPrice, item
     var str = document.createElement('DIV');
     str.setAttribute("class", "listItem");
     str.innerHTML =
-        '<img class="listImage" src="' + image + '" /><img class="listStoreLogo" src="images/spar.png" /><br /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><br /><ins class="listBeforePrice" id="1-beforePrice">Før:' + beforePrice + '</ins>'
+        '<img class="listImage" src="' + image + '" /><img class="listStoreLogo" src="images/spar.png" /><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><hr /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listBeforePrice" id="1-beforePrice">Før:' + beforePrice + '</ins>'
 
     // <br /><ins class="listDesc" id="1-desc">' + description +'</ins> REMOVED THE DESCRIPTION DUE TO SPACING ISSUES
 
