@@ -182,6 +182,14 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function display(id) {
+    byId(id).style.display = 'block';
+}
+
+function hide(id) {
+    byId(id).style.display = 'none';
+}
+
 // async function tutorialPulsate(elem, type) {
 //     console.log(byId(elem).style.fontSize)
 //     // byId(elem).style;
@@ -262,13 +270,20 @@ function switchMenu(menuId) {
     for(var i = 0; i < menus.length; i++) {
         menus[i].style.display = 'none';
     }
-    byId(menuId).style.display = 'block';
+    display(menuId);
 
     if(menuId != 'signupMenu') {
         document.body.className = 'noBackground';
+        display('topBar');
+        display('filterBar');
+        display('bottomBar');
+        display('labelBar');
         if(menuId == 'loginMenu'){
-            console.log('test')
             document.body.className = 'loginBackground';
+            hide('topBar');
+            hide('filterBar');
+            hide('bottomBar');
+            hide('labelBar');
         }
     }
 }

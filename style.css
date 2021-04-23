@@ -280,30 +280,33 @@ button {
 }
 
 .topBar {
-	position:absolute;
-	left:0px;
-	top:0px;
-	width:100%;
-	height:12vw;
+  display: none;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 12vw;
   background-color: #62959C;
 }
 
 .bottomBar {
-	position:fixed;
-	left:0px;
-	bottom:5vw;
-	width:100%;
-	height:12vw;
-  padding-top:1vw;
+  display: none;
+	position: fixed;
+	left: 0px;
+	bottom: 5vw;
+	width: 100%;
+	height: 12vw;
+  padding-top: 1vw;
   background-color: #62959C;
 }
 
 .labelBar {
-	position:fixed;
-	left:0px;
-	bottom:0px;
-	width:100%;
-	height:6vw;
+  display: none;
+	position: fixed;
+	left: 0px;
+	bottom: 0px;
+	width: 100%;
+	height: 6vw;
   background-color: #62959C;
 }
 
@@ -339,7 +342,7 @@ button {
 
 
 .filterBar {
-  /* display: none; */
+  display: none;
 	position:absolute;
 	left:0px;
 	top:0vw;
