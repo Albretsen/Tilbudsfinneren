@@ -306,12 +306,35 @@ GetDiscountsFromDB();
 // image: DONE
 // description: DONE
 
-// window.onscroll = function() {
-//     if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
-//         GetDiscountsFromDB();
-//     }
-// }
+var loadMoreReady = true;
+window.onscroll = function() { // Automatically loads discounts
+    if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+        if(loadMoreReady) {
+            GetDiscountsFromDB();
+            setTimeout(loadMoreWait, 1000);
+            loadMoreReady = false;
+        }
+    }
+}
 
+function loadMoreWait() {
+    loadMoreReady = true;
+}
+
+var searchExtended = false;
+function search() {
+    // if(!searchExtended) {
+    //     searchExtended = true;
+    //     byId('searchBar').style.width = '60vw';
+    //     //display('searchBar');
+    // }
+
+    page_ = 1;
+    query = byId('searchBar').value;
+    console.log(query)
+    byId('listAnchor').innerHTML = ''; // Clears the list
+    GetDiscountsFromDB();
+}
 
 
 function getAllDiscounts(data) {

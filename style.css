@@ -45,9 +45,9 @@ ins {
 
 input[type=text] { /* Affects all text inputs */
   font-family:Montserrat, MontserratDownload, Monospace;
-  border: 0px solid #ccc;
   display: inline-block;
   box-sizing: border-box;
+  border: none;
 }
 
 input[type=text]:focus {
@@ -84,6 +84,7 @@ hr {
   font-size: 4vw;
   height: 12vw;
   width: 70%;
+  border: 0px solid #ccc;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   border-top-right-radius: 2vw;
@@ -100,9 +101,12 @@ button {
   height: 12vw;
   display: inline-block;
   border: 1px solid #ccc;
-  border-radius: 2vw;
   box-sizing: border-box;
   background-color: white;
+}
+
+#loginMenu button, #signupMenu button {
+  border-radius: 2vw;
 }
 
 .subtext {
@@ -263,20 +267,39 @@ button {
 }
 
 #searchBar {
-  position: absolute;
-  width: 16vw;
+  /* display: none; */
+  border-top-left-radius: 2vw;
+  border-bottom-left-radius: 2vw;
+  border-top-right-radius: 0vw;
+  border-bottom-right-radius: 0vw;
+  width: 60vw;
   font-size: 4vw;
   height: 10vw;
-  display: inline-block;
-  top: 1vw;
-  right: 2vw;
-  padding-left: 3vw;
-  border-radius: 2vw;
-  transition: width 0.4s ease-in-out;
+  padding: 2vw;
+  transition: width 0.4s;
 }
 
-#searchBar:focus {
-  width: 70vw;
+.topBar .input-container {
+  margin-top: -10vw;
+  margin-left: -1vw;
+  justify-content: flex-end;
+}
+
+.topBar .loginInput {
+  border-top-left-radius: 2vw;
+  border-bottom-left-radius: 2vw;
+  border-top-right-radius: 0vw;
+  border-bottom-right-radius: 0vw;
+}
+
+.topBar .icon {
+  border-top-left-radius: 0vw;
+  border-bottom-left-radius: 0vw;
+  border-top-right-radius: 2vw;
+  border-bottom-right-radius: 2vw;
+  min-height: 4vw;
+  height: 4vw;
+  font-size: 5vw;
 }
 
 .topBar {

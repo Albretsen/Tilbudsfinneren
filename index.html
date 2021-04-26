@@ -6,6 +6,28 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Tilbudsfinneren</title>
 
+    <script type="text/javascript" charset="utf-8">
+              
+        function onDeviceReady() {
+          document.removeEventListener('deviceready', onDeviceReady, false);
+          
+          // Set AdMobAds options:
+          admob.setOptions({
+            publisherId:          "ca-app-pub-3989514379219446/5803629860",  // Required
+            interstitialAdId:     "ca-app-pub-3989514379219446/3424060299",  // Optional
+            tappxIdiOS:           "/XXXXXXXXX/Pub-XXXX-iOS-IIII",            // Optional
+            tappxIdAndroid:       "/XXXXXXXXX/Pub-XXXX-Android-AAAA",        // Optional
+            tappxShare:           0                                          // Optional
+          });
+          
+          // Start showing banners (atomatic when autoShowBanner is set to true)
+          admob.createBannerView();
+        }
+        
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="style.css" rel="stylesheet" type="text/css">
 </head>
@@ -110,7 +132,16 @@
         <i id="hamburger" class="fa fa-bars hamburger" onclick="openCloseNav()"></i>
         <i id="filtersIcon" class="fa fa-filter hamburger" onclick="openFilter()"></i>
 
-        <input placeholder="SØK" type="text" id="searchBar"></input>
+        <!-- <button id="searchBtn"><i id="searchIcon" class="fa fa-search" onclick="search()"></i></button>
+        <input placeholder="SØK" type="text" id="searchBar"></input> -->
+
+        <span class="input-container">
+            <!-- oninput="search()" -->
+            <input placeholder="SØK" type="text" id="searchBar" class="searchBar" />
+            <i onclick="search()" class="fa fa-search icon"></i>
+            
+        </span>
+
         
     </div>
 
@@ -119,12 +150,13 @@
     <div class="menu" id="listMenu" style="display: none;">
         <section id="listAnchor"></section>
 
-        <button onclick="GetDiscountsFromDB()">LAST MER</button>
+        <!-- <button onclick="GetDiscountsFromDB()">LAST MER</button> -->
     </div>
 
     <div onclick="hidePopup()" id="popup"></div>
 
 </body>
+<script type="text/javascript" src="cordova.js"></script>
 <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
 
 <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
