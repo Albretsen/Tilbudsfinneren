@@ -411,7 +411,6 @@ button {
 .blink {
   animation:fade 3000ms infinite;
   -webkit-animation:fade 3000ms infinite;
-<<<<<<< HEAD:www/css/style.css
 }
 
 .favListImg {
@@ -432,6 +431,4 @@ button {
 
 .favListName {
   padding: 2vw;
-=======
->>>>>>> fc7c30080052a16d7f68ba514fdd2702991f0d04:style.css
 }
