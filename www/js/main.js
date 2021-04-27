@@ -1,4 +1,37 @@
 /*=====================================================================================
+								    CORDOVA
+=======================================================================================*/
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+// Wait for the deviceready event before using any of Cordova's device APIs.
+// See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
+document.addEventListener('deviceready', onDeviceReady, false);
+
+function onDeviceReady() {
+    // Cordova is now initialized. Have fun!
+
+    console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
+    document.getElementById('deviceready').classList.add('ready');
+}
+
+/*=====================================================================================
 								    FIREBASE SETUP
 =======================================================================================*/
 var firebaseConfig = {
@@ -174,12 +207,8 @@ function GetItemUsingGTINFromDB(gtin) {
 /*=====================================================================================
 									 MISCELLANEOUS
 =======================================================================================*/
-const byId = function(id) { // Shortcut
+const byId = function(id) { // Shorthand
 	return document.getElementById(id);
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function display(id) {
@@ -190,13 +219,17 @@ function hide(id) {
     byId(id).style.display = 'none';
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // async function tutorialPulsate(elem, type) {
 //     console.log(byId(elem).style.fontSize)
 //     // byId(elem).style;
 // }
 
 var filterOpen = false;
-function openFilter() {
+function openFilter() { // Opens or closes filter dropdown
     if(!filterOpen) {
         byId('filterBar').style.top = '12vw';
         byId('filtersIcon').style.color = 'gray';
@@ -272,7 +305,7 @@ function switchMenu(menuId) {
     }
     display(menuId);
 
-    if(menuId != 'signupMenu') {
+    if(menuId != 'signupMenu') { // Hide or show top and bottom bars
         document.body.className = 'noBackground';
         display('topBar');
         display('filterBar');
@@ -289,7 +322,10 @@ function switchMenu(menuId) {
 }
 
 
-switchMenu('listMenu');
+// Temporary, to get menu on load for quality of life
+//switchMenu('listMenu');
+switchMenu('favoritesMenu');
+//switchMenu('loginMenu');
 GetDiscountsFromDB();
 
 /*=====================================================================================
@@ -317,7 +353,7 @@ window.onscroll = function() { // Automatically loads discounts
     }
 }
 
-function loadMoreWait() {
+function loadMoreWait() { // Prevents several executions while loading new items
     loadMoreReady = true;
 }
 
@@ -335,7 +371,6 @@ function search() {
     byId('listAnchor').innerHTML = ''; // Clears the list
     GetDiscountsFromDB();
 }
-
 
 function getAllDiscounts(data) {
     var discounts = JSON.parse(data);
@@ -355,7 +390,7 @@ function createListItem(name, image, beforePrice, salePrice, combinedPrice, item
     var str = document.createElement('DIV');
     str.setAttribute("class", "listItem");
     str.innerHTML =
-        '<img class="listImage" src="' + image + '" /><img class="listStoreLogo" src="images/spar.png" /><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><hr /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listBeforePrice" id="1-beforePrice">Før:' + beforePrice + '</ins>'
+        '<img class="listImage" src="' + image + '" /><img class="listStoreLogo" src="img/spar.png" /><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><hr /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listBeforePrice" id="1-beforePrice">Før:' + beforePrice + '</ins>'
 
     // <br /><ins class="listDesc" id="1-desc">' + description +'</ins> REMOVED THE DESCRIPTION DUE TO SPACING ISSUES
 

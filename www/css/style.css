@@ -39,7 +39,7 @@ html {
     }
 }
 
-ins {
+ins { /* Removes underline from ins element */
   text-decoration: none;
 }
 
@@ -62,10 +62,10 @@ input[type=text]:focus {
   align-items: center;
 }
 
-hr {
+hr { /* Styles the line linebreak */
   border: 0;
-   height: 0.5vw;
-   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(153, 153, 153), rgba(0, 0, 0, 0));
+  height: 0.5vw;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(153, 153, 153), rgba(0, 0, 0, 0));
 }
 
 .icon {
@@ -142,9 +142,7 @@ button {
   bottom: 10vw;
 }
 
-
-
-/* Sidebar navigation style with animation */
+/* Sidebar navigation */
 .sidenav {
   height: 100%;
   width: 0;
@@ -189,17 +187,15 @@ button {
   margin-left: -100vw;
 }
 
-
 /* List item styles */
 .listItem {
   display: inline-block;
   width: 45.8%;
   height: 60vw;
-  /* border: 1px solid gray; */
-  /* border-radius: 8px; */
   background-color:white;
   color:black;
   padding:2vw;
+  margin-top: 6vw;
 }
 
 .listName {
@@ -213,7 +209,6 @@ button {
 .listNewPrice {
   font-size: 6vw;
 }
-
 
 .listImage {
   width: 100%;
@@ -230,7 +225,6 @@ button {
   width: 100%;
   height: 6vw;
 }
-
 
 #popup {
   height: 0;
@@ -267,7 +261,6 @@ button {
 }
 
 #searchBar {
-  /* display: none; */
   border-top-left-radius: 2vw;
   border-bottom-left-radius: 2vw;
   border-top-right-radius: 0vw;
@@ -361,9 +354,6 @@ button {
   margin-left: 23vw;
 }
 
-
-
-
 .filterBar {
   display: none;
 	position:absolute;
@@ -374,9 +364,6 @@ button {
   background-color: #62959C;
   transition: 0.3s;
 }
-
-
-
 
 .dropbtn {
   background-color: white;
@@ -409,7 +396,9 @@ button {
   display: block;
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+  background-color: #f1f1f1
+}
 
 .dropdown:hover .dropdown-content {
   display: block;
@@ -417,4 +406,29 @@ button {
 
 .dropdown:hover .dropbtn {
   background-color: gray;
+}
+
+.blink {
+  animation:fade 3000ms infinite;
+  -webkit-animation:fade 3000ms infinite;
+}
+
+.favListImg {
+  height: 28vw;
+  width: 32vw;
+  position: relative;
+  float: right;
+  padding: 1vw;
+}
+
+.favListItem {
+  color:black;
+  font-size: 8vw;
+  height: 30vw;
+  border-radius: 2vw;
+  box-shadow:inset 0px 0px 0px 3px rgba(0, 0, 0, 0.15);
+}
+
+.favListName {
+  padding: 2vw;
 }
