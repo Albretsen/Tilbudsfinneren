@@ -305,26 +305,22 @@ function switchMenu(menuId) {
     }
     display(menuId);
 
-    if(menuId != 'signupMenu') { // Hide or show top and bottom bars
+    if(menuId != 'signupMenu') { // Hide or show top bar
         document.body.className = 'noBackground';
         display('topBar');
         display('filterBar');
-        display('bottomBar');
-        display('labelBar');
         if(menuId == 'loginMenu'){
             document.body.className = 'loginBackground';
             hide('topBar');
             hide('filterBar');
-            hide('bottomBar');
-            hide('labelBar');
         }
     }
 }
 
 
 // Temporary, to get menu on load for quality of life
-//switchMenu('listMenu');
-switchMenu('favoritesMenu');
+switchMenu('listMenu');
+//switchMenu('favoritesMenu');
 //switchMenu('loginMenu');
 GetDiscountsFromDB();
 
@@ -376,7 +372,7 @@ function getAllDiscounts(data) {
     var discounts = JSON.parse(data);
 
     for(var i = 0; i < discounts.length; i++) {
-        createListItem(discounts[i].name, discounts[i].image, discounts[i].before_price, discounts[i].sale_price, discounts[i].combined_price, discounts[i].item_count, discounts[i].description)
+        //createListItem(discounts[i].name, discounts[i].image, discounts[i].before_price, discounts[i].sale_price, discounts[i].combined_price, discounts[i].item_count, discounts[i].description)
     }
     
 }

@@ -86,18 +86,6 @@
         
     </div>
 
-    <div class="bottomBar" id="bottomBar">
-        <i id="discountsIcon" class="fa fa-shopping-cart hamburger" onclick="switchMenu('listMenu')"></i>
-        <i id="favoritesIcon" class="fa fa-heart hamburger" onclick="switchMenu('favoritesMenu')"></i>
-        <i id="userpageIcon" class="fa fa-user hamburger" onclick=""></i>
-    </div>
-
-    <div class="labelBar" id="labelBar">
-        <ins id="discountsLabel" class="label">Tilbud</ins>
-        <ins id="favoritesLabel" class="label">Favoritter</ins>
-        <ins id="userpageLabel" class="label">Profil</ins>
-    </div>
-
     <div class="topBar" id="topBar">
         <i id="hamburger" class="fa fa-bars hamburger" onclick="openCloseNav()"></i>
         <i id="filtersIcon" class="fa fa-filter hamburger" onclick="openFilter()"></i>
@@ -113,6 +101,17 @@
 
     <div class="menu" id="listMenu" style="display: none;">
         <section id="listAnchor"></section>
+
+        <div class="listItem">
+            <img class="listImage" src="img/cola.jpg" />
+            <ins class="listName" id="1-name">Cola</ins>
+            <br />
+            <ins class="listDesc">1,5l flaske</ins>
+            <br />
+            <img class="listStoreLogo" src="img/spar.png" />
+            <ins class="listNewPrice" id="1-newPrice">kr 29,99</ins>
+            <ins class="listBeforePrice" id="1-beforePrice">før kr 89</ins>
+        </div>
 
         <!-- <button onclick="GetDiscountsFromDB()">LAST MER</button> -->
     </div>
