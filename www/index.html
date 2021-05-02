@@ -5,44 +5,51 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>Tilbudsfinneren</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body class="loginBackground">
 
     <div id="sidenav" class="sidenav">
-        <a href="#" class="navButton"><i class="fa fa-user navIcon"></i></i> Brukerside</a>
-        <a href="#" class="navButton"><i class="fa fa-comment navIcon"></i>Kontakt oss</a>
-        <a href="#" class="navButton"><i class="fa fa-user navIcon"></i> Clients</a>
-        <a href="#" class="navButton"><i class="fa fa-user navIcon"></i> Contact</a>
-    </div>
-
-    <div class="menu" id="loginMenu">
-        <h1 style="font-size:10vw;">Velkommen</h1>
-            <div class="imageCrop">
+        <i onclick="openCloseNav()" class="material-icons navExit">close</i>
+        <div class="navTop">
+            <div id="sideNavImg" class="imageCrop">
                 <img class="profilePic"
                     src="https://freepikpsd.com/wp-content/uploads/2019/10/default-profile-image-png-1-Transparent-Images.png" />
             </div>
+            <div id="userNameDisplay" class="userNameDisplay">Asgeir Bjellan Albertsen</div>
+        </div>
+        <span class="navButton" id="navList" onclick="switchMenu('listMenu')"><i class="material-icons-outlined navIcon">local_offer</i>Alle varer</span>
+        <span class="navButton" id="navFavorites" onclick="switchMenu('favoritesMenu')"><i class="material-icons-outlined navIcon">favorite_border</i>Favoritter</span>
+        <span class="navButton" id="navUser" onclick="switchMenu('userMenu')"><i class="material-icons-outlined navIcon">person</i>Brukerside</span>
+        <span class="navButton" id="navContact"><i class="material-icons-outlined navIcon">contact_support</i>Kontakt oss</span>
+        <span class="navButton" id="navSettings" onclick="switchMenu('settingsMenu')"><i class="material-icons-outlined navIcon">settings</i>Instillinger</span>
+    </div>
+
+    <div class="menu" id="loginMenu">
+        <h1 style="font-size:10vw; color: black">Logg inn</h1>
             <br />
             <div class="input-container">
-                <i class="fa fa-user icon"></i>
-                <input class="loginInput" id="inputEmail" type="text" placeholder="EMAIL" value="test@email.com"/>
+                <i class="material-icons-outlined icon">email</i>
+                <input class="loginInput" id="inputEmail" type="text" placeholder="Email" value="test@email.com"/>
             </div>
-
+            <hr />
             <div class="input-container">
-                <i class="fa fa-lock icon"></i>
-                <input class="loginInput" id="inputPassword" type="text" placeholder="PASSORD" value="123456"/>
+                <i class="material-icons-outlined icon">lock</i>
+                <input class="loginInput" id="inputPassword" type="text" placeholder="Passord" value="123456"/>
             </div>
-
+            <hr />
             <div>
-                <ins class="subtext" style="margin-left:45vw">Glemt passord</ins>
+                <ins class="subtext" style="margin-left:60vw">Glemt passord</ins>
             </div>
             <br />
 
-            <button onclick="SignInEmail()" id="loginBtn">LOGG INN</button>
+            <button class="redBtn" onclick="SignInEmail()" id="loginBtn">LOGG INN</button>
 
-            <button onclick="switchMenu('signupMenu')" id="">LAG BRUKER</button>
+            <button class="whiteBtn" id="">GÅ VIDERE UTEN BRUKER</button>
 
-            <p class="subtext" id="noLogin">Gå videre uten bruker</p>
+            <p class="subtext" id="noLogin" onclick="switchMenu('signupMenu')">Har du ikke bruker? <ins class="darkText"><b> Registrer her</b></ins></p>
     </div>
 
     <div class="menu" id="signupMenu" style="display: none;">
@@ -52,20 +59,19 @@
             <i class="fa fa-user icon"></i>
             <input placeholder="EMAIL" type="text" id="inputSignupEmail" class="loginInput" />
         </div>
-
+        <hr />
         <div class="input-container">
             <i class="fa fa-lock icon"></i>
             <input placeholder="PASSORD" type="text" id="inputSignupPassword" class="loginInput" />
         </div>
-
+        <hr />
         <div class="input-container">
             <i class="fa fa-lock icon"></i>
             <input placeholder="BEKREFT PASSORD" type="text" id="inputSignupPasswordConfirm" class="loginInput" />
         </div>
-        
-        <br />
+        <hr />
 
-        <button onclick="SignUpEmail()" id="loginBtn">GÅ VIDERE</button>
+        <button onclick="SignUpEmail()" class="redBtn" id="loginBtn">OPPRETT BRUKER</button>
 
     </div>
 
@@ -87,31 +93,100 @@
     </div>
 
     <div class="topBar" id="topBar">
-        <i id="hamburger" class="fa fa-bars hamburger" onclick="openCloseNav()"></i>
-        <i id="filtersIcon" class="fa fa-filter hamburger" onclick="openFilter()"></i>
+        <span id="pageHeader"></span>
+        <i id="hamburger" onclick="openCloseNav()" class="material-icons hamburger">menu</i>
 
-        <span class="input-container">
-            <!-- oninput="search()" -->
+        <!-- <span class="input-container">
             <input placeholder="SØK" type="text" id="searchBar" class="searchBar" />
             <i onclick="search()" class="fa fa-search icon"></i>
             
-        </span>
+        </span> -->
 
     </div>
 
-    <div class="menu" id="listMenu" style="display: none;">
-        <section id="listAnchor"></section>
+    <div id="searchBarContainer" class="searchBarContainer">
+        <i onclick="search()" class="material-icons searchIcon">search</i>
+        <input oninput="search()" placeholder="Varenavn..." type="text" id="searchBar" class="searchBar" />
+        <i onclick="openFilter()" class="material-icons-outlined filterIcon">filter_alt</i>
+    </div>
 
-        <div class="listItem">
-            <img class="listImage" src="img/cola.jpg" />
-            <ins class="listName" id="1-name">Cola</ins>
-            <br />
-            <ins class="listDesc">1,5l flaske</ins>
-            <br />
-            <img class="listStoreLogo" src="img/spar.png" />
-            <ins class="listNewPrice" id="1-newPrice">kr 29,99</ins>
-            <ins class="listBeforePrice" id="1-beforePrice">før kr 89</ins>
-        </div>
+    <div class="menu" id="listMenu" style="display: none;">
+            <div id="filterMenu" class="filterMenu">
+                <span class="filterItem filterHeader">Filter<i onclick="openFilter()" class="material-icons filterTextIcon filterExit">close</i></span>
+                 <div class="filterItem">
+                    <label for="visTilbud">Bare vis tilbud</label>
+                    <input class="filterTextIcon filterCheckbox" type="checkbox" name="visTilbud" value="">
+                 </div>
+                <div id="storeChoose" class="filterItem">
+                    <span onclick="openStoreChoose()">Velg butikker</span> 
+                    <i onclick="openStoreChoose()" id="storeDropDown" class="material-icons-outlined filterTextIcon">expand_more</i>
+                    <br />
+                    <br />
+                    <div class="filterSubDropdown">
+                        <label for="bunnpris">Bunnpris</label>
+                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="bunnpris" value="">
+                    </div>
+                    <div class="filterSubDropdown">
+                        <label for="coop">Coop</label>
+                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="coop" value="">
+                    </div>
+                    <div class="filterSubDropdown">
+                        <label for="joker">Joker</label>
+                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="joker" value="">
+                    </div>
+                    <div class="filterSubDropdown">
+                        <label for="kiwi">Kiwi</label>
+                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="kiwi" value="">
+                    </div>
+                    <div class="filterSubDropdown">
+                        <label for="meny">Meny</label>
+                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="meny" value="">
+                    </div>
+                    <div class="filterSubDropdown">
+                        <label for="rema">Rema 1000</label>
+                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="rema" value="">
+                    </div>
+                    <div class="filterSubDropdown">
+                        <label for="spar">Spar</label>
+                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="spar" value="">
+                    </div>
+
+                    <!-- <a onclick="chooseStore('bunnpris')" href="#"><img class="dropdownImage" src="img/bunnpris.jpg"></a>
+                    <a onclick="chooseStore('coop')" href="#"><img class="dropdownImage" src="img/coop.png"></a>
+                    <a onclick="chooseStore('joker')" href="#"><img class="dropdownImage" src="img/joker.jpg"></a>
+                    <a onclick="chooseStore('kiwi')" href="#"><img class="dropdownImage" src="img/kiwi.jpg"></a>
+                    <a onclick="chooseStore('meny')" href="#"><img class="dropdownImage" src="img/meny.jpg"></a>
+                    <a onclick="chooseStore('rema')" href="#"><img class="dropdownImage" src="img/rema.png"></a>
+                    <a onclick="chooseStore('spar')" href="#"><img class="dropdownImage" src="img/spar.png"></a> -->
+                </div>
+                <div class="filterItem">Sorter etter
+                    <i class="material-icons-outlined filterTextIcon">expand_more</i></div>
+            </div>
+
+        <section id="listAnchor">
+            <!-- <div class="listItem">
+                <img class="listImage" src="img/cola.jpg" />
+                <i class="material-icons-outlined favoriteIcon">star_border</i>
+                <ins class="listName" id="1-name">Cola</ins>
+                <br />
+                <ins class="listDesc">1,5l flaske</ins>
+                <br />
+                <img class="listStoreLogo" src="img/spar.png" />
+                <ins class="listNewPrice" id="1-newPrice">kr 29,99</ins>
+                <ins class="listBeforePrice" id="1-beforePrice">før kr 89</ins>
+            </div>
+            <div class="listItem">
+                <img class="listImage" src="img/cola.jpg" />
+                <i class="material-icons-outlined favoriteIcon">star_border</i>
+                <ins class="listName" id="1-name">Cola</ins>
+                <br />
+                <ins class="listDesc">1,5l flaske</ins>
+                <br />
+                <img class="listStoreLogo" src="img/spar.png" />
+                <ins class="listNewPrice" id="1-newPrice">kr 29,99</ins>
+                <ins class="listBeforePrice" id="1-beforePrice">før kr 89</ins>
+            </div> -->
+        </section>
 
         <!-- <button onclick="GetDiscountsFromDB()">LAST MER</button> -->
     </div>

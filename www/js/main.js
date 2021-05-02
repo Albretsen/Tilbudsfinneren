@@ -144,9 +144,9 @@ db.collection("week15").get().then((querySnapshot) => {
 =======================================================================================*/
 const db_base_url_with_http = "http://18.224.108.235"
 
-function AddUserToDatabase(id, email_) {
+function AddUserToDatabase(id, email) {
     const Http = new XMLHttpRequest();
-    const url = db_base_url_with_http + '/adduser/in_app_id/in_app@email.com';
+    const url = db_base_url_with_http + '/adduser/' + id + '/' + email;
     Http.open("GET", url);
     Http.send();
 
@@ -164,8 +164,13 @@ var page_ = 1;
 var sort = "none";
 var query = "";
 var shop = "spar";
+var isSearching = false;
 function GetDiscountsFromDB() {
-    var page = page_+"";
+    if(isSearching) {
+        return
+    }
+    isSearching = true;
+    var page = page_ + "";
 
     if(query == '') {
         query = 'GzMsXN9CuJp3pRSXubvfX';
@@ -174,14 +179,53 @@ function GetDiscountsFromDB() {
     const url = db_base_url_with_http + '/db/all/' + sort + '/' + query + '/' + shop + '/' + page;
     Http.open("GET", url);
     Http.send();
-
     Http.onreadystatechange = (e) => {
+        isSearching = false;
         if (Http.readyState == 4 && Http.status == 200) {
             getAllDiscounts(Http.responseText);
             page_++;
         }
     }
 }
+
+function GetFavoritesFromDB(id) {
+    const Http = new XMLHttpRequest();
+    const url = db_base_url_with_http + '/getfavorites/' + id;
+    console.log(url)
+    Http.open("GET", url);
+    Http.send();
+    Http.onreadystatechange = (e) => {
+        if (Http.readyState == 4 && Http.status == 200) {
+            console.log(Http.responseText);
+        }
+    }
+}
+
+function AddFavoriteToDB(id, ean) {
+    const Http = new XMLHttpRequest();
+    const url = db_base_url_with_http + '/addfavorite/'+ id + '/' + ean;
+    Http.open("GET", url);
+    Http.send();
+    Http.onreadystatechange = (e) => {
+        if (Http.readyState == 4 && Http.status == 200) {
+            console.log(Http.responseText);
+        }
+    }
+}
+
+function RemoveFavoriteFromDB(id, ean) {
+    const Http = new XMLHttpRequest();
+    const url = db_base_url_with_http + '/removefavorite/'+ id + '/' + ean;
+    Http.open("GET", url);
+    Http.send();
+    Http.onreadystatechange = (e) => {
+        if (Http.readyState == 4 && Http.status == 200) {
+            console.log(Http.responseText);
+        }
+    }
+}
+
+GetFavoritesFromDB('123')
 
 function SearchAllItems(query) {
     if(query == '') {
@@ -229,14 +273,36 @@ function sleep(ms) {
 // }
 
 var filterOpen = false;
-function openFilter() { // Opens or closes filter dropdown
+async function openFilter() { // Opens or closes filter dropdown
     if(!filterOpen) {
-        byId('filterBar').style.top = '12vw';
-        byId('filtersIcon').style.color = 'gray';
+        byId('filterMenu').style.top = '26vw';
+        
+        filterOpen = true;
+
+        await sleep(200);
+        byId('filterMenu').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, .5)';
+        byId('filterMenu').style.zIndex = 3;
+    } else {
+        byId('filterMenu').style.zIndex = 1;
+        byId('filterMenu').style.top = '-38vw';
+        byId('filterMenu').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, 0)';
+
+        byId('storeChoose').style.height = '8vw';
+        byId('storeDropDown').style.transform = 'rotate(0deg)';
+        filterOpen = false;
+
+    }
+}
+
+var storeChooseOpen = false;
+function openStoreChoose() { // Opens or closes store dropdown
+    if(!filterOpen) {
+        byId('storeChoose').style.height = '80vw';
+        byId('storeDropDown').style.transform = 'rotate(-180deg)';
         filterOpen = true;
     } else {
-        byId('filterBar').style.top = '0';
-        byId('filtersIcon').style.color = 'white';
+        byId('storeChoose').style.height = '8vw';
+        byId('storeDropDown').style.transform = 'rotate(0deg)';
         filterOpen = false;
     }
 }
@@ -244,24 +310,16 @@ function openFilter() { // Opens or closes filter dropdown
 var navOpen = false;
 function openCloseNav(close) {
     if(!navOpen && !close) {
-        byId("sidenav").style.width = "66vw";
-        var buttons = document.getElementsByClassName("navButton");
-        for(var i = 0; i < buttons.length; i++) {
-            buttons[i].style.marginLeft = "0";
-        }
-        byId('hamburger').className = 'fa fa-arrow-left hamburger';
+        byId("sidenav").style.left = "24vw";
+        byId('sidenav').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, .5)';
         // var menus = document.getElementsByClassName("menu");
         // for(var i = 0; i < menus.length; i++) {
         //     menus[i].style.filter = 'brightness(50%)';
         // }
         navOpen = true;
     } else {
-        byId("sidenav").style.width = "0";
-        var buttons = document.getElementsByClassName("navButton");
-        for(var i = 0; i < buttons.length; i++) {
-            buttons[i].style.marginLeft = "-100vw";
-        }
-        byId('hamburger').className = 'fa fa-bars hamburger';
+        byId("sidenav").style.left = "100vw";
+        byId('sidenav').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, 0)';
         navOpen = false;
     }
 }
@@ -305,6 +363,16 @@ function switchMenu(menuId) {
     }
     display(menuId);
 
+    if(menuId == 'listMenu') {
+        byId('pageHeader').innerHTML = 'Alle varer'
+        byId('navList').style.backgroundColor = "#FFEBEC";
+        display('searchBarContainer');
+    }
+    if(menuId == 'favoritesMenu') {
+        byId('pageHeader').innerHTML = 'Favoritter'
+        hide('searchBarContainer');
+    }
+
     if(menuId != 'signupMenu') { // Hide or show top bar
         document.body.className = 'noBackground';
         display('topBar');
@@ -312,6 +380,7 @@ function switchMenu(menuId) {
         if(menuId == 'loginMenu'){
             document.body.className = 'loginBackground';
             hide('topBar');
+            hide('searchBarContainer');
             hide('filterBar');
         }
     }
@@ -319,9 +388,9 @@ function switchMenu(menuId) {
 
 
 // Temporary, to get menu on load for quality of life
-switchMenu('listMenu');
+//switchMenu('listMenu');
 //switchMenu('favoritesMenu');
-//switchMenu('loginMenu');
+switchMenu('loginMenu');
 GetDiscountsFromDB();
 
 /*=====================================================================================
@@ -368,27 +437,66 @@ function search() {
     GetDiscountsFromDB();
 }
 
+var listItemExample =
+{
+	name:"Laksefilet",
+	description:"Naturell u/skinn 4x125g Lofoten",
+	sale:99.40,
+	sale_text:"kr 99,40",
+	price:142,
+	price_text:"før 142",
+	store:"spar",
+	saved_amount:43,
+	ean:"7023539700527",
+	image:"https://res.cloudinary.com/norgesgruppen/image/upload/f_auto,q_50,w_320,h_320,c_pad/v1610065297/Product/7023539700527.jpg"
+}
+
 function getAllDiscounts(data) {
     var discounts = JSON.parse(data);
 
     for(var i = 0; i < discounts.length; i++) {
-        //createListItem(discounts[i].name, discounts[i].image, discounts[i].before_price, discounts[i].sale_price, discounts[i].combined_price, discounts[i].item_count, discounts[i].description)
+        createListItem(discounts[i].name, discounts[i].image, discounts[i].price_text, discounts[i].sale_text, discounts[i].description)
     }
     
 }
 
 var itemsMade = 0;
-function createListItem(name, image, beforePrice, salePrice, combinedPrice, itemCount, description) { //
-    if (itemCount != '') {
-        salePrice = combinedPrice
+function createListItem(name, image, beforePrice, sale, description) {
+
+    var fontSize = 7;
+
+    if(name.length > 8) {
+        fontSize = 7;
+    }
+    if(name.length > 10) {
+        fontSize = 6;
+    }
+    if(name.length > 12) {
+        fontSize = 5;
+    }
+    if(name.length > 16) {
+        fontSize = 4;
+    }
+
+    if(description.length > 20) {
+        description = '';
     }
 
     var str = document.createElement('DIV');
     str.setAttribute("class", "listItem");
-    str.innerHTML =
-        '<img class="listImage" src="' + image + '" /><img class="listStoreLogo" src="img/spar.png" /><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><hr /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listBeforePrice" id="1-beforePrice">Før:' + beforePrice + '</ins>'
+    str.innerHTML =`
+    <img class="listImage" src="${image}"/>
+    <i class="material-icons favoriteIcon">star_border</i>
+    <ins class="listName" id="1-name" style="font-size:${fontSize}vw">${name}</ins>
+    <br />
+    <ins class="listDesc">${description}</ins>
+    <br />
+    <img class="listStoreLogo" src="img/spar.png" />
+    <ins class="listNewPrice" id="1-newPrice">${sale}</ins>
+    <ins class="listBeforePrice" id="1-beforePrice">${beforePrice}</ins>`
 
-    // <br /><ins class="listDesc" id="1-desc">' + description +'</ins> REMOVED THE DESCRIPTION DUE TO SPACING ISSUES
 
     byId("listAnchor").append(str);
 }
+
+//'<img class="listImage" src="' + image + '" /><img class="listStoreLogo" src="img/spar.png" /><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><hr /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listBeforePrice" id="1-beforePrice">Før:' + beforePrice + '</ins>'

@@ -3,19 +3,32 @@
   src:url("montserrat.woff");
 }
 
+@font-face {
+  font-family:Roboto;
+  src:url("roboto-v27-latin-300.woff") format('woff'),
+  url('roboto-v27-latin-300.ttf') format('truetype'); /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-family:RobotoRegular;
+  src:url("roboto-v27-latin-regular.woff") format('woff'),
+  url('roboto-v27-latin-regular.ttf') format('truetype'); /* Safari, Android, iOS */
+}
+
 body {
-  font-family:Montserrat, MontserratDownload, Monospace;
+  font-family:Roboto, Montserrat, MontserratDownload, Monospace;
   color: white; /* Dictates font color */
+  margin: 0;
 }
 
 .loginBackground {
   /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
   /*background-size: 400% 400%;*/
   animation: gradient 150s linear infinite; 
-  background-color: #ff7700;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cpolygon fill='%23cc0000' points='957 450 539 900 1396 900'/%3E%3Cpolygon fill='%23aa0000' points='957 450 872.9 900 1396 900'/%3E%3Cpolygon fill='%23d6002b' points='-60 900 398 662 816 900'/%3E%3Cpolygon fill='%23b10022' points='337 900 398 662 816 900'/%3E%3Cpolygon fill='%23d9004b' points='1203 546 1552 900 876 900'/%3E%3Cpolygon fill='%23b2003d' points='1203 546 1552 900 1162 900'/%3E%3Cpolygon fill='%23d3006c' points='641 695 886 900 367 900'/%3E%3Cpolygon fill='%23ac0057' points='587 900 641 695 886 900'/%3E%3Cpolygon fill='%23c4008c' points='1710 900 1401 632 1096 900'/%3E%3Cpolygon fill='%239e0071' points='1710 900 1401 632 1365 900'/%3E%3Cpolygon fill='%23aa00aa' points='1210 900 971 687 725 900'/%3E%3Cpolygon fill='%23880088' points='943 900 1210 900 971 687'/%3E%3C/svg%3E");
+  background-color: white;
+  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cpolygon fill='%23cc0000' points='957 450 539 900 1396 900'/%3E%3Cpolygon fill='%23aa0000' points='957 450 872.9 900 1396 900'/%3E%3Cpolygon fill='%23d6002b' points='-60 900 398 662 816 900'/%3E%3Cpolygon fill='%23b10022' points='337 900 398 662 816 900'/%3E%3Cpolygon fill='%23d9004b' points='1203 546 1552 900 876 900'/%3E%3Cpolygon fill='%23b2003d' points='1203 546 1552 900 1162 900'/%3E%3Cpolygon fill='%23d3006c' points='641 695 886 900 367 900'/%3E%3Cpolygon fill='%23ac0057' points='587 900 641 695 886 900'/%3E%3Cpolygon fill='%23c4008c' points='1710 900 1401 632 1096 900'/%3E%3Cpolygon fill='%239e0071' points='1710 900 1401 632 1365 900'/%3E%3Cpolygon fill='%23aa00aa' points='1210 900 971 687 725 900'/%3E%3Cpolygon fill='%23880088' points='943 900 1210 900 971 687'/%3E%3C/svg%3E"); */
   background-attachment: fixed;
-  background-size: cover;
+  /* background-size: cover; */
   /* background by SVGBackgrounds.com */
 }
 
@@ -25,6 +38,11 @@ body {
 
 html {
   height:100%;
+}
+
+.material-icons {
+  color:black;
+  font-size: 7vw;
 }
 
 @keyframes gradient {
@@ -47,7 +65,6 @@ input[type=text] { /* Affects all text inputs */
   font-family:Montserrat, MontserratDownload, Monospace;
   display: inline-block;
   box-sizing: border-box;
-  border: none;
 }
 
 input[type=text]:focus {
@@ -62,55 +79,74 @@ input[type=text]:focus {
   align-items: center;
 }
 
-hr { /* Styles the line linebreak */
+/* hr {
   border: 0;
   height: 0.5vw;
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(153, 153, 153), rgba(0, 0, 0, 0));
+} */
+
+#loginMenu hr, #signupMenu hr {
+  top: -3vw;
+  position: relative;
+  border: 0.1vw solid;
+  width: 88%;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, #333, #ccc);
 }
 
 .icon {
   font-size: 6vw;
   color: black;
-  padding: 3vw;
   min-width: 6vw;
   min-height: 6vw;
   background: white;
   text-align: center;
-  border-top-left-radius: 2vw;
-  border-bottom-left-radius: 2vw;
+  background-color: transparent;
 }
 
 .loginInput {
   font-size: 4vw;
   height: 12vw;
-  width: 70%;
+  width: 82%;
   border: 0px solid #ccc;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-right-radius: 2vw;
-  border-bottom-right-radius: 2vw;
-  padding: 2vw; 
+  padding: 2vw;
   display: inline-block;
+  background-color: transparent;
 }
 
 button {
-  font-family:Montserrat, MontserratDownload, Monospace;
+  font-family:RobotoRegular, Montserrat, MontserratDownload, Monospace;
   font-size: 4vw;
   color:black;
-  width: 40%;
+  width: 90%;
   height: 12vw;
   display: inline-block;
-  border: 1px solid #ccc;
   box-sizing: border-box;
+  border: 0 solid;
+}
+
+.redBtn {
+  background-color: #ED1B24;
+  color: white;
+}
+
+.whiteBtn {
   background-color: white;
+  border: 0.6vw solid #ED1B24;
 }
 
 #loginMenu button, #signupMenu button {
-  border-radius: 2vw;
+  border-radius: 1vw;
+  margin-top: 3vw;
 }
 
 .subtext {
   font-size: 4vw;
+  color: #C4C4C4;
+}
+
+.darkText {
+  color: black;
 }
 
 /* Circular image frame */
@@ -133,6 +169,7 @@ button {
 }
 
 #loginMenu, #signupMenu {
+  margin-top: 40vw;
   text-align: center;
   height: 100%;
 }
@@ -145,46 +182,52 @@ button {
 /* Sidebar navigation */
 .sidenav {
   height: 100%;
-  width: 0;
+  width: 76vw;
   position: fixed;
-  z-index: 1;
-  margin-top: 12vw;
-  left: 0;
-  background-color: #E3D0B9;
+  left: 100vw;
+  background-color: white;
   overflow-x: hidden;
   transition: 0.3s;
-  padding-top: 2vw;
-}
-
-.sidenav a {
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-  padding-top: 3.5vw;
-  padding-bottom: 3.5vw;
-  padding-left: 4vw;
-  border-bottom: 1px solid;
-}
-
-.sidenav {
-  position: absolute;
   top: 0;
-  font-size: 36px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-
-.navIcon {
-  margin-right: 2vw;
+  z-index: 3;
 }
 
 .navButton {
-  margin-left: -100vw;
+  text-decoration: none;
+  font-size: 6vw;
+  color: black;
+  display: block;
+  transition: 0.3s;
+  padding-top: 5vw;
+  padding-bottom: 5vw;
+  padding-left: 4vw;
+}
+
+.navIcon {
+  margin-right: 4vw;
+  top: 1vw;
+  position: relative;
+}
+
+.navTop {
+  padding-top: 6vw;
+  padding-bottom: 6vw;
+  background-color: #ED1B24;
+  text-align: center;
+  font-family: 'RobotoRegular';
+  font-size: 6vw;
+}
+
+.navExit {
+  left: 65vw;
+  position: absolute;
+  color: white;
+  font-size: 9vw;
+  margin-top: 2vw;
+}
+
+.userNameDisplay {
+  margin-top: 4vw;
 }
 
 /* List item styles */
@@ -194,45 +237,55 @@ button {
   background-color: white;
   color: black;
   margin-top: 6vw;
-  border-bottom: 0.1vw solid gray;
+  border-bottom: 0.1vw solid #C4C4C4;
 }
 
 .listImage {
-  width: 32vw;
-  height: 30vw;
-  margin-bottom: -6vw;
+  width: 26vw;
+  height: 24vw;
+  margin-bottom: 1vw;
   float: right;
 }
 
+.favoriteIcon {
+  position: absolute;
+  margin-left: 92vw;
+  margin-top: -6vw;
+  color: #ED1B24;
+}
+
 .listName {
+  font-family: RobotoRegular;
   font-size: 8vw;
+  margin-left: 2vw;
 }
 
 .listDesc {
   font-size: 4vw;
   color: gray;
+  margin-left: 2vw;
 }
 
 .listBeforePrice {
   position: absolute;
-  font-size: 4vw;
+  font-size: 5vw;
   border-radius: 2vw;
   padding: 1vw;
-  margin-left: 8vw;
-  margin-top: -5vw;
+  margin-left: 16vw;
+  margin-top: 0vw;
 }
 
 .listNewPrice {
   position: absolute;
-  font-size: 6vw;
+  font-size: 5vw;
   background-color: #ED1B24;
   border-radius: 2vw;
   padding: 1vw;
   padding-left: 2vw;
   padding-right: 2vw;
   color: white;
-  margin-left: 5vw;
-  margin-top: -15vw;
+  margin-left: 16vw;
+  margin-top: -10vw;
 }
 
 .listStoreLogo {
@@ -241,9 +294,9 @@ button {
   height: 6vw;
 }
 
-.dropdownImage {
-  width: 100%;
-  height: 6vw;
+#listAnchor {
+  position: absolute;
+  top: 26vw;
 }
 
 #popup {
@@ -269,27 +322,56 @@ button {
   color: gray;
 }
 
-.menu {
-  margin-top:15vw; /* Makes space for the top bar */
+#listMenu {
+  margin-top: 20vw; /* Makes space for the top bar */
 }
 
 /* Hamburger menu*/
 .hamburger {
-  font-size: 11vw;
-  padding-left: 2vw;
+  font-size: 12vw;
+  padding-right: 2vw;
   padding-top: 0.2vw;
+  float: right;
+  color: white;
+}
+
+.searchBarContainer {
+  border-bottom: 0.1vw solid #C4C4C4;
+  display: flex;
+  width: 100%;
+  margin-top: -8.2vw;
+  align-items: center;
+  z-index: 2;
+  position: fixed;
+  background: white;
+  height: 12vw;
+  padding-top: 2vw;
+}
+
+.searchIcon {
+  margin-bottom: 2vw;
+  margin-left: 2vw;
+  position: relative;
+  top: 2vw;
+}
+
+.filterIcon {
+  margin-bottom: 2vw;
+  color: black;
+}
+
+.filterTextIcon {
+  float: right;
+  right: 4vw;
+  position: relative;
 }
 
 #searchBar {
-  border-top-left-radius: 2vw;
-  border-bottom-left-radius: 2vw;
-  border-top-right-radius: 0vw;
-  border-bottom-right-radius: 0vw;
-  width: 60vw;
-  font-size: 4vw;
-  height: 10vw;
+  font-size: 5vw;
   padding: 2vw;
-  transition: width 0.4s;
+  width: 81%;
+  margin-bottom: 2vw;
+  border: 0;
 }
 
 .topBar .input-container {
@@ -317,12 +399,21 @@ button {
 
 .topBar {
   display: none;
-	position: absolute;
+	position: fixed;
 	left: 0px;
 	top: 0px;
 	width: 100%;
 	height: 12vw;
-  background-color: #62959C;
+  background-color: #ED1B24;
+  z-index: 2;
+}
+
+#pageHeader {
+  margin-left: 2vw;
+  font-size: 6vw;
+  font-family: 'RobotoRegular';
+  top: 2vw;
+  position: relative;
 }
 
 .filterBar {
@@ -402,4 +493,59 @@ button {
 
 .favListName {
   padding: 2vw;
+}
+
+.filterMenu {
+  position: absolute;
+  right: 0;
+  width: 75vw;
+  height: auto;
+  z-index: 1;
+  background-color: white;
+  top: -38vw;
+  transition: top 0.3s, box-shadow 0.3s;
+}
+
+.filterItem {
+  text-decoration: none;
+  font-size: 5vw;
+  display: block;
+  height: 8vw;
+  transition: 0.3s;
+  padding-top: 3.5vw;
+  padding-bottom: 3.5vw;
+  padding-left: 4vw;
+  border-bottom: 1px solid #C4C4C4;
+  color: black;
+  overflow: hidden;
+}
+
+.filterHeader {
+  background-color: #ED1B24;
+  color:white;
+}
+
+.material-icons-outlined {
+  font-size: 6vw;
+}
+
+.filterCheckbox {
+  margin-right: -0.1vw;
+  width: 6vw;
+  height: 4vw;
+}
+
+.filterExit {
+  color: white;
+  left: -3.7vw;
+}
+
+.dropdownImage {
+  width: 80%;
+  height: 10vw;
+  margin-top: 4vw;
+}
+
+.filterSubDropdown {
+  margin-bottom: 4vw
 }
