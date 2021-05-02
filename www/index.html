@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<body class="loginBackground">
+<body onload="load()" class="loginBackground">
 
     <div id="sidenav" class="sidenav">
         <i onclick="openCloseNav()" class="material-icons navExit">close</i>
@@ -27,7 +27,7 @@
         <span class="navButton" id="navSettings" onclick="switchMenu('settingsMenu')"><i class="material-icons-outlined navIcon">settings</i>Instillinger</span>
     </div>
 
-    <div class="menu" id="loginMenu">
+    <div class="menu" id="loginMenu" style="display: none;">
         <h1 style="font-size:10vw; color: black">Logg inn</h1>
             <br />
             <div class="input-container">
@@ -104,7 +104,7 @@
 
     </div>
 
-    <div id="searchBarContainer" class="searchBarContainer">
+    <div id="searchBarContainer" class="searchBarContainer" style="display: none;">
         <i onclick="search()" class="material-icons searchIcon">search</i>
         <input oninput="search()" placeholder="Varenavn..." type="text" id="searchBar" class="searchBar" />
         <i onclick="openFilter()" class="material-icons-outlined filterIcon">filter_alt</i>
@@ -162,6 +162,7 @@
                 <div class="filterItem">Sorter etter
                     <i class="material-icons-outlined filterTextIcon">expand_more</i></div>
             </div>
+            <br />
 
         <section id="listAnchor">
             <!-- <div class="listItem">
@@ -188,17 +189,15 @@
             </div> -->
         </section>
 
-        <!-- <button onclick="GetDiscountsFromDB()">LAST MER</button> -->
+        <div class="loader" id="listLoader"></div>
+
     </div>
 
     <div class="menu" id="favoritesMenu" style="display: none;">
-        <section id="listAnchor"></section>
+        <br />
+        <section id="favoritesAnchor"></section>
 
-        <div class="favListItem">
-            <img class="favListImg" src="img/cola.jpg"/>
-            <ins class="favListName">Cola</ins>
-        </div>
-
+        <div class="loader" id="favoritesLoader"></div>
     </div>
 
     <div onclick="hidePopup()" id="popup"></div>

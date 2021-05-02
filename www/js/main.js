@@ -166,6 +166,7 @@ var query = "";
 var shop = "spar";
 var isSearching = false;
 function GetDiscountsFromDB() {
+    loading(true, 'listLoader');
     if(isSearching) {
         return
     }
@@ -180,6 +181,7 @@ function GetDiscountsFromDB() {
     Http.open("GET", url);
     Http.send();
     Http.onreadystatechange = (e) => {
+        loading(false, 'listLoader');
         isSearching = false;
         if (Http.readyState == 4 && Http.status == 200) {
             getAllDiscounts(Http.responseText);
@@ -188,14 +190,26 @@ function GetDiscountsFromDB() {
     }
 }
 
+
+function loading(bool, which) {
+    if(bool) {
+        display(which);
+    }else {
+        hide(which);
+    }
+}
+
 function GetFavoritesFromDB(id) {
+    loading(true, 'favoritesLoader');
     const Http = new XMLHttpRequest();
     const url = db_base_url_with_http + '/getfavorites/' + id;
     console.log(url)
     Http.open("GET", url);
     Http.send();
     Http.onreadystatechange = (e) => {
+        loading(false, 'favoritesLoader');
         if (Http.readyState == 4 && Http.status == 200) {
+            getAllFavorites(Http.responseText)
             console.log(Http.responseText);
         }
     }
@@ -224,8 +238,6 @@ function RemoveFavoriteFromDB(id, ean) {
         }
     }
 }
-
-GetFavoritesFromDB('123')
 
 function SearchAllItems(query) {
     if(query == '') {
@@ -363,14 +375,19 @@ function switchMenu(menuId) {
     }
     display(menuId);
 
+    byId('navList').style.backgroundColor = "white";
+    byId('navFavorites').style.backgroundColor = "white";
     if(menuId == 'listMenu') {
         byId('pageHeader').innerHTML = 'Alle varer'
         byId('navList').style.backgroundColor = "#FFEBEC";
         display('searchBarContainer');
+        byId('searchBar').placeholder = 'Varenavn...'
     }
     if(menuId == 'favoritesMenu') {
         byId('pageHeader').innerHTML = 'Favoritter'
-        hide('searchBarContainer');
+        byId('navFavorites').style.backgroundColor = "#FFEBEC";
+        display('searchBarContainer');
+        byId('searchBar').placeholder = 'Søk blandt dine favoritter...'
     }
 
     if(menuId != 'signupMenu') { // Hide or show top bar
@@ -388,10 +405,11 @@ function switchMenu(menuId) {
 
 
 // Temporary, to get menu on load for quality of life
-//switchMenu('listMenu');
+switchMenu('listMenu');
 //switchMenu('favoritesMenu');
-switchMenu('loginMenu');
+//switchMenu('loginMenu');
 GetDiscountsFromDB();
+//GetFavoritesFromDB('123');
 
 /*=====================================================================================
 									 DISCOUNT LIST
@@ -437,31 +455,86 @@ function search() {
     GetDiscountsFromDB();
 }
 
-var listItemExample =
-{
-	name:"Laksefilet",
-	description:"Naturell u/skinn 4x125g Lofoten",
-	sale:99.40,
-	sale_text:"kr 99,40",
-	price:142,
-	price_text:"før 142",
-	store:"spar",
-	saved_amount:43,
-	ean:"7023539700527",
-	image:"https://res.cloudinary.com/norgesgruppen/image/upload/f_auto,q_50,w_320,h_320,c_pad/v1610065297/Product/7023539700527.jpg"
-}
-
 function getAllDiscounts(data) {
     var discounts = JSON.parse(data);
 
     for(var i = 0; i < discounts.length; i++) {
-        createListItem(discounts[i].name, discounts[i].image, discounts[i].price_text, discounts[i].sale_text, discounts[i].description)
+        createListItem(discounts[i].name, discounts[i].image, discounts[i].price_text, discounts[i].sale_text, discounts[i].description, discounts[i].ean, 'listAnchor')
     }
     
 }
 
+function getAllFavorites(data) {
+    var favorites = JSON.parse(data);
+
+    for(var i = 0; i < favorites.length; i++) {
+        createListItem(favorites[i].name, favorites[i].image, favorites[i].price_text, favorites[i].sale_text, favorites[i].description, favorites[i].ean, 'favoritesAnchor')
+    }
+    
+}
+
+var favoritesObjects = [];
+var favorites = [];
+function addFavorite(ean) {
+
+    var remove = false;
+    for(var i = 0; i < favorites.length; i++) {
+        if(favorites[i] == ean) {
+            console.log(favorites)
+
+            favorites.splice(i, 1);
+            byId(ean).innerHTML = 'star_border';
+            remove = true;
+
+            console.log(favorites)
+        }
+    }
+
+    if(!remove) {
+        favorites[favorites.length] = ean;
+        byId(ean).innerHTML = 'star';
+
+        console.log(favorites)
+    }
+
+    saveFavorites();
+}
+
+var productsInList = [];
+var madeEans = [];
 var itemsMade = 0;
-function createListItem(name, image, beforePrice, sale, description) {
+function createListItem(name, image, beforePrice, sale, description, ean, location) {
+
+    var alreadyMade = false;
+    for(var i = 0; i < madeEans.length; i++) {
+        if(madeEans[i] == ean) {
+            alreadyMade = true;
+        }
+    }
+    
+    if(!alreadyMade) {
+        var object = { 
+            name: name,
+            image: image,
+            beforePrice: beforePrice,
+            sale: sale,
+            description: description,
+            ean: ean
+        }
+        madeEans[itemsMade] = ean;
+        productsInList[itemsMade] = object;
+        itemsMade++;
+    }
+
+    var star = 'star_border';
+    for(var i = 0; i < favorites.length; i++) {
+        if(favorites[i] == ean) {
+            star = 'star';
+        }
+    }
+    
+
+    console.log(productsInList)
 
     var fontSize = 7;
 
@@ -482,21 +555,42 @@ function createListItem(name, image, beforePrice, sale, description) {
         description = '';
     }
 
+    var displaySale = '';
+    if(location == 'favoritesAnchor') {
+        displaySale = 'style="display:none;"'
+    }
+
     var str = document.createElement('DIV');
     str.setAttribute("class", "listItem");
     str.innerHTML =`
     <img class="listImage" src="${image}"/>
-    <i class="material-icons favoriteIcon">star_border</i>
+    <i class="material-icons favoriteIcon" id="${ean}" onclick="addFavorite(${ean})">${star}</i>
     <ins class="listName" id="1-name" style="font-size:${fontSize}vw">${name}</ins>
     <br />
     <ins class="listDesc">${description}</ins>
     <br />
     <img class="listStoreLogo" src="img/spar.png" />
-    <ins class="listNewPrice" id="1-newPrice">${sale}</ins>
+    <ins class="listNewPrice" id="1-newPrice" ${displaySale}>${sale}</ins>
     <ins class="listBeforePrice" id="1-beforePrice">${beforePrice}</ins>`
 
 
-    byId("listAnchor").append(str);
+    byId(location).append(str);
 }
 
-//'<img class="listImage" src="' + image + '" /><img class="listStoreLogo" src="img/spar.png" /><br /><ins class="listNewPrice" id="1-newPrice">' + salePrice + '</ins><hr /><ins class="listName" id="1-name">' + name + '</ins><br /><ins class="listBeforePrice" id="1-beforePrice">Før:' + beforePrice + '</ins>'
+
+/*=====================================================================================
+									 STORAGE
+=======================================================================================*/
+var storage = window.localStorage;
+var saveArray = [];
+
+function saveFavorites() {
+    storage.setItem('favoritesSave', JSON.stringify(favorites));
+    storage.setItem('savedProducts', JSON.stringify())
+}
+
+function load() {
+    if(storage.length != 0) {
+        favorites = JSON.parse(storage.getItem('favoritesSave'));
+    }
+}
