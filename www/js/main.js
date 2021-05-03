@@ -299,23 +299,39 @@ async function openFilter() { // Opens or closes filter dropdown
         byId('filterMenu').style.top = '-38vw';
         byId('filterMenu').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, 0)';
 
-        byId('storeChoose').style.height = '8vw';
+        byId('storeChoose').style.height = '6vw';
         byId('storeDropDown').style.transform = 'rotate(0deg)';
         filterOpen = false;
 
+        byId('sortBy').style.height = '6vw';
+        byId('sortDropDown').style.transform = 'rotate(0deg)';
+        sortByOpen = false;
     }
 }
 
 var storeChooseOpen = false;
 function openStoreChoose() { // Opens or closes store dropdown
-    if(!filterOpen) {
-        byId('storeChoose').style.height = '80vw';
+    if(!storeChooseOpen) {
+        byId('storeChoose').style.height = '68vw';
         byId('storeDropDown').style.transform = 'rotate(-180deg)';
-        filterOpen = true;
+        storeChooseOpen = true;
     } else {
-        byId('storeChoose').style.height = '8vw';
+        byId('storeChoose').style.height = '6vw';
         byId('storeDropDown').style.transform = 'rotate(0deg)';
-        filterOpen = false;
+        storeChooseOpen = false;
+    }
+}
+
+var sortByOpen = false;
+function openSortBy() { // Opens or closes sort by dropdown
+    if(!sortByOpen) {
+        byId('sortBy').style.height = '40vw';
+        byId('sortDropDown').style.transform = 'rotate(-180deg)';
+        sortByOpen = true;
+    } else {
+        byId('sortBy').style.height = '6vw';
+        byId('sortDropDown').style.transform = 'rotate(0deg)';
+        sortByOpen = false;
     }
 }
 
@@ -375,6 +391,8 @@ function switchMenu(menuId) {
     }
     display(menuId);
 
+    openCloseNav(true);
+
     byId('navList').style.backgroundColor = "white";
     byId('navFavorites').style.backgroundColor = "white";
     if(menuId == 'listMenu') {
@@ -393,12 +411,10 @@ function switchMenu(menuId) {
     if(menuId != 'signupMenu') { // Hide or show top bar
         document.body.className = 'noBackground';
         display('topBar');
-        display('filterBar');
         if(menuId == 'loginMenu'){
             document.body.className = 'loginBackground';
             hide('topBar');
             hide('searchBarContainer');
-            hide('filterBar');
         }
     }
 }

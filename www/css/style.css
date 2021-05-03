@@ -416,17 +416,6 @@ button {
   position: relative;
 }
 
-.filterBar {
-  display: none;
-	position:absolute;
-	left:0px;
-	top:0vw;
-	width:100%;
-	height:12vw;
-  background-color: #62959C;
-  transition: 0.3s;
-}
-
 .dropbtn {
   background-color: white;
   color: black;
@@ -510,7 +499,7 @@ button {
   text-decoration: none;
   font-size: 4vw;
   display: block;
-  height: 8vw;
+  height: 6vw;
   transition: 0.3s;
   padding-top: 3.5vw;
   padding-bottom: 3.5vw;

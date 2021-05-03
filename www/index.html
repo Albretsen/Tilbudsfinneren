@@ -75,23 +75,6 @@
 
     </div>
 
-    <div id="filterBar" class="filterBar">
-
-        <div class="dropdown">
-            <button id="dropBtn" class="dropbtn">Velg butikk</button>
-            <div class="dropdown-content">
-            <a onclick="chooseStore('bunnpris')" href="#"><img class="dropdownImage" src="img/bunnpris.jpg"></a>
-            <a onclick="chooseStore('coop')" href="#"><img class="dropdownImage" src="img/coop.png"></a>
-            <a onclick="chooseStore('joker')" href="#"><img class="dropdownImage" src="img/joker.jpg"></a>
-            <a onclick="chooseStore('kiwi')" href="#"><img class="dropdownImage" src="img/kiwi.jpg"></a>
-            <a onclick="chooseStore('meny')" href="#"><img class="dropdownImage" src="img/meny.jpg"></a>
-            <a onclick="chooseStore('rema')" href="#"><img class="dropdownImage" src="img/rema.png"></a>
-            <a onclick="chooseStore('spar')" href="#"><img class="dropdownImage" src="img/spar.png"></a>
-            </div>
-        </div>
-        
-    </div>
-
     <div class="topBar" id="topBar">
         <span id="pageHeader"></span>
         <i id="hamburger" onclick="openCloseNav()" class="material-icons hamburger">menu</i>
@@ -110,58 +93,68 @@
         <i onclick="openFilter()" class="material-icons-outlined filterIcon">filter_alt</i>
     </div>
 
-    <div class="menu" id="listMenu" style="display: none;">
-            <div id="filterMenu" class="filterMenu">
-                <span class="filterItem filterHeader">Filter<i onclick="openFilter()" class="material-icons filterTextIcon filterExit">close</i></span>
-                 <div class="filterItem">
-                    <label for="visTilbud">Bare vis tilbud</label>
-                    <input class="filterTextIcon filterCheckbox" type="checkbox" name="visTilbud" value="">
-                 </div>
-                <div id="storeChoose" class="filterItem">
-                    <span onclick="openStoreChoose()">Velg butikker</span> 
-                    <i onclick="openStoreChoose()" id="storeDropDown" class="material-icons-outlined filterTextIcon">expand_more</i>
-                    <br />
-                    <br />
-                    <div class="filterSubDropdown">
-                        <label for="bunnpris">Bunnpris</label>
-                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="bunnpris" value="">
-                    </div>
-                    <div class="filterSubDropdown">
-                        <label for="coop">Coop</label>
-                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="coop" value="">
-                    </div>
-                    <div class="filterSubDropdown">
-                        <label for="joker">Joker</label>
-                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="joker" value="">
-                    </div>
-                    <div class="filterSubDropdown">
-                        <label for="kiwi">Kiwi</label>
-                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="kiwi" value="">
-                    </div>
-                    <div class="filterSubDropdown">
-                        <label for="meny">Meny</label>
-                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="meny" value="">
-                    </div>
-                    <div class="filterSubDropdown">
-                        <label for="rema">Rema 1000</label>
-                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="rema" value="">
-                    </div>
-                    <div class="filterSubDropdown">
-                        <label for="spar">Spar</label>
-                        <input class="filterTextIcon filterCheckbox" type="checkbox" name="spar" value="">
-                    </div>
-
-                    <!-- <a onclick="chooseStore('bunnpris')" href="#"><img class="dropdownImage" src="img/bunnpris.jpg"></a>
-                    <a onclick="chooseStore('coop')" href="#"><img class="dropdownImage" src="img/coop.png"></a>
-                    <a onclick="chooseStore('joker')" href="#"><img class="dropdownImage" src="img/joker.jpg"></a>
-                    <a onclick="chooseStore('kiwi')" href="#"><img class="dropdownImage" src="img/kiwi.jpg"></a>
-                    <a onclick="chooseStore('meny')" href="#"><img class="dropdownImage" src="img/meny.jpg"></a>
-                    <a onclick="chooseStore('rema')" href="#"><img class="dropdownImage" src="img/rema.png"></a>
-                    <a onclick="chooseStore('spar')" href="#"><img class="dropdownImage" src="img/spar.png"></a> -->
-                </div>
-                <div class="filterItem">Sorter etter
-                    <i class="material-icons-outlined filterTextIcon">expand_more</i></div>
+    <div id="filterMenu" class="filterMenu">
+        <span class="filterItem filterHeader">Filter<i onclick="openFilter()" class="material-icons filterTextIcon filterExit">close</i></span>
+         <div class="filterItem">
+            <label for="visTilbud">Bare vis tilbud</label>
+            <input class="filterTextIcon filterCheckbox" type="checkbox" name="visTilbud" value="">
+         </div>
+        <div id="storeChoose" class="filterItem">
+            <span onclick="openStoreChoose()">Velg butikker</span> 
+            <i onclick="openStoreChoose()" id="storeDropDown" class="material-icons-outlined filterTextIcon">expand_more</i>
+            <br />
+            <br />
+            <div class="filterSubDropdown">
+                <label for="bunnpris">Bunnpris</label>
+                <input class="filterTextIcon filterCheckbox" type="checkbox" name="bunnpris" value="">
             </div>
+            <div class="filterSubDropdown">
+                <label for="coop">Coop</label>
+                <input class="filterTextIcon filterCheckbox" type="checkbox" name="coop" value="">
+            </div>
+            <div class="filterSubDropdown">
+                <label for="joker">Joker</label>
+                <input class="filterTextIcon filterCheckbox" type="checkbox" name="joker" value="">
+            </div>
+            <div class="filterSubDropdown">
+                <label for="kiwi">Kiwi</label>
+                <input class="filterTextIcon filterCheckbox" type="checkbox" name="kiwi" value="">
+            </div>
+            <div class="filterSubDropdown">
+                <label for="meny">Meny</label>
+                <input class="filterTextIcon filterCheckbox" type="checkbox" name="meny" value="">
+            </div>
+            <div class="filterSubDropdown">
+                <label for="rema">Rema 1000</label>
+                <input class="filterTextIcon filterCheckbox" type="checkbox" name="rema" value="">
+            </div>
+            <div class="filterSubDropdown">
+                <label for="spar">Spar</label>
+                <input class="filterTextIcon filterCheckbox" type="checkbox" name="spar" value="">
+            </div>
+
+            <!-- <a onclick="chooseStore('bunnpris')" href="#"><img class="dropdownImage" src="img/bunnpris.jpg"></a>
+            <a onclick="chooseStore('coop')" href="#"><img class="dropdownImage" src="img/coop.png"></a>
+            <a onclick="chooseStore('joker')" href="#"><img class="dropdownImage" src="img/joker.jpg"></a>
+            <a onclick="chooseStore('kiwi')" href="#"><img class="dropdownImage" src="img/kiwi.jpg"></a>
+            <a onclick="chooseStore('meny')" href="#"><img class="dropdownImage" src="img/meny.jpg"></a>
+            <a onclick="chooseStore('rema')" href="#"><img class="dropdownImage" src="img/rema.png"></a>
+            <a onclick="chooseStore('spar')" href="#"><img class="dropdownImage" src="img/spar.png"></a> -->
+        </div>
+        <div id="sortBy" class="filterItem">
+            <span onclick="openSortBy()">Sorter etter</span>
+            <i onclick="openSortBy()" id="sortDropDown" class="material-icons-outlined filterTextIcon">expand_more</i>
+            <br />
+            <br />
+            <div class="filterSubDropdown">
+                <label for="AÅ">A-Å</label>
+                <input class="filterTextIcon filterCheckbox" type="radio" name="AÅ" value="">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="menu" id="listMenu" style="display: none;">
             <br />
 
         <section id="listAnchor">
