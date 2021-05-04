@@ -15,6 +15,30 @@
   url('roboto-v27-latin-regular.ttf') format('truetype'); /* Safari, Android, iOS */
 }
 
+@media only screen and (max-width: 600px) { /* Phone-specific resolution */
+  #loginMenu, #signupMenu {
+    margin-top: 50vw;
+  }
+
+  .listItem {
+    margin-top: 8vw;
+  }
+}
+
+@media only screen /* Tablet-specific resolution */
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+    #loginMenu, #signupMenu {
+      margin-top: 15vw;
+    }
+
+    .listItem {
+      margin-top: 10vw;
+    }
+}
+
 body {
   font-family:Roboto, Montserrat, MontserratDownload, Monospace;
   color: white; /* Dictates font color */
@@ -79,19 +103,18 @@ input[type=text]:focus {
   align-items: center;
 }
 
-/* hr {
-  border: 0;
-  height: 0.5vw;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(153, 153, 153), rgba(0, 0, 0, 0));
-} */
-
-#loginMenu hr, #signupMenu hr {
+#loginMenu hr, #signupMenu hr, #settingsMenu hr {
   top: -3vw;
   position: relative;
   border: 0.1vw solid;
   width: 88%;
   background: #333;
   background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+#loginMenu, #signupMenu {
+  text-align: center;
+  height: 100%;
 }
 
 .icon {
@@ -168,10 +191,8 @@ button {
   margin-right: auto;
 }
 
-#loginMenu, #signupMenu {
-  margin-top: 40vw;
-  text-align: center;
-  height: 100%;
+.menu {
+  display: none;
 }
 
 .bottomAlign {
@@ -236,7 +257,6 @@ button {
   width: 100%;
   background-color: white;
   color: black;
-  margin-top: 6vw;
   border-bottom: 0.1vw solid #C4C4C4;
 }
 
@@ -541,7 +561,7 @@ button {
 
 .loader {
   display: none;
-  border: 3vw solid #f3f3f3;
+  border: 3vw solid #E0E0E0;
   border-radius: 50%;
   border-top: 3vw solid #ED1B24;
   width: 10vw;
@@ -551,6 +571,14 @@ button {
   margin-left: auto;
   margin-right: auto;
   margin-top: 10vw;
+}
+
+.loginHeader {
+  text-align: left;
+  font-size: 10vw;
+  color: black;
+  margin-left: 6vw;
+  font-family: 'RobotoRegular';
 }
 
 @keyframes spin {

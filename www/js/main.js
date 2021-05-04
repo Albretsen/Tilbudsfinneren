@@ -79,14 +79,15 @@ function SignUpEmail() {
 }
 
 function SignInEmail() {
+    loading(true, 'loginLoader');
     var email = byId('inputEmail').value;
     var password = byId('inputPassword').value;
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
             // Signed in
+            loading(false, 'loginLoader');
             var user = userCredential.user;
             switchMenu('listMenu');
-            console.log('success');
             // ...
         })
         .catch((error) => {
@@ -154,7 +155,6 @@ function AddUserToDatabase(id, email) {
         console.log(Http.responseText)
     }
 }
-
 
 // Sort names:
 // best_deal
@@ -261,7 +261,7 @@ function GetItemUsingGTINFromDB(gtin) {
 }
 
 /*=====================================================================================
-									 MISCELLANEOUS
+									    UI
 =======================================================================================*/
 const byId = function(id) { // Shorthand
 	return document.getElementById(id);
@@ -279,16 +279,11 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// async function tutorialPulsate(elem, type) {
-//     console.log(byId(elem).style.fontSize)
-//     // byId(elem).style;
-// }
-
 var filterOpen = false;
 async function openFilter() { // Opens or closes filter dropdown
     if(!filterOpen) {
         byId('filterMenu').style.top = '26vw';
-        
+        document.getElementsByTagName("BODY")[0].style.overflow = 'hidden'; // Disables scrolling while open
         filterOpen = true;
 
         await sleep(200);
@@ -299,11 +294,13 @@ async function openFilter() { // Opens or closes filter dropdown
         byId('filterMenu').style.top = '-38vw';
         byId('filterMenu').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, 0)';
 
-        byId('storeChoose').style.height = '6vw';
-        byId('storeDropDown').style.transform = 'rotate(0deg)';
+        document.getElementsByTagName("BODY")[0].style.overflow = 'visible';
         filterOpen = false;
 
-        byId('sortBy').style.height = '6vw';
+        // Close the dropdowns
+        byId('storeChoose').style.height = '6vw';
+        byId('storeDropDown').style.transform = 'rotate(0deg)';
+        byId('sortBy').style.height = '6vw'; 
         byId('sortDropDown').style.transform = 'rotate(0deg)';
         sortByOpen = false;
     }
@@ -339,14 +336,10 @@ var navOpen = false;
 function openCloseNav(close) {
     if(!navOpen && !close) {
         byId("sidenav").style.left = "24vw";
-        byId('sidenav').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, .5)';
-        // var menus = document.getElementsByClassName("menu");
-        // for(var i = 0; i < menus.length; i++) {
-        //     menus[i].style.filter = 'brightness(50%)';
-        // }
+        byId('sidenav').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, .5)'; // Shadow on everything but the menu
         navOpen = true;
     } else {
-        byId("sidenav").style.left = "100vw";
+        byId("sidenav").style.left = "102vw"; // Moves the nav menu off screen
         byId('sidenav').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, 0)';
         navOpen = false;
     }
@@ -365,11 +358,16 @@ function outsideClick(event, notelem) {
 }
 
 // Close side menu if clicked outside it, using function above
-var navMenu = [document.getElementById("sidenav"), document.getElementById("hamburger")];
+var navMenu = [byId('sidenav'), byId('hamburger')];
+var filterMenu = [byId('filterMenu'), byId('filterIcon')]
 window.addEventListener('click', function(e) {
-   if(outsideClick(e, navMenu)) {
+    if(outsideClick(e, navMenu)) {
    	    openCloseNav(true);
-   }
+    }
+    if(outsideClick(e, filterMenu)) {
+        filterOpen = true;
+        openFilter();
+    }
 });
 
 async function popup(text) {
@@ -384,6 +382,7 @@ function hidePopup() { // Separate function because it can be called from more t
     byId("popup").style.height = "0";
 }
 
+var menuOpen = 'loginMenu';
 function switchMenu(menuId) {
     var menus = document.getElementsByClassName("menu");
     for(var i = 0; i < menus.length; i++) {
@@ -399,15 +398,24 @@ function switchMenu(menuId) {
         byId('pageHeader').innerHTML = 'Alle varer'
         byId('navList').style.backgroundColor = "#FFEBEC";
         display('searchBarContainer');
+        display('filterMenu');
         byId('searchBar').placeholder = 'Varenavn...'
+
+        if(menuOpen == 'loginMenu' || listOpen == 'signupMenu') {
+            GetDiscountsFromDB();
+        }
+        menuOpen = 'listMenu';
     }
     if(menuId == 'favoritesMenu') {
         byId('pageHeader').innerHTML = 'Favoritter'
         byId('navFavorites').style.backgroundColor = "#FFEBEC";
         display('searchBarContainer');
+        display('filterMenu');
         byId('searchBar').placeholder = 'Søk blandt dine favoritter...'
-    }
+        menuOpen = 'favoritesMenu';
 
+        createFavoritesList();
+    }
     if(menuId != 'signupMenu') { // Hide or show top bar
         document.body.className = 'noBackground';
         display('topBar');
@@ -415,36 +423,25 @@ function switchMenu(menuId) {
             document.body.className = 'loginBackground';
             hide('topBar');
             hide('searchBarContainer');
+            hide('filterMenu');
         }
     }
 }
 
 
 // Temporary, to get menu on load for quality of life
-switchMenu('listMenu');
+//switchMenu('listMenu');
 //switchMenu('favoritesMenu');
-//switchMenu('loginMenu');
-GetDiscountsFromDB();
+switchMenu('loginMenu');
 //GetFavoritesFromDB('123');
 
 /*=====================================================================================
 									 DISCOUNT LIST
 =======================================================================================*/
-
-// REFERENCE
-// name: DONE
-// before_price: DONE
-// sale_price: DONE
-// item_count: DONE
-// combined_price: DONE
-// gtin:
-// image: DONE
-// description: DONE
-
 var loadMoreReady = true;
 window.onscroll = function() { // Automatically loads discounts
     if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
-        if(loadMoreReady) {
+        if(loadMoreReady && menuOpen == 'listMenu') {
             GetDiscountsFromDB();
             setTimeout(loadMoreWait, 1000);
             loadMoreReady = false;
@@ -458,12 +455,6 @@ function loadMoreWait() { // Prevents several executions while loading new items
 
 var searchExtended = false;
 function search() {
-    // if(!searchExtended) {
-    //     searchExtended = true;
-    //     byId('searchBar').style.width = '60vw';
-    //     //display('searchBar');
-    // }
-
     page_ = 1;
     query = byId('searchBar').value;
     console.log(query)
@@ -489,31 +480,48 @@ function getAllFavorites(data) {
     
 }
 
+function createFavoritesList() {
+    byId('favoritesAnchor').innerHTML = ''; // Clears the list
+    for(var i = 0; i < favoritesObjects.length; i++) {
+        createListItem(favoritesObjects[i].name, favoritesObjects[i].image, favoritesObjects[i].price_text, favoritesObjects[i].sale_text, favoritesObjects[i].description, favoritesObjects[i].ean, 'favoritesAnchor')
+    }
+}
+
 var favoritesObjects = [];
 var favorites = [];
 function addFavorite(ean) {
-
     var remove = false;
-    for(var i = 0; i < favorites.length; i++) {
+    for(var i = 0; i < favorites.length; i++) { // Remove
         if(favorites[i] == ean) {
-            console.log(favorites)
+            favorites.splice(i, 1); // Removes the ean from favorites
+            favoritesObjects.splice(i, 1); // Removes the saved product from the locally saved array
 
-            favorites.splice(i, 1);
-            byId(ean).innerHTML = 'star_border';
+            for(var i = 0; i < productsInList.length; i++) {
+                if(productsInList[i].ean == ean && productsInList[i].location == 'listMenu') {
+                    byId(`${ean}-listMenu`).innerHTML = 'star_border'; // Changes appearance of star
+                }
+            }
+            if(menuOpen == 'favoritesMenu') {
+                byId(`${ean}-favoritesMenu`).innerHTML = 'star_border';
+            }
+            
             remove = true;
-
-            console.log(favorites)
         }
     }
 
-    if(!remove) {
-        favorites[favorites.length] = ean;
-        byId(ean).innerHTML = 'star';
+    if(!remove) { // Add 
+        favorites[favorites.length] = ean; // Adds the ean to favorites
+        byId(`${ean}-${menuOpen}`).innerHTML = 'star';
+        byId(`${ean}-${menuOpen}`).innerHTML = 'star';
 
-        console.log(favorites)
+        for(var i = 0; i < productsInList.length; i++) {
+            if(productsInList[i].ean == ean) {
+                favoritesObjects[favoritesObjects.length] = productsInList[i];
+            }
+        }
     }
 
-    saveFavorites();
+    saveFavorites(); // Saves locally
 }
 
 var productsInList = [];
@@ -532,10 +540,11 @@ function createListItem(name, image, beforePrice, sale, description, ean, locati
         var object = { 
             name: name,
             image: image,
-            beforePrice: beforePrice,
-            sale: sale,
+            price_text: beforePrice,
+            sale_text: sale,
             description: description,
-            ean: ean
+            ean: ean,
+            location: menuOpen
         }
         madeEans[itemsMade] = ean;
         productsInList[itemsMade] = object;
@@ -550,11 +559,8 @@ function createListItem(name, image, beforePrice, sale, description, ean, locati
     }
     
 
-    console.log(productsInList)
-
     var fontSize = 7;
-
-    if(name.length > 8) {
+    if(name.length > 8) { // Scales text size based on length
         fontSize = 7;
     }
     if(name.length > 10) {
@@ -567,12 +573,12 @@ function createListItem(name, image, beforePrice, sale, description, ean, locati
         fontSize = 4;
     }
 
-    if(description.length > 20) {
-        description = '';
+    if(description.length > 20) { // Don't display description of too long
+        description = ''; // Would ideally be replaced by something better
     }
 
     var displaySale = '';
-    if(location == 'favoritesAnchor') {
+    if(location == 'favoritesAnchor') { // Hides sale price in favorites menu
         displaySale = 'style="display:none;"'
     }
 
@@ -580,7 +586,7 @@ function createListItem(name, image, beforePrice, sale, description, ean, locati
     str.setAttribute("class", "listItem");
     str.innerHTML =`
     <img class="listImage" src="${image}"/>
-    <i class="material-icons favoriteIcon" id="${ean}" onclick="addFavorite(${ean})">${star}</i>
+    <i class="material-icons favoriteIcon" id="${ean}-${menuOpen}" onclick="addFavorite(${ean})">${star}</i>
     <ins class="listName" id="1-name" style="font-size:${fontSize}vw">${name}</ins>
     <br />
     <ins class="listDesc">${description}</ins>
@@ -589,24 +595,30 @@ function createListItem(name, image, beforePrice, sale, description, ean, locati
     <ins class="listNewPrice" id="1-newPrice" ${displaySale}>${sale}</ins>
     <ins class="listBeforePrice" id="1-beforePrice">${beforePrice}</ins>`
 
-
     byId(location).append(str);
 }
 
-
 /*=====================================================================================
-									 STORAGE
+									 SAVING
 =======================================================================================*/
 var storage = window.localStorage;
-var saveArray = [];
 
 function saveFavorites() {
     storage.setItem('favoritesSave', JSON.stringify(favorites));
-    storage.setItem('savedProducts', JSON.stringify())
+    storage.setItem('savedFavoritesObjects', JSON.stringify(favoritesObjects))
 }
 
-function load() {
-    if(storage.length != 0) {
+function clearStorage() {
+    storage.clear();
+    location.reload();
+}
+
+function load() { // Assigns all saved variables
+    if(storage.length != 0) { // If storage empty, don't run. Prevents the function on the first load
         favorites = JSON.parse(storage.getItem('favoritesSave'));
+        favoritesObjects = JSON.parse(storage.getItem('savedFavoritesObjects'));
+
+        switchMenu('listMenu'); // Skips the login menu if not first time using app
+        GetDiscountsFromDB(); // Loads list
     }
 }

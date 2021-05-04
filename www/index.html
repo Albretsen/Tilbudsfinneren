@@ -22,14 +22,13 @@
         </div>
         <span class="navButton" id="navList" onclick="switchMenu('listMenu')"><i class="material-icons-outlined navIcon">local_offer</i>Alle varer</span>
         <span class="navButton" id="navFavorites" onclick="switchMenu('favoritesMenu')"><i class="material-icons-outlined navIcon">favorite_border</i>Favoritter</span>
-        <span class="navButton" id="navUser" onclick="switchMenu('userMenu')"><i class="material-icons-outlined navIcon">person</i>Brukerside</span>
         <span class="navButton" id="navContact"><i class="material-icons-outlined navIcon">contact_support</i>Kontakt oss</span>
         <span class="navButton" id="navSettings" onclick="switchMenu('settingsMenu')"><i class="material-icons-outlined navIcon">settings</i>Instillinger</span>
+        <span class="navButton" id="navSettings" onclick="clearStorage()"><i class="material-icons-outlined navIcon">developer_mode</i>Clear storage (dev only)</span>
     </div>
 
-    <div class="menu" id="loginMenu" style="display: none;">
-        <h1 style="font-size:10vw; color: black">Logg inn</h1>
-            <br />
+    <div class="menu" id="loginMenu">
+        <h1 class="loginHeader">Logg inn</h1>
             <div class="input-container">
                 <i class="material-icons-outlined icon">email</i>
                 <input class="loginInput" id="inputEmail" type="text" placeholder="Email" value="test@email.com"/>
@@ -50,9 +49,11 @@
             <button class="whiteBtn" id="">GÅ VIDERE UTEN BRUKER</button>
 
             <p class="subtext" id="noLogin" onclick="switchMenu('signupMenu')">Har du ikke bruker? <ins class="darkText"><b> Registrer her</b></ins></p>
+
+            <div class="loader" id="loginLoader" style="margin-top: 0vw"></div>
     </div>
 
-    <div class="menu" id="signupMenu" style="display: none;">
+    <div class="menu" id="signupMenu">
         <h1 style="font-size:10vw;">Lag ny bruker</h1>
 
         <div class="input-container">
@@ -78,19 +79,12 @@
     <div class="topBar" id="topBar">
         <span id="pageHeader"></span>
         <i id="hamburger" onclick="openCloseNav()" class="material-icons hamburger">menu</i>
-
-        <!-- <span class="input-container">
-            <input placeholder="SØK" type="text" id="searchBar" class="searchBar" />
-            <i onclick="search()" class="fa fa-search icon"></i>
-            
-        </span> -->
-
     </div>
 
     <div id="searchBarContainer" class="searchBarContainer" style="display: none;">
         <i onclick="search()" class="material-icons searchIcon">search</i>
         <input oninput="search()" placeholder="Varenavn..." type="text" id="searchBar" class="searchBar" />
-        <i onclick="openFilter()" class="material-icons-outlined filterIcon">filter_alt</i>
+        <i onclick="openFilter()" id="filterIcon" class="material-icons-outlined filterIcon">filter_alt</i>
     </div>
 
     <div id="filterMenu" class="filterMenu">
@@ -154,49 +148,26 @@
 
     </div>
 
-    <div class="menu" id="listMenu" style="display: none;">
-            <br />
-
-        <section id="listAnchor">
-            <!-- <div class="listItem">
-                <img class="listImage" src="img/cola.jpg" />
-                <i class="material-icons-outlined favoriteIcon">star_border</i>
-                <ins class="listName" id="1-name">Cola</ins>
-                <br />
-                <ins class="listDesc">1,5l flaske</ins>
-                <br />
-                <img class="listStoreLogo" src="img/spar.png" />
-                <ins class="listNewPrice" id="1-newPrice">kr 29,99</ins>
-                <ins class="listBeforePrice" id="1-beforePrice">før kr 89</ins>
-            </div>
-            <div class="listItem">
-                <img class="listImage" src="img/cola.jpg" />
-                <i class="material-icons-outlined favoriteIcon">star_border</i>
-                <ins class="listName" id="1-name">Cola</ins>
-                <br />
-                <ins class="listDesc">1,5l flaske</ins>
-                <br />
-                <img class="listStoreLogo" src="img/spar.png" />
-                <ins class="listNewPrice" id="1-newPrice">kr 29,99</ins>
-                <ins class="listBeforePrice" id="1-beforePrice">før kr 89</ins>
-            </div> -->
-        </section>
-
+    <div class="menu" id="listMenu">
+        <br />
+        <section id="listAnchor"></section>
         <div class="loader" id="listLoader"></div>
-
     </div>
 
-    <div class="menu" id="favoritesMenu" style="display: none;">
+    <div class="menu" id="favoritesMenu">
         <br />
         <section id="favoritesAnchor"></section>
-
         <div class="loader" id="favoritesLoader"></div>
+    </div>
+
+    <div class="menu" id="settingsMenu">
+        <label for="notifications">Notifikasjoner</label>
+        <input class="filterTextIcon filterCheckbox" type="radio" name="AÅ" value="">
     </div>
 
     <div onclick="hidePopup()" id="popup"></div>
 
     <script src="cordova.js"></script>
-
 </body>
 <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
 
