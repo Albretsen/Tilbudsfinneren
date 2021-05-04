@@ -164,25 +164,22 @@ var page_ = 1;
 var sort = "none";
 var query = "";
 var shop = "spar";
-var isSearching = false;
+var Http = new XMLHttpRequest();
 function GetDiscountsFromDB() {
     loading(true, 'listLoader');
-    if(isSearching) {
-        return
-    }
-    isSearching = true;
     var page = page_ + "";
 
     if(query == '') {
         query = 'GzMsXN9CuJp3pRSXubvfX';
     }
-    const Http = new XMLHttpRequest();
+
+    Http.abort();
+    Http = new XMLHttpRequest();
     const url = db_base_url_with_http + '/db/all/' + sort + '/' + query + '/' + shop + '/' + page;
     Http.open("GET", url);
     Http.send();
     Http.onreadystatechange = (e) => {
         loading(false, 'listLoader');
-        isSearching = false;
         if (Http.readyState == 4 && Http.status == 200) {
             getAllDiscounts(Http.responseText);
             page_++;
@@ -458,15 +455,21 @@ function search() {
     page_ = 1;
     query = byId('searchBar').value;
     console.log(query)
-    byId('listAnchor').innerHTML = ''; // Clears the list
-    GetDiscountsFromDB();
+
+    if (menuOpen == "listMenu") {
+        byId('listAnchor').innerHTML = ''; // Clears the list
+        GetDiscountsFromDB();
+    } else {
+        byId('favoritesAnchor').innerHTML = ''; // Clears the list
+        createFavoritesList();
+    }
 }
 
 function getAllDiscounts(data) {
     var discounts = JSON.parse(data);
 
     for(var i = 0; i < discounts.length; i++) {
-        createListItem(discounts[i].name, discounts[i].image, discounts[i].price_text, discounts[i].sale_text, discounts[i].description, discounts[i].ean, 'listAnchor')
+        createListItem(discounts[i].name, discounts[i].image, discounts[i].price_text, discounts[i].sale_text, discounts[i].description, discounts[i].ean, discounts[i].saved_amount, discounts[i].store,'listAnchor')
     }
     
 }
@@ -482,8 +485,11 @@ function getAllFavorites(data) {
 
 function createFavoritesList() {
     byId('favoritesAnchor').innerHTML = ''; // Clears the list
-    for(var i = 0; i < favoritesObjects.length; i++) {
-        createListItem(favoritesObjects[i].name, favoritesObjects[i].image, favoritesObjects[i].price_text, favoritesObjects[i].sale_text, favoritesObjects[i].description, favoritesObjects[i].ean, 'favoritesAnchor')
+    let favoritesObjectsCopy = favoritesObjects;
+    favoritesObjectsCopy = sortProducts(favoritesObjects, byId('searchBar').value, "best_deal", "spar");
+    
+    for(var i = 0; i < favoritesObjectsCopy.length; i++) {
+        createListItem(favoritesObjectsCopy[i].name, favoritesObjectsCopy[i].image, favoritesObjectsCopy[i].price_text, favoritesObjectsCopy[i].sale_text, favoritesObjectsCopy[i].description, favoritesObjectsCopy[i].ean, favoritesObjectsCopy[i].saved_amount, favoritesObjectsCopy[i].store, 'favoritesAnchor')
     }
 }
 
@@ -527,7 +533,7 @@ function addFavorite(ean) {
 var productsInList = [];
 var madeEans = [];
 var itemsMade = 0;
-function createListItem(name, image, beforePrice, sale, description, ean, location) {
+function createListItem(name, image, beforePrice, sale, description, ean, saved_amount, store, location) {
 
     var alreadyMade = false;
     for(var i = 0; i < madeEans.length; i++) {
@@ -542,8 +548,10 @@ function createListItem(name, image, beforePrice, sale, description, ean, locati
             image: image,
             price_text: beforePrice,
             sale_text: sale,
+            store: store,
             description: description,
             ean: ean,
+            saved_amount: saved_amount,
             location: menuOpen
         }
         madeEans[itemsMade] = ean;
@@ -620,7 +628,6 @@ function load() { // Assigns all saved variables
 
         switchMenu('listMenu'); // Skips the login menu if not first time using app
         //GetDiscountsFromDB(); // Loads list
-        sortProducts(favoritesObjects, "", "", "");
     }
 }
 
@@ -630,8 +637,80 @@ query - search term
 store - which store (e.g "spar")
 sort - the order of the products (e.g "none", "best_deal", "alphabetically")
 */
-function sortProducts(favorites, query, store, sort) {
+function sortProducts(favorites, query, sort, store) {
+    if (query == "" || query == undefined) {
+        query == "";
+    }
+    let result = []
+
     favorites.forEach(product => {
-        
+        let allowQuery = false;
+        let allowStore = false;
+        let name = product.name;
+        name = name.split(/,| /);
+        for (let i = 0; i < name.length; i++) {
+            if (searchCustomizedEpicness(query, name[i])) {
+                allowQuery = true;
+                break;
+            }
+        }
+        if (query == "") { allowStore = true; }
+        allowStore = product.store == store;
+        if (allowQuery && allowStore) {
+            result.push(product);
+        }
+        /*if (searchCustomizedEpicness(query, product.name)) {
+            result.push(product);
+        }*/
     });
+
+    for (let i = 0; i < result.length; i++) {
+        console.log(result[i].saved_amount);
+    }
+
+    result.sort(function(a, b) {
+        return a[1] - b[1];
+    });
+
+    switch (sort) {
+        case "best_deal":
+            result.sort(function(a, b) {
+                if (a.saved_amount == null) { a.saved_amount = 0; }
+                if (b.saved_amount == null) { b.saved_amount = 0; }
+                return b.saved_amount - a.saved_amount;
+            });
+            break;
+        case "alphabetically":
+            break;
+    }
+
+    for (let i = 0; i < result.length; i++) {
+        console.log(result[i].saved_amount);
+    }
+
+    return result;
 }
+
+function searchCustomizedEpicness(query, s) {
+    query = query.toString().toLowerCase();
+    s = s.toString().toLowerCase();
+    let matchesStart = true; 
+    for (let i = 0; i < query.length; i++) {
+        if (query[i] != s[i]) {
+            matchesStart = false;
+            break;
+        }
+    }
+
+    /*if (!matchesStart) {
+        let index = s.search(query);
+        if ((s[index-1] == " " || s[index-1] == "-") && (s[query.length + index] == " " || s[query.length + index] == "-" || s[query.length + index] == undefined)) {
+            matchesStart = true;
+        }
+    }*/
+    return matchesStart;
+}
+
+// Only search after no changes for X seconds
+
+// Delete list items when changes have been detected
