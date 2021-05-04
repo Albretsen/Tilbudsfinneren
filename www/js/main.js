@@ -664,10 +664,6 @@ function sortProducts(favorites, query, sort, store) {
         }*/
     });
 
-    for (let i = 0; i < result.length; i++) {
-        console.log(result[i].saved_amount);
-    }
-
     result.sort(function(a, b) {
         return a[1] - b[1];
     });
@@ -682,10 +678,6 @@ function sortProducts(favorites, query, sort, store) {
             break;
         case "alphabetically":
             break;
-    }
-
-    for (let i = 0; i < result.length; i++) {
-        console.log(result[i].saved_amount);
     }
 
     return result;
