@@ -619,6 +619,19 @@ function load() { // Assigns all saved variables
         favoritesObjects = JSON.parse(storage.getItem('savedFavoritesObjects'));
 
         switchMenu('listMenu'); // Skips the login menu if not first time using app
-        GetDiscountsFromDB(); // Loads list
+        //GetDiscountsFromDB(); // Loads list
+        sortProducts(favoritesObjects, "", "", "");
     }
+}
+
+/*
+This function takes in a list of favorites and returns them sorted.
+query - search term
+store - which store (e.g "spar")
+sort - the order of the products (e.g "none", "best_deal", "alphabetically")
+*/
+function sortProducts(favorites, query, store, sort) {
+    favorites.forEach(product => {
+        
+    });
 }
