@@ -401,7 +401,7 @@ function switchMenu(menuId) {
         display('filterMenu');
         byId('searchBar').placeholder = 'Varenavn...'
 
-        if(menuOpen == 'loginMenu' || listOpen == 'signupMenu') {
+        if(menuOpen == 'loginMenu' || menuOpen == 'signupMenu') {
             GetDiscountsFromDB();
         }
         menuOpen = 'listMenu';
