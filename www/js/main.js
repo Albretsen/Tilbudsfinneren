@@ -329,6 +329,17 @@ function openSortBy() { // Opens or closes sort by dropdown
     }
 }
 
+function chooseSort(which) {
+    console.log(which)
+    sort = which;
+    if(menuOpen == 'listMenu') {
+        GetDiscountsFromDB();
+    }
+    if(menuOpen == 'favoritesMenu') {
+        createFavoritesList();
+    }
+}
+
 var navOpen = false;
 function openCloseNav(close) {
     if(!navOpen && !close) {

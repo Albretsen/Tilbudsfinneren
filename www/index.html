@@ -140,9 +140,13 @@
             <i onclick="openSortBy()" id="sortDropDown" class="material-icons-outlined filterTextIcon">expand_more</i>
             <br />
             <br />
-            <div class="filterSubDropdown">
+            <div class="filterSubDropdown" onclick="chooseSort('alphabetically')">
                 <label for="AÅ">A-Å</label>
-                <input class="filterTextIcon filterCheckbox" type="radio" name="AÅ" value="">
+                <input id="a-åCheckbox" class="filterTextIcon filterCheckbox" type="radio" name="AÅ" value="">
+            </div>
+            <div class="filterSubDropdown" onclick="chooseSort('best_offer')">
+                <label for="bestOffer">Beste tilbud</label>
+                <input id="bestOfferCheckbox" class="filterTextIcon filterCheckbox" type="radio" name="bestOffer" value="">
             </div>
         </div>
 
