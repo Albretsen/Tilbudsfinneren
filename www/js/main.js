@@ -160,6 +160,7 @@ function AddUserToDatabase(id, email) {
 // best_deal
 // alphabetically
 
+var allOrDiscount = 'discounts';
 var page_ = 1;
 var sort = "none";
 var query = "";
@@ -175,7 +176,7 @@ function GetDiscountsFromDB() {
 
     Http.abort();
     Http = new XMLHttpRequest();
-    const url = db_base_url_with_http + '/db/all/' + sort + '/' + query + '/' + shop + '/' + page;
+    const url = `${db_base_url_with_http}/db/${allOrDiscount}/${sort}/${query}/${shop}/${page}`;
     Http.open("GET", url);
     Http.send();
     Http.onreadystatechange = (e) => {
@@ -303,6 +304,7 @@ async function openFilter() { // Opens or closes filter dropdown
     }
 }
 
+var chosenStores = ['spar'];
 var storeChooseOpen = false;
 function openStoreChoose() { // Opens or closes store dropdown
     if(!storeChooseOpen) {
@@ -330,12 +332,15 @@ function openSortBy() { // Opens or closes sort by dropdown
 }
 
 function chooseSort(which) {
-    console.log(which)
     sort = which;
     if(menuOpen == 'listMenu') {
+        page_ = 1;
+        console.log(which);
+        byId('listAnchor').innerHTML = '';
         GetDiscountsFromDB();
     }
     if(menuOpen == 'favoritesMenu') {
+        byId('favoritesAnchor').innerHTML = '';
         createFavoritesList();
     }
 }
@@ -478,9 +483,12 @@ function search() {
 
 function getAllDiscounts(data) {
     var discounts = JSON.parse(data);
+    let discountsCopy = discounts;
+    discountsCopy = sortProducts(discounts, byId('searchBar').value, sort, chosenStores[0]);
 
-    for(var i = 0; i < discounts.length; i++) {
-        createListItem(discounts[i].name, discounts[i].image, discounts[i].price_text, discounts[i].sale_text, discounts[i].description, discounts[i].ean, discounts[i].saved_amount, discounts[i].store,'listAnchor')
+    console.log(discounts, sort)
+    for(var i = 0; i < discountsCopy.length; i++) {
+        createListItem(discountsCopy[i].name, discountsCopy[i].image, discountsCopy[i].price_text, discountsCopy[i].sale_text, discountsCopy[i].description, discountsCopy[i].ean, discountsCopy[i].saved_amount, discountsCopy[i].store,'listAnchor')
     }
     
 }
@@ -497,7 +505,7 @@ function getAllFavorites(data) {
 function createFavoritesList() {
     byId('favoritesAnchor').innerHTML = ''; // Clears the list
     let favoritesObjectsCopy = favoritesObjects;
-    favoritesObjectsCopy = sortProducts(favoritesObjects, byId('searchBar').value, "best_deal", "spar");
+    favoritesObjectsCopy = sortProducts(favoritesObjects, byId('searchBar').value, sort, chosenStores[0]);
     
     for(var i = 0; i < favoritesObjectsCopy.length; i++) {
         createListItem(favoritesObjectsCopy[i].name, favoritesObjectsCopy[i].image, favoritesObjectsCopy[i].price_text, favoritesObjectsCopy[i].sale_text, favoritesObjectsCopy[i].description, favoritesObjectsCopy[i].ean, favoritesObjectsCopy[i].saved_amount, favoritesObjectsCopy[i].store, 'favoritesAnchor')
@@ -592,12 +600,12 @@ function createListItem(name, image, beforePrice, sale, description, ean, saved_
         fontSize = 4;
     }
 
-    if(description.length > 20) { // Don't display description of too long
+    if(description.length > 20) { // Don't display description if too long
         description = ''; // Would ideally be replaced by something better
     }
 
     var displaySale = '';
-    if(location == 'favoritesAnchor') { // Hides sale price in favorites menu
+    if(sale == undefined) { // Hides sale price in favorites menu
         displaySale = 'style="display:none;"'
     }
 

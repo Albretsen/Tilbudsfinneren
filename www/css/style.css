@@ -505,7 +505,7 @@ button {
 }
 
 .filterMenu {
-  position: absolute;
+  position: fixed;
   right: 0;
   width: 75vw;
   height: auto;
