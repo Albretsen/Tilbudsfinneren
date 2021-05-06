@@ -71,9 +71,7 @@
             <input placeholder="BEKREFT PASSORD" type="text" id="inputSignupPasswordConfirm" class="loginInput" />
         </div>
         <hr />
-
         <button onclick="SignUpEmail()" class="redBtn" id="loginBtn">OPPRETT BRUKER</button>
-
     </div>
 
     <div class="topBar" id="topBar">
@@ -89,13 +87,15 @@
 
     <div id="filterMenu" class="filterMenu">
         <span class="filterItem filterHeader">Filter<i onclick="openFilter()" class="material-icons filterTextIcon filterExit">close</i></span>
-         <div class="filterItem">
+
+        <div onclick="onlyShowDiscounts()" class="filterItem">
             <label for="visTilbud">Bare vis tilbud</label>
-            <input class="filterTextIcon filterCheckbox" type="checkbox" name="visTilbud" value="">
-         </div>
-        <div id="storeChoose" class="filterItem">
-            <span onclick="openStoreChoose()">Velg butikker</span> 
-            <i onclick="openStoreChoose()" id="storeDropDown" class="material-icons-outlined filterTextIcon">expand_more</i>
+            <input id="onlyDiscountsCheck" class="filterTextIcon filterCheckbox" type="checkbox" name="visTilbud" value="">
+        </div>
+
+        <div onclick="openStoreChoose()" id="storeChoose" class="filterItem">
+            <span>Velg butikker</span> 
+            <i id="storeDropDown" class="material-icons-outlined filterTextIcon">expand_more</i>
             <br />
             <br />
             <div class="filterSubDropdown">
@@ -135,9 +135,10 @@
             <a onclick="chooseStore('rema')" href="#"><img class="dropdownImage" src="img/rema.png"></a>
             <a onclick="chooseStore('spar')" href="#"><img class="dropdownImage" src="img/spar.png"></a> -->
         </div>
-        <div id="sortBy" class="filterItem">
-            <span onclick="openSortBy()">Sorter etter</span>
-            <i onclick="openSortBy()" id="sortDropDown" class="material-icons-outlined filterTextIcon">expand_more</i>
+
+        <div onclick="openSortBy()" id="sortBy" class="filterItem">
+            <span>Sorter etter</span>
+            <i id="sortDropDown" class="material-icons-outlined filterTextIcon">expand_more</i>
             <br />
             <br />
             <div class="filterSubDropdown" onclick="chooseSort('alphabetically')">
@@ -190,6 +191,8 @@
 <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-firestore.js"></script>
+
+<!-- Load main JavaScript code -->
 <script src="js/main.js"></script>
 
 </html>

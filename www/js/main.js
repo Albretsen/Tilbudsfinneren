@@ -160,30 +160,38 @@ function AddUserToDatabase(id, email) {
 // best_deal
 // alphabetically
 
-var allOrDiscount = 'discounts';
+var fullyLoaded = false;
 var page_ = 1;
 var sort = "none";
 var query = "";
 var shop = "spar";
 var Http = new XMLHttpRequest();
 function GetDiscountsFromDB() {
-    loading(true, 'listLoader');
-    var page = page_ + "";
+    if(!fullyLoaded) {
+        loading(true, 'listLoader');
+        loadMoreReady = false;
+        var page = page_ + "";
 
-    if(query == '') {
-        query = 'GzMsXN9CuJp3pRSXubvfX';
-    }
+        if(query == '') {
+            query = 'GzMsXN9CuJp3pRSXubvfX';
+        }
 
-    Http.abort();
-    Http = new XMLHttpRequest();
-    const url = `${db_base_url_with_http}/db/${allOrDiscount}/${sort}/${query}/${shop}/${page}`;
-    Http.open("GET", url);
-    Http.send();
-    Http.onreadystatechange = (e) => {
-        loading(false, 'listLoader');
-        if (Http.readyState == 4 && Http.status == 200) {
-            getAllDiscounts(Http.responseText);
-            page_++;
+        Http.abort();
+        Http = new XMLHttpRequest();
+        const url = `${db_base_url_with_http}/db/${allOrDiscount}/${sort}/${query}/${shop}/${page}`;
+        console.log(url)
+        Http.open("GET", url);
+        Http.send();
+        Http.onreadystatechange = (e) => {
+            loading(false, 'listLoader');
+            loadMoreReady = true;
+            if (Http.readyState == 4 && Http.status == 200) {
+                var data = JSON.parse(Http.responseText);
+                console.log(data.length);
+                if(data.length == 0) { fullyLoaded = true; }
+                getAllDiscounts(Http.responseText);
+                page_++;
+            }
         }
     }
 }
@@ -316,6 +324,24 @@ function openStoreChoose() { // Opens or closes store dropdown
         byId('storeDropDown').style.transform = 'rotate(0deg)';
         storeChooseOpen = false;
     }
+}
+
+var allOrDiscount = 'discounts';
+function onlyShowDiscounts() {
+    console.log(allOrDiscount) 
+    if(allOrDiscount == 'all') {
+        allOrDiscount = 'discounts';
+        byId('onlyDiscountsCheck').checked = false;
+    }
+    else if(allOrDiscount == 'discounts') {
+        allOrDiscount = 'all';
+        byId('onlyDiscountsCheck').checked = true;
+    }
+    page_ = 1;
+    byId('listAnchor').innerHTML = '';
+    fullyLoaded = false;
+    GetDiscountsFromDB();
+    save();
 }
 
 var sortByOpen = false;
@@ -460,19 +486,19 @@ switchMenu('loginMenu');
 									 DISCOUNT LIST
 =======================================================================================*/
 var loadMoreReady = true;
-window.onscroll = function() { // Automatically loads discounts
+window.onscroll = function() { // Automatically loads discounts when at bottom of page
     if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
         if(loadMoreReady && menuOpen == 'listMenu') {
             GetDiscountsFromDB();
-            setTimeout(loadMoreWait, 1000);
-            loadMoreReady = false;
+            // setTimeout(loadMoreWait, 1000);
+            // loadMoreReady = false;
         }
     }
 }
 
-function loadMoreWait() { // Prevents several executions while loading new items
-    loadMoreReady = true;
-}
+// function loadMoreWait() { // Prevents several executions while loading new items
+//     loadMoreReady = true;
+// }
 
 var searchExtended = false;
 function search() {
@@ -494,7 +520,6 @@ function getAllDiscounts(data) {
     let discountsCopy = discounts;
     discountsCopy = sortProducts(discounts, byId('searchBar').value, sort, chosenStores[0]);
 
-    console.log(discounts, sort)
     for(var i = 0; i < discountsCopy.length; i++) {
         createListItem(discountsCopy[i].name, discountsCopy[i].image, discountsCopy[i].price_text, discountsCopy[i].sale_text, discountsCopy[i].description, discountsCopy[i].ean, discountsCopy[i].saved_amount, discountsCopy[i].store,'listAnchor')
     }
@@ -554,7 +579,7 @@ function addFavorite(ean) {
         }
     }
 
-    saveFavorites(); // Saves locally
+    save(); // Saves locally
 }
 
 var productsInList = [];
@@ -638,23 +663,37 @@ function createListItem(name, image, beforePrice, sale, description, ean, saved_
 =======================================================================================*/
 var storage = window.localStorage;
 
-function saveFavorites() {
-    storage.setItem('favoritesSave', JSON.stringify(favorites));
-    storage.setItem('savedFavoritesObjects', JSON.stringify(favoritesObjects))
+function save() {
+    // Favorites
+    storage.setItem('favorites_save', JSON.stringify(favorites));
+    storage.setItem('favoritesObjects_save', JSON.stringify(favoritesObjects));
+
+    // Filter variables
+    storage.setItem('allOrDiscount_save', JSON.stringify(allOrDiscount));
 }
 
 function clearStorage() {
     storage.clear();
+    console.log(storage)
     location.reload();
 }
 
 function load() { // Assigns all saved variables
     if(storage.length != 0) { // If storage empty, don't run. Prevents the function on the first load
-        favorites = JSON.parse(storage.getItem('favoritesSave'));
-        favoritesObjects = JSON.parse(storage.getItem('savedFavoritesObjects'));
+        favorites = JSON.parse(storage.getItem('favorites_save'));
+        favoritesObjects = JSON.parse(storage.getItem('favoritesObjects_save'));
+
+        allOrDiscount = JSON.parse(storage.getItem('allOrDiscount_save'));
+        if(allOrDiscount == 'discounts') {
+            byId('onlyDiscountsCheck').checked = true;
+        } else {
+            byId('onlyDiscountsCheck').checked = false;
+        }
 
         switchMenu('listMenu'); // Skips the login menu if not first time using app
         //GetDiscountsFromDB(); // Loads list
+    } else {
+        byId('onlyDiscountsCheck').checked = true;
     }
 }
 
