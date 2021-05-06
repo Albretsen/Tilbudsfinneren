@@ -85,7 +85,7 @@ ins { /* Removes underline from ins element */
   text-decoration: none;
 }
 
-input[type=text] { /* Affects all text inputs */
+input[type="text"] { /* Affects all text inputs */
   font-family:Montserrat, MontserratDownload, Monospace;
   display: inline-block;
   box-sizing: border-box;
@@ -93,6 +93,14 @@ input[type=text] { /* Affects all text inputs */
 
 input[type=text]:focus {
   outline: none;
+}
+
+input[type=checkbox]:checked {
+  color: black;
+}
+
+input[type=radio]:checked {
+  color: black;
 }
 
 .input-container {
@@ -103,7 +111,7 @@ input[type=text]:focus {
   align-items: center;
 }
 
-#loginMenu hr, #signupMenu hr, #settingsMenu hr {
+#loginMenu hr, #signupMenu hr {
   top: -3vw;
   position: relative;
   border: 0.1vw solid;
@@ -193,11 +201,36 @@ button {
 
 .menu {
   display: none;
+  margin-top: 20vw;
 }
 
-.bottomAlign {
-  /* position: absolute; */
-  bottom: 10vw;
+#settingsMenu {
+  color:black;
+}
+
+.settingsText {
+  margin-left: 8vw;
+}
+
+.settingsCheckbox {
+  float: right;
+  right: 6vw;
+  position: relative;
+}
+
+.logOut {
+  color: #ED1B24;
+  font-family: RobotoRegular;
+}
+
+#settingsMenu hr {
+  border: none;
+  background-color: #ccc;
+  color: #ccc;
+  height: 0.1vw;
+  width: 88%;
+  margin-bottom: 5vw;
+  margin-top: 5vw;
 }
 
 /* Sidebar navigation */

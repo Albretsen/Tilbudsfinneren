@@ -405,8 +405,13 @@ function switchMenu(menuId) {
 
     openCloseNav(true);
 
+    hide('searchBarContainer');
+    hide('filterMenu');
+
     byId('navList').style.backgroundColor = "white";
     byId('navFavorites').style.backgroundColor = "white";
+    byId('navSettings').style.backgroundColor = "white";
+    byId('navContact').backgroundColor = "white";
     if(menuId == 'listMenu') {
         byId('pageHeader').innerHTML = 'Alle varer'
         byId('navList').style.backgroundColor = "#FFEBEC";
@@ -429,14 +434,17 @@ function switchMenu(menuId) {
 
         createFavoritesList();
     }
+    if(menuId == 'settingsMenu'){
+        byId('pageHeader').innerHTML = 'Favoritter';
+        byId('navFavorites').style.backgroundColor = "#FFEBEC";
+    }
+
     if(menuId != 'signupMenu') { // Hide or show top bar
         document.body.className = 'noBackground';
         display('topBar');
         if(menuId == 'loginMenu'){
             document.body.className = 'loginBackground';
             hide('topBar');
-            hide('searchBarContainer');
-            hide('filterMenu');
         }
     }
 }
