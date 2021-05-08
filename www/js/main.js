@@ -722,7 +722,7 @@ function sortProducts(favorites, query, sort, store) {
         }
         if (query == "") { allowStore = true; }
         allowStore = product.store == store;
-        if (allowQuery && allowStore) {
+        if (allowQuery) {
             result.push(product);
         }
         /*if (searchCustomizedEpicness(query, product.name)) {
