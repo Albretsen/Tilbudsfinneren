@@ -476,227 +476,6 @@ function switchMenu(menuId) {
 }
 
 
-// Temporary, to get menu on load for quality of life
-//switchMenu('listMenu');
-//switchMenu('favoritesMenu');
-switchMenu('loginMenu');
-//GetFavoritesFromDB('123');
-
-/*=====================================================================================
-									 DISCOUNT LIST
-=======================================================================================*/
-var loadMoreReady = true;
-window.onscroll = function() { // Automatically loads discounts when at bottom of page
-    if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
-        if(loadMoreReady && menuOpen == 'listMenu') {
-            GetDiscountsFromDB();
-            // setTimeout(loadMoreWait, 1000);
-            // loadMoreReady = false;
-        }
-    }
-}
-
-// function loadMoreWait() { // Prevents several executions while loading new items
-//     loadMoreReady = true;
-// }
-
-var searchExtended = false;
-function search() {
-    page_ = 1;
-    query = byId('searchBar').value;
-    console.log(query)
-
-    if (menuOpen == "listMenu") {
-        byId('listAnchor').innerHTML = ''; // Clears the list
-        GetDiscountsFromDB();
-    } else {
-        byId('favoritesAnchor').innerHTML = ''; // Clears the list
-        createFavoritesList();
-    }
-}
-
-function getAllDiscounts(data) {
-    var discounts = JSON.parse(data);
-    let discountsCopy = discounts;
-    discountsCopy = sortProducts(discounts, byId('searchBar').value, sort, chosenStores[0]);
-
-    for(var i = 0; i < discountsCopy.length; i++) {
-        createListItem(discountsCopy[i].name, discountsCopy[i].image, discountsCopy[i].price_text, discountsCopy[i].sale_text, discountsCopy[i].description, discountsCopy[i].ean, discountsCopy[i].saved_amount, discountsCopy[i].store,'listAnchor')
-    }
-    
-}
-
-function getAllFavorites(data) {
-    var favorites = JSON.parse(data);
-
-    for(var i = 0; i < favorites.length; i++) {
-        createListItem(favorites[i].name, favorites[i].image, favorites[i].price_text, favorites[i].sale_text, favorites[i].description, favorites[i].ean, 'favoritesAnchor')
-    }
-    
-}
-
-function createFavoritesList() {
-    byId('favoritesAnchor').innerHTML = ''; // Clears the list
-    let favoritesObjectsCopy = favoritesObjects;
-    favoritesObjectsCopy = sortProducts(favoritesObjects, byId('searchBar').value, sort, chosenStores[0]);
-    
-    for(var i = 0; i < favoritesObjectsCopy.length; i++) {
-        createListItem(favoritesObjectsCopy[i].name, favoritesObjectsCopy[i].image, favoritesObjectsCopy[i].price_text, favoritesObjectsCopy[i].sale_text, favoritesObjectsCopy[i].description, favoritesObjectsCopy[i].ean, favoritesObjectsCopy[i].saved_amount, favoritesObjectsCopy[i].store, 'favoritesAnchor')
-    }
-}
-
-var favoritesObjects = [];
-var favorites = [];
-function addFavorite(ean) {
-    var remove = false;
-    for(var i = 0; i < favorites.length; i++) { // Remove
-        if(favorites[i] == ean) {
-            favorites.splice(i, 1); // Removes the ean from favorites
-            favoritesObjects.splice(i, 1); // Removes the saved product from the locally saved array
-
-            for(var i = 0; i < productsInList.length; i++) {
-                if(productsInList[i].ean == ean && productsInList[i].location == 'listMenu') {
-                    byId(`${ean}-listMenu`).innerHTML = 'star_border'; // Changes appearance of star
-                }
-            }
-            if(menuOpen == 'favoritesMenu') {
-                byId(`${ean}-favoritesMenu`).innerHTML = 'star_border';
-            }
-            
-            remove = true;
-        }
-    }
-
-    if(!remove) { // Add 
-        favorites[favorites.length] = ean; // Adds the ean to favorites
-        byId(`${ean}-${menuOpen}`).innerHTML = 'star';
-        byId(`${ean}-${menuOpen}`).innerHTML = 'star';
-
-        for(var i = 0; i < productsInList.length; i++) {
-            if(productsInList[i].ean == ean) {
-                favoritesObjects[favoritesObjects.length] = productsInList[i];
-            }
-        }
-    }
-
-    save(); // Saves locally
-}
-
-var productsInList = [];
-var madeEans = [];
-var itemsMade = 0;
-function createListItem(name, image, beforePrice, sale, description, ean, saved_amount, store, location) {
-
-    var alreadyMade = false;
-    for(var i = 0; i < madeEans.length; i++) {
-        if(madeEans[i] == ean) {
-            alreadyMade = true;
-        }
-    }
-    
-    if(!alreadyMade) {
-        var object = { 
-            name: name,
-            image: image,
-            price_text: beforePrice,
-            sale_text: sale,
-            store: store,
-            description: description,
-            ean: ean,
-            saved_amount: saved_amount,
-            location: menuOpen
-        }
-        madeEans[itemsMade] = ean;
-        productsInList[itemsMade] = object;
-        itemsMade++;
-    }
-
-    var star = 'star_border';
-    for(var i = 0; i < favorites.length; i++) {
-        if(favorites[i] == ean) {
-            star = 'star';
-        }
-    }
-    
-
-    var fontSize = 7;
-    if(name.length > 8) { // Scales text size based on length
-        fontSize = 7;
-    }
-    if(name.length > 10) {
-        fontSize = 6;
-    }
-    if(name.length > 12) {
-        fontSize = 5;
-    }
-    if(name.length > 16) {
-        fontSize = 4;
-    }
-
-    if(description.length > 20) { // Don't display description if too long
-        description = ''; // Would ideally be replaced by something better
-    }
-
-    var displaySale = '';
-    if(sale == undefined) { // Hides sale price in favorites menu
-        displaySale = 'style="display:none;"'
-    }
-
-    var str = document.createElement('DIV');
-    str.setAttribute("class", "listItem");
-    str.innerHTML =`
-    <img class="listImage" src="${image}"/>
-    <i class="material-icons favoriteIcon" id="${ean}-${menuOpen}" onclick="addFavorite(${ean})">${star}</i>
-    <ins class="listName" id="1-name" style="font-size:${fontSize}vw">${name}</ins>
-    <br />
-    <ins class="listDesc">${description}</ins>
-    <br />
-    <img class="listStoreLogo" src="img/spar.png" />
-    <ins class="listNewPrice" id="1-newPrice" ${displaySale}>${sale}</ins>
-    <ins class="listBeforePrice" id="1-beforePrice">${beforePrice}</ins>`
-
-    byId(location).append(str);
-}
-
-/*=====================================================================================
-									 SAVING
-=======================================================================================*/
-var storage = window.localStorage;
-
-function save() {
-    // Favorites
-    storage.setItem('favorites_save', JSON.stringify(favorites));
-    storage.setItem('favoritesObjects_save', JSON.stringify(favoritesObjects));
-
-    // Filter variables
-    storage.setItem('allOrDiscount_save', JSON.stringify(allOrDiscount));
-}
-
-function clearStorage() {
-    storage.clear();
-    console.log(storage)
-    location.reload();
-}
-
-function load() { // Assigns all saved variables
-    if(storage.length != 0) { // If storage empty, don't run. Prevents the function on the first load
-        favorites = JSON.parse(storage.getItem('favorites_save'));
-        favoritesObjects = JSON.parse(storage.getItem('favoritesObjects_save'));
-
-        allOrDiscount = JSON.parse(storage.getItem('allOrDiscount_save'));
-        if(allOrDiscount == 'discounts') {
-            byId('onlyDiscountsCheck').checked = true;
-        } else {
-            byId('onlyDiscountsCheck').checked = false;
-        }
-
-        switchMenu('listMenu'); // Skips the login menu if not first time using app
-        //GetDiscountsFromDB(); // Loads list
-    } else {
-        byId('onlyDiscountsCheck').checked = true;
-    }
-} 
-
 /*
 This function takes in a list of favorites and returns them sorted.
 query - search term
@@ -772,3 +551,241 @@ function searchCustomizedEpicness(query, s) {
 // Only search after no changes for X seconds
 
 // Delete list items when changes have been detected
+
+
+// Temporary, to get menu on load for quality of life
+//switchMenu('listMenu');
+//switchMenu('favoritesMenu');
+switchMenu('loginMenu');
+//GetFavoritesFromDB('123');
+
+/*=====================================================================================
+									 DISCOUNT LIST
+=======================================================================================*/
+var loadMoreReady = true;
+window.onscroll = function() { // Automatically loads discounts when at bottom of page
+    if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+        if(loadMoreReady && menuOpen == 'listMenu') {
+            GetDiscountsFromDB();
+            // setTimeout(loadMoreWait, 1000);
+            // loadMoreReady = false;
+        }
+    }
+}
+
+// function loadMoreWait() { // Prevents several executions while loading new items
+//     loadMoreReady = true;
+// }
+
+var searchExtended = false;
+function search() {
+    page_ = 1;
+    query = byId('searchBar').value;
+    console.log(query)
+
+    if (menuOpen == "listMenu") {
+        byId('listAnchor').innerHTML = ''; // Clears the list
+        GetDiscountsFromDB();
+    } else {
+        byId('favoritesAnchor').innerHTML = ''; // Clears the list
+        createFavoritesList();
+    }
+}
+
+function getAllDiscounts(data) {
+    var discounts = JSON.parse(data);
+
+    var newDiscounts = [];
+    for(var i = 0; i < discounts.length; i++) {
+        for(var ii = 0; ii < discounts[i].prices.length; ii++) {
+            var obj = discounts[i];
+            try{
+                obj.sale = discounts[i].discounts[ii].sale;
+                obj.sale_text = discounts[i].discounts[ii].sale_text;
+            }
+            catch{}
+            obj.price = discounts[i].prices[ii].price;
+            obj.price_text = discounts[i].prices[ii].price_text;
+            obj.store = discounts[i].prices[ii].store;
+            obj.location = 'listMenu';
+            newDiscounts.push(obj);
+        }
+    }
+
+    newDiscounts = sortProducts(newDiscounts, '', sort, '')
+
+    for(var i = 0; i < newDiscounts.length; i++) {
+        createListItem(newDiscounts[i],'listAnchor')
+    }
+    
+}
+
+// function getAllFavorites(data) {
+//     var favorites = JSON.parse(data);
+
+//     for(var i = 0; i < favorites.length; i++) {
+//         createListItem(favorites[i].name, favorites[i].image, favorites[i].price_text, favorites[i].sale_text, favorites[i].description, favorites[i].ean, 'favoritesAnchor')
+//     }
+    
+// }
+
+function createFavoritesList() {
+    byId('favoritesAnchor').innerHTML = ''; // Clears the list
+    let favoritesObjectsCopy = favoritesObjects;
+    favoritesObjectsCopy = sortProducts(favoritesObjects, byId('searchBar').value, sort, chosenStores[0]);
+    
+    for(var i = 0; i < favoritesObjectsCopy.length; i++) {
+        createListItem(favoritesObjectsCopy[i], 'favoritesAnchor')
+    }
+}
+
+var favoritesObjects = [];
+var favorites = [];
+function addFavorite(ean) {
+    var remove = false;
+    for(var i = 0; i < favorites.length; i++) { // Remove
+        if(favorites[i] == ean) {
+            favorites.splice(i, 1); // Removes the ean from favorites
+            favoritesObjects.splice(i, 1); // Removes the saved product from the locally saved array
+
+            for(var i = 0; i < productsInList.length; i++) {
+                if(productsInList[i].ean == ean && productsInList[i].location == 'listMenu') {
+                    byId(`${ean}-listMenu`).innerHTML = 'star_border'; // Changes appearance of star
+                }
+            }
+            if(menuOpen == 'favoritesMenu') {
+                byId(`${ean}-favoritesMenu`).innerHTML = 'star_border';
+            }
+            
+            remove = true;
+        }
+    }
+
+    if(!remove) { // Add 
+        favorites[favorites.length] = ean; // Adds the ean to favorites
+        byId(`${ean}-${menuOpen}`).innerHTML = 'star';
+        byId(`${ean}-${menuOpen}`).innerHTML = 'star';
+
+        for(var i = 0; i < productsInList.length; i++) {
+            if(productsInList[i].ean == ean) {
+                favoritesObjects[favoritesObjects.length] = productsInList[i];
+            }
+        }
+    }
+
+    save(); // Saves locally
+}
+
+var productsInList = [];
+var madeEans = [];
+var itemsMade = 0;
+function createListItem(product, location) {
+
+    var name = product.name; console.log(product, name)
+    var image = product.image;
+    var sale = product.sale;
+    var sale_text = product.sale_text;
+    var price = product.price;
+    var price_text = product.price_text;
+    var store = product.store;
+    var description = product.description;
+    var ean = product.ean;
+
+    var alreadyMade = false;
+    for(var i = 0; i < madeEans.length; i++) {
+        if(madeEans[i] == ean) {
+            alreadyMade = true;
+        }
+    }
+    
+    if(!alreadyMade) {
+        madeEans[itemsMade] = ean;
+        productsInList[itemsMade] = product;
+        itemsMade++;
+    }
+
+    var star = 'star_border';
+    for(var i = 0; i < favorites.length; i++) {
+        if(favorites[i] == ean) {
+            star = 'star';
+        }
+    }
+    
+
+    var fontSize = 7;
+    if(name.length > 8) { // Scales text size based on length
+        fontSize = 7;
+    }
+    if(name.length > 10) {
+        fontSize = 6;
+    }
+    if(name.length > 12) {
+        fontSize = 5;
+    }
+    if(name.length > 16) {
+        fontSize = 4;
+    }
+
+    if(description.length > 20) { // Don't display description if too long
+        description = ''; // Would ideally be replaced by something better
+    }
+
+    var displaySale = '';
+    if(sale == undefined) { // Hides sale price in favorites menu
+        displaySale = 'style="display:none;"'
+    }
+
+    var str = document.createElement('DIV');
+    str.setAttribute("class", "listItem");
+    str.innerHTML =`
+    <img class="listImage" src="${image}"/>
+    <i class="material-icons favoriteIcon" id="${ean}-${menuOpen}" onclick="addFavorite(${ean})">${star}</i>
+    <ins class="listName" id="1-name" style="font-size:${fontSize}vw">${name}</ins>
+    <br />
+    <ins class="listDesc">${description}</ins>
+    <br />
+    <img class="listStoreLogo" src="img/spar.png" />
+    <ins class="listNewPrice" id="1-newPrice" ${displaySale}>${sale_text}</ins>
+    <ins class="listBeforePrice" id="1-beforePrice">${price_text}</ins>`
+
+    byId(location).append(str);
+}
+
+/*=====================================================================================
+									 SAVING
+=======================================================================================*/
+var storage = window.localStorage;
+
+function save() {
+    // Favorites
+    storage.setItem('favorites_save', JSON.stringify(favorites));
+    storage.setItem('favoritesObjects_save', JSON.stringify(favoritesObjects));
+
+    // Filter variables
+    storage.setItem('allOrDiscount_save', JSON.stringify(allOrDiscount));
+}
+
+function clearStorage() {
+    storage.clear();
+    console.log(storage)
+    location.reload();
+}
+
+function load() { // Assigns all saved variables
+    if(storage.length != 0) { // If storage empty, don't run. Prevents the function on the first load
+        favorites = JSON.parse(storage.getItem('favorites_save'));
+        favoritesObjects = JSON.parse(storage.getItem('favoritesObjects_save'));
+
+        allOrDiscount = JSON.parse(storage.getItem('allOrDiscount_save'));
+        if(allOrDiscount == 'discounts') {
+            byId('onlyDiscountsCheck').checked = true;
+        } else {
+            byId('onlyDiscountsCheck').checked = false;
+        }
+
+        switchMenu('listMenu'); // Skips the login menu if not first time using app
+        //GetDiscountsFromDB(); // Loads list
+    } else {
+        byId('onlyDiscountsCheck').checked = true;
+    }
+}
