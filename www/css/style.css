@@ -86,7 +86,7 @@ ins { /* Removes underline from ins element */
 }
 
 input[type="text"] { /* Affects all text inputs */
-  font-family:Montserrat, MontserratDownload, Monospace;
+  font-family:RobotoRegular, Montserrat, MontserratDownload, Monospace;
   display: inline-block;
   box-sizing: border-box;
 }
@@ -303,7 +303,7 @@ button {
 .favoriteIcon {
   position: absolute;
   margin-left: 92vw;
-  margin-top: -6vw;
+  margin-top: -5vw;
   color: #ED1B24;
 }
 
@@ -618,4 +618,34 @@ button {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.filterBar {
+  width: 100%;
+  margin-top: 6vw;
+  align-items: center;
+  z-index: 2;
+  position: fixed;
+  background: white;
+  height: 6vw;
+  padding-top: 2vw;
+  border-top: 0.1vw solid #C4C4C4;
+  color: black;
+  font-family: 'RobotoRegular';
+}
+
+.filterBarIcon {
+  margin-left: 2vw;
+  position: relative;
+}
+
+.filterBarDropdown {
+  left: 32vw;
+  position: relative;
+}
+
+#displayedFilterMenu {
+  margin-top: 0.5vw;
+  position: absolute;
+  margin-left: 1vw;
 }

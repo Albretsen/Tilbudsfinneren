@@ -79,10 +79,16 @@
         <i id="hamburger" onclick="openCloseNav()" class="material-icons hamburger">menu</i>
     </div>
 
-    <div id="searchBarContainer" class="searchBarContainer" style="display: none;">
+    <div id="searchBarContainer" class="searchBarContainer">
         <i onclick="search()" class="material-icons searchIcon">search</i>
         <input oninput="search()" placeholder="Varenavn..." type="text" id="searchBar" class="searchBar" />
         <i onclick="openFilter()" id="filterIcon" class="material-icons-outlined filterIcon">filter_alt</i>
+    </div>
+
+    <div id="filterBar" class="filterBar">
+        <i id="filterBarIcon" class="material-icons-outlined filterBarIcon">shopping_bag</i>
+        <span id="displayedFilterMenu">ALLE TILBUD</span><i id="storeDropDown" class="material-icons-outlined filterBarDropdown">expand_more</i>
+        
     </div>
 
     <div id="filterMenu" class="filterMenu">
@@ -155,6 +161,8 @@
 
     <div class="menu" id="listMenu">
         <br />
+        <br />
+        <!-- <br /> -->
         <section id="listAnchor"></section>
         <div class="loader" id="listLoader"></div>
     </div>

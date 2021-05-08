@@ -331,11 +331,11 @@ function onlyShowDiscounts() {
     console.log(allOrDiscount) 
     if(allOrDiscount == 'all') {
         allOrDiscount = 'discounts';
-        byId('onlyDiscountsCheck').checked = false;
+        byId('onlyDiscountsCheck').checked = true;
     }
     else if(allOrDiscount == 'discounts') {
         allOrDiscount = 'all';
-        byId('onlyDiscountsCheck').checked = true;
+        byId('onlyDiscountsCheck').checked = false;
     }
     page_ = 1;
     byId('listAnchor').innerHTML = '';
@@ -695,7 +695,7 @@ function load() { // Assigns all saved variables
     } else {
         byId('onlyDiscountsCheck').checked = true;
     }
-}
+} 
 
 /*
 This function takes in a list of favorites and returns them sorted.
