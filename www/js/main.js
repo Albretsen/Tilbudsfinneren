@@ -179,7 +179,6 @@ function GetDiscountsFromDB() {
         Http.abort();
         Http = new XMLHttpRequest();
         const url = `${db_base_url_with_http}/db/${allOrDiscount}/${sort}/${query}/${shop}/${page}`;
-        console.log(url)
         Http.open("GET", url);
         Http.send();
         Http.onreadystatechange = (e) => {
@@ -187,7 +186,6 @@ function GetDiscountsFromDB() {
             loadMoreReady = true;
             if (Http.readyState == 4 && Http.status == 200) {
                 var data = JSON.parse(Http.responseText);
-                console.log(data.length);
                 if(data.length == 0) { fullyLoaded = true; }
                 getAllDiscounts(Http.responseText);
                 page_++;
@@ -209,7 +207,6 @@ function GetFavoritesFromDB(id) {
     loading(true, 'favoritesLoader');
     const Http = new XMLHttpRequest();
     const url = db_base_url_with_http + '/getfavorites/' + id;
-    console.log(url)
     Http.open("GET", url);
     Http.send();
     Http.onreadystatechange = (e) => {
@@ -328,20 +325,55 @@ function openStoreChoose() { // Opens or closes store dropdown
 
 var allOrDiscount = 'discounts';
 function onlyShowDiscounts() {
-    console.log(allOrDiscount) 
     if(allOrDiscount == 'all') {
         allOrDiscount = 'discounts';
         byId('onlyDiscountsCheck').checked = true;
+
+        byId('displayedFilter').innerHTML = 'ALLE TILBUD';
+        byId('displayedFilterIcon').innerHTML = 'shopping_bag';
+        byId('displayedFilterDropdown').innerHTML = 'ALLE VARER';
+        byId('displayedFilterDropdownIcon').innerHTML = 'shopping_cart';
     }
     else if(allOrDiscount == 'discounts') {
         allOrDiscount = 'all';
         byId('onlyDiscountsCheck').checked = false;
+
+        byId('displayedFilter').innerHTML = 'ALLE VARER';
+        byId('displayedFilterIcon').innerHTML = 'shopping_cart';
+        byId('displayedFilterDropdown').innerHTML = 'ALLE TILBUD';
+        byId('displayedFilterDropdownIcon').innerHTML = 'shopping_bag';
     }
     page_ = 1;
     byId('listAnchor').innerHTML = '';
     fullyLoaded = false;
     GetDiscountsFromDB();
     save();
+}
+
+var filterBarExpanded = false;
+function filterBarDrop() {
+    if(!filterBarExpanded) {
+        byId('filterBar').style.zIndex = 3;
+        byId('filterBar').style.height = '19vw';
+        byId('filterBar').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, .5)';
+        byId('filterBarDropdownIcon').style.transform = 'rotate(-180deg)';
+        filterBarExpanded = true;
+    } else {
+        filterBarOnlyShowDiscounts(true);
+    }
+}
+
+function filterBarOnlyShowDiscounts(close) {
+    byId('filterBar').style.zIndex = 1;
+    byId('filterBar').style.height = '6vw';
+    byId('filterBar').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, 0)';
+    byId('filterBarDropdownIcon').style.transform = 'rotate(0deg)';
+
+    filterBarExpanded = false;
+
+    if(!close) {
+        onlyShowDiscounts();
+    }
 }
 
 var sortByOpen = false;
@@ -361,7 +393,6 @@ function chooseSort(which) {
     sort = which;
     if(menuOpen == 'listMenu') {
         page_ = 1;
-        console.log(which);
         byId('listAnchor').innerHTML = '';
         GetDiscountsFromDB();
     }
@@ -398,7 +429,8 @@ function outsideClick(event, notelem) {
 
 // Close side menu if clicked outside it, using function above
 var navMenu = [byId('sidenav'), byId('hamburger')];
-var filterMenu = [byId('filterMenu'), byId('filterIcon')]
+var filterMenu = [byId('filterMenu'), byId('filterIcon')];
+var filterBar = [byId('filterBar')];
 window.addEventListener('click', function(e) {
     if(outsideClick(e, navMenu)) {
    	    openCloseNav(true);
@@ -406,6 +438,9 @@ window.addEventListener('click', function(e) {
     if(outsideClick(e, filterMenu)) {
         filterOpen = true;
         openFilter();
+    }
+    if(outsideClick(e, filterBar)) {
+        filterBarOnlyShowDiscounts(true);
     }
 });
 
@@ -433,6 +468,7 @@ function switchMenu(menuId) {
 
     hide('searchBarContainer');
     hide('filterMenu');
+    hide('filterBar');
 
     byId('navList').style.backgroundColor = "white";
     byId('navFavorites').style.backgroundColor = "white";
@@ -443,6 +479,7 @@ function switchMenu(menuId) {
         byId('navList').style.backgroundColor = "#FFEBEC";
         display('searchBarContainer');
         display('filterMenu');
+        display('filterBar');
         byId('searchBar').placeholder = 'Varenavn...'
 
         if(menuOpen == 'loginMenu' || menuOpen == 'signupMenu') {
@@ -455,6 +492,7 @@ function switchMenu(menuId) {
         byId('navFavorites').style.backgroundColor = "#FFEBEC";
         display('searchBarContainer');
         display('filterMenu');
+        display('filterBar');
         byId('searchBar').placeholder = 'Søk blandt dine favoritter...'
         menuOpen = 'favoritesMenu';
 
@@ -473,6 +511,10 @@ function switchMenu(menuId) {
             hide('topBar');
         }
     }
+}
+
+function darkMode() {
+    document.getElementsByTagName('BODY')[0].style.backgroundColor = '#121212';
 }
 
 
@@ -681,7 +723,7 @@ var madeEans = [];
 var itemsMade = 0;
 function createListItem(product, location) {
 
-    var name = product.name; console.log(product, name)
+    var name = product.name;
     var image = product.image;
     var sale = product.sale;
     var sale_text = product.sale_text;
@@ -767,7 +809,6 @@ function save() {
 
 function clearStorage() {
     storage.clear();
-    console.log(storage)
     location.reload();
 }
 
@@ -779,8 +820,18 @@ function load() { // Assigns all saved variables
         allOrDiscount = JSON.parse(storage.getItem('allOrDiscount_save'));
         if(allOrDiscount == 'discounts') {
             byId('onlyDiscountsCheck').checked = true;
+
+            byId('displayedFilter').innerHTML = 'ALLE TILBUD';
+            byId('displayedFilterIcon').innerHTML = 'shopping_bag';
+            byId('displayedFilterDropdown').innerHTML = 'ALLE VARER';
+            byId('displayedFilterDropdownIcon').innerHTML = 'shopping_cart';
         } else {
             byId('onlyDiscountsCheck').checked = false;
+
+            byId('displayedFilter').innerHTML = 'ALLE VARER';
+            byId('displayedFilterIcon').innerHTML = 'shopping_cart';
+            byId('displayedFilterDropdown').innerHTML = 'ALLE TILBUD';
+            byId('displayedFilterDropdownIcon').innerHTML = 'shopping_bag';
         }
 
         switchMenu('listMenu'); // Skips the login menu if not first time using app

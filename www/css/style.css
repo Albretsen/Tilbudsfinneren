@@ -624,14 +624,16 @@ button {
   width: 100%;
   margin-top: 6vw;
   align-items: center;
-  z-index: 2;
+  z-index: 1;
   position: fixed;
   background: white;
   height: 6vw;
   padding-top: 2vw;
-  border-top: 0.1vw solid #C4C4C4;
   color: black;
   font-family: 'RobotoRegular';
+  overflow: hidden;
+  transition: 0.1s;
+  width: 44vw;
 }
 
 .filterBarIcon {
@@ -640,13 +642,21 @@ button {
 }
 
 .filterBarDropdown {
-  left: 32vw;
+  left: 28vw;
   position: relative;
 }
 
-#displayedFilterMenu {
+#displayedFilter, #displayedFilterDropdown {
   margin-top: 0.5vw;
   position: absolute;
   margin-left: 1vw;
   font-size: 4.5vw;
+}
+
+#filterBarDropdown {
+  padding-top: 3vw;
+}
+
+#filterBarDropdownIcon {
+  transition: 0.3s;
 }

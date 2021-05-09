@@ -86,8 +86,17 @@
     </div>
 
     <div id="filterBar" class="filterBar">
-        <i id="filterBarIcon" class="material-icons-outlined filterBarIcon">shopping_bag</i>
-        <span id="displayedFilterMenu">ALLE TILBUD</span><i id="storeDropDown" class="material-icons-outlined filterBarDropdown">expand_more</i>
+        <div onclick="filterBarDrop()">
+            <i id="displayedFilterIcon" class="material-icons-outlined filterBarIcon">shopping_bag</i>
+            <span id="displayedFilter">ALLE TILBUD</span>
+            <i id="filterBarDropdownIcon" class="material-icons-outlined filterBarDropdown">expand_more</i>
+        </div>
+        <div id="filterBarDropdown" onclick="filterBarOnlyShowDiscounts()">
+            <i id="displayedFilterDropdownIcon" class="material-icons-outlined filterBarIcon">shopping_cart</i>
+            <span id="displayedFilterDropdown">ALLE VARER</span>
+            <i style="color:white" class="material-icons-outlined filterBarDropdown">expand_more</i>
+        </div>
+        
         
     </div>
 
