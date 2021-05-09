@@ -108,11 +108,13 @@
             <input id="onlyDiscountsCheck" class="filterTextIcon filterCheckbox" type="checkbox" name="visTilbud" value="">
         </div>
 
-        <div onclick="openStoreChoose()" id="storeChoose" class="filterItem">
-            <span>Velg butikker</span> 
-            <i id="storeDropDown" class="material-icons-outlined filterTextIcon">expand_more</i>
-            <br />
-            <br />
+        <div id="storeChoose" class="filterItem">
+            <div onclick="openStoreChoose()">
+                <span>Velg butikker</span> 
+                <i id="storeDropDown" class="material-icons-outlined filterTextIcon">expand_more</i>
+                <br />
+                <br />
+            </div>
             <div class="filterSubDropdown">
                 <label for="bunnpris">Bunnpris</label>
                 <input class="filterTextIcon filterCheckbox" type="checkbox" name="bunnpris" value="">
@@ -120,6 +122,10 @@
             <div class="filterSubDropdown">
                 <label for="coop">Coop</label>
                 <input class="filterTextIcon filterCheckbox" type="checkbox" name="coop" value="">
+            </div>
+            <div class="filterSubDropdown">
+                <label for="europris">Europris</label>
+                <input class="filterTextIcon filterCheckbox" type="checkbox" name="europris" value="">
             </div>
             <div class="filterSubDropdown">
                 <label for="joker">Joker</label>
@@ -151,11 +157,13 @@
             <a onclick="chooseStore('spar')" href="#"><img class="dropdownImage" src="img/spar.png"></a> -->
         </div>
 
-        <div onclick="openSortBy()" id="sortBy" class="filterItem">
+        <div id="sortBy" class="filterItem">
+            <div onclick="openSortBy()">
             <span>Sorter etter</span>
             <i id="sortDropDown" class="material-icons-outlined filterTextIcon">expand_more</i>
             <br />
             <br />
+            </div>
             <div class="filterSubDropdown" onclick="chooseSort('alphabetically')">
                 <label for="AÅ">A-Å</label>
                 <input id="a-åCheckbox" class="filterTextIcon filterCheckbox" type="radio" name="AÅ" value="">

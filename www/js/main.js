@@ -100,7 +100,7 @@ function SignInEmail() {
 function ResetPassword(emailAddress) {
     firebase.auth().sendPasswordResetEmail(emailAddress).then(function () {
         // Email sent.
-    }).catch(function (error) {
+    }).catch(function (_error) {
         // An error happened.
     });
 }
@@ -151,7 +151,7 @@ function AddUserToDatabase(id, email) {
     Http.open("GET", url);
     Http.send();
 
-    Http.onreadystatechange = (e) => {
+    Http.onreadystatechange = (_e) => {
         console.log(Http.responseText)
     }
 }
@@ -181,7 +181,7 @@ function GetDiscountsFromDB() {
         const url = `${db_base_url_with_http}/db/${allOrDiscount}/${sort}/${query}/${shop}/${page}`;
         Http.open("GET", url);
         Http.send();
-        Http.onreadystatechange = (e) => {
+        Http.onreadystatechange = (_e) => {
             loading(false, 'listLoader');
             loadMoreReady = true;
             if (Http.readyState == 4 && Http.status == 200) {
@@ -209,7 +209,7 @@ function GetFavoritesFromDB(id) {
     const url = db_base_url_with_http + '/getfavorites/' + id;
     Http.open("GET", url);
     Http.send();
-    Http.onreadystatechange = (e) => {
+    Http.onreadystatechange = (_e) => {
         loading(false, 'favoritesLoader');
         if (Http.readyState == 4 && Http.status == 200) {
             getAllFavorites(Http.responseText)
@@ -223,7 +223,7 @@ function AddFavoriteToDB(id, ean) {
     const url = db_base_url_with_http + '/addfavorite/'+ id + '/' + ean;
     Http.open("GET", url);
     Http.send();
-    Http.onreadystatechange = (e) => {
+    Http.onreadystatechange = (_e) => {
         if (Http.readyState == 4 && Http.status == 200) {
             console.log(Http.responseText);
         }
@@ -235,7 +235,7 @@ function RemoveFavoriteFromDB(id, ean) {
     const url = db_base_url_with_http + '/removefavorite/'+ id + '/' + ean;
     Http.open("GET", url);
     Http.send();
-    Http.onreadystatechange = (e) => {
+    Http.onreadystatechange = (_e) => {
         if (Http.readyState == 4 && Http.status == 200) {
             console.log(Http.responseText);
         }
@@ -251,7 +251,7 @@ function SearchAllItems(query) {
     Http.open("GET", url);
     Http.send();
 
-    Http.onreadystatechange = (e) => {
+    Http.onreadystatechange = (_e) => {
         if (Http.readyState == 4 && Http.status == 200) {
             // jsonResult is all the returned objects
             var jsonResult = JSON.parse(Http.responseText);
@@ -259,7 +259,7 @@ function SearchAllItems(query) {
     }
 }
 
-function GetItemUsingGTINFromDB(gtin) {
+function GetItemUsingGTINFromDB(_gtin) {
     
 }
 
@@ -270,12 +270,47 @@ const byId = function(id) { // Shorthand
 	return document.getElementById(id);
 }
 
+// Shorthands for style
 function display(id) {
     byId(id).style.display = 'block';
 }
 
 function hide(id) {
     byId(id).style.display = 'none';
+}
+
+function style_height(id, value) {
+    byId(id).style.height = value;
+}
+
+function style_width(id, value) {
+    byId(id).style.width = value;
+}
+
+function style_transform(id, value) {
+    byId(id).style.transform = value;
+}
+
+function style_top(id, value) {
+    byId(id).style.top = value;
+}
+
+function style_boxShadow(id, value) {
+    byId(id).style.boxShadow = value;
+}
+
+function style_zIndex(id, value) {
+    byId(id).style.zIndex = value;
+}
+
+function style_left(id, value) {
+    byId(id).style.left = value;
+}
+
+
+
+function clearList(id) {
+    byId(id).innerHTML = '';
 }
 
 function sleep(ms) {
@@ -285,26 +320,26 @@ function sleep(ms) {
 var filterOpen = false;
 async function openFilter() { // Opens or closes filter dropdown
     if(!filterOpen) {
-        byId('filterMenu').style.top = '26vw';
+        style_top('filterMenu', '26vw');
         document.getElementsByTagName("BODY")[0].style.overflow = 'hidden'; // Disables scrolling while open
         filterOpen = true;
 
         await sleep(200);
-        byId('filterMenu').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, .5)';
-        byId('filterMenu').style.zIndex = 3;
+        style_boxShadow('filterMenu', '0 0 0 99999vw rgba(0, 0, 0, .5)');
+        style_zIndex('filterMenu', 3);
     } else {
-        byId('filterMenu').style.zIndex = 1;
-        byId('filterMenu').style.top = '-38vw';
-        byId('filterMenu').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, 0)';
+        style_zIndex('filterMenu', 1);
+        style_top('filterMenu', '-38vw');
+        style_boxShadow('filterMenu', '0 0 0 99999vw rgba(0, 0, 0, 0)');
 
         document.getElementsByTagName("BODY")[0].style.overflow = 'visible';
         filterOpen = false;
 
         // Close the dropdowns
-        byId('storeChoose').style.height = '6vw';
-        byId('storeDropDown').style.transform = 'rotate(0deg)';
-        byId('sortBy').style.height = '6vw'; 
-        byId('sortDropDown').style.transform = 'rotate(0deg)';
+        style_height('storeChoose', '6vw');
+        style_transform('storeDropDown', 'rotate(0deg)');
+        style_height('sortBy', '6vw'); 
+        style_transform('sortDropDown', 'rotate(0deg)');
         sortByOpen = false;
     }
 }
@@ -313,12 +348,12 @@ var chosenStores = ['spar'];
 var storeChooseOpen = false;
 function openStoreChoose() { // Opens or closes store dropdown
     if(!storeChooseOpen) {
-        byId('storeChoose').style.height = '68vw';
-        byId('storeDropDown').style.transform = 'rotate(-180deg)';
+        style_height('storeChoose', '78vw');
+        style_transform('storeDropDown', 'rotate(-180deg)');
         storeChooseOpen = true;
     } else {
-        byId('storeChoose').style.height = '6vw';
-        byId('storeDropDown').style.transform = 'rotate(0deg)';
+        style_height('storeChoose', '6vw');
+        style_transform('storeDropDown', 'rotate(0deg)');
         storeChooseOpen = false;
     }
 }
@@ -344,7 +379,7 @@ function onlyShowDiscounts() {
         byId('displayedFilterDropdownIcon').innerHTML = 'shopping_bag';
     }
     page_ = 1;
-    byId('listAnchor').innerHTML = '';
+    clearList('listAnchor');
     fullyLoaded = false;
     GetDiscountsFromDB();
     save();
@@ -353,10 +388,10 @@ function onlyShowDiscounts() {
 var filterBarExpanded = false;
 function filterBarDrop() {
     if(!filterBarExpanded) {
-        byId('filterBar').style.zIndex = 3;
-        byId('filterBar').style.height = '19vw';
-        byId('filterBar').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, .5)';
-        byId('filterBarDropdownIcon').style.transform = 'rotate(-180deg)';
+        style_zIndex('filterBar', 3);
+        style_height('filterBar', '19vw');
+        style_boxShadow('filterBar', '0 0 0 99999vw rgba(0, 0, 0, .5)');
+        style_transform('filterBarDropdownIcon', 'rotate(-180deg)');
         filterBarExpanded = true;
     } else {
         filterBarOnlyShowDiscounts(true);
@@ -364,10 +399,10 @@ function filterBarDrop() {
 }
 
 function filterBarOnlyShowDiscounts(close) {
-    byId('filterBar').style.zIndex = 1;
-    byId('filterBar').style.height = '6vw';
-    byId('filterBar').style.boxShadow = '0 0 0 99999vw rgba(0, 0, 0, 0)';
-    byId('filterBarDropdownIcon').style.transform = 'rotate(0deg)';
+    style_zIndex('filterBar', 1);
+    style_height('filterBar', '6vw');
+    style_boxShadow('filterBar', '0 0 0 99999vw rgba(0, 0, 0, 0)');
+    style_transform('filterBarDropdownIcon', 'rotate(0deg)');
 
     filterBarExpanded = false;
 
@@ -376,15 +411,16 @@ function filterBarOnlyShowDiscounts(close) {
     }
 }
 
+
 var sortByOpen = false;
 function openSortBy() { // Opens or closes sort by dropdown
     if(!sortByOpen) {
-        byId('sortBy').style.height = '40vw';
-        byId('sortDropDown').style.transform = 'rotate(-180deg)';
+        style_height('sortBy', '40vw');
+        style_transform('sortDropDown', 'rotate(-180deg)');
         sortByOpen = true;
     } else {
-        byId('sortBy').style.height = '6vw';
-        byId('sortDropDown').style.transform = 'rotate(0deg)';
+        style_height('sortBy', '6vw');
+        style_transform('sortDropDown', 'rotate(0deg)');
         sortByOpen = false;
     }
 }
@@ -393,11 +429,11 @@ function chooseSort(which) {
     sort = which;
     if(menuOpen == 'listMenu') {
         page_ = 1;
-        byId('listAnchor').innerHTML = '';
+        clearList('listAnchor');
         GetDiscountsFromDB();
     }
     if(menuOpen == 'favoritesMenu') {
-        byId('favoritesAnchor').innerHTML = '';
+        clearList('favoritesAnchor');
         createFavoritesList();
     }
 }
@@ -466,6 +502,9 @@ function switchMenu(menuId) {
 
     openCloseNav(true);
 
+    clearList('favoritesAnchor');
+    clearList('listAnchor');
+
     hide('searchBarContainer');
     hide('filterMenu');
     hide('filterBar');
@@ -482,10 +521,9 @@ function switchMenu(menuId) {
         display('filterBar');
         byId('searchBar').placeholder = 'Varenavn...'
 
-        if(menuOpen == 'loginMenu' || menuOpen == 'signupMenu') {
-            GetDiscountsFromDB();
-        }
         menuOpen = 'listMenu';
+        page_ = 1;
+        GetDiscountsFromDB();
     }
     if(menuId == 'favoritesMenu') {
         byId('pageHeader').innerHTML = 'Favoritter'
@@ -626,10 +664,10 @@ function search() {
     console.log(query)
 
     if (menuOpen == "listMenu") {
-        byId('listAnchor').innerHTML = ''; // Clears the list
+        clearList('listAnchor'); // Clears the list
         GetDiscountsFromDB();
     } else {
-        byId('favoritesAnchor').innerHTML = ''; // Clears the list
+        clearList('favoritesAnchor'); // Clears the list
         createFavoritesList();
     }
 }
@@ -662,17 +700,8 @@ function getAllDiscounts(data) {
     
 }
 
-// function getAllFavorites(data) {
-//     var favorites = JSON.parse(data);
-
-//     for(var i = 0; i < favorites.length; i++) {
-//         createListItem(favorites[i].name, favorites[i].image, favorites[i].price_text, favorites[i].sale_text, favorites[i].description, favorites[i].ean, 'favoritesAnchor')
-//     }
-    
-// }
-
 function createFavoritesList() {
-    byId('favoritesAnchor').innerHTML = ''; // Clears the list
+    clearList('favoritesAnchor'); // Clears the list
     let favoritesObjectsCopy = favoritesObjects;
     favoritesObjectsCopy = sortProducts(favoritesObjects, byId('searchBar').value, sort, chosenStores[0]);
     
@@ -691,22 +720,17 @@ function addFavorite(ean) {
             favoritesObjects.splice(i, 1); // Removes the saved product from the locally saved array
 
             for(var i = 0; i < productsInList.length; i++) {
-                if(productsInList[i].ean == ean && productsInList[i].location == 'listMenu') {
-                    byId(`${ean}-listMenu`).innerHTML = 'star_border'; // Changes appearance of star
+                if(productsInList[i].ean == ean) {
+                    byId(ean).innerHTML = 'star_border'; // Changes appearance of star
                 }
             }
-            if(menuOpen == 'favoritesMenu') {
-                byId(`${ean}-favoritesMenu`).innerHTML = 'star_border';
-            }
-            
             remove = true;
         }
     }
 
     if(!remove) { // Add 
         favorites[favorites.length] = ean; // Adds the ean to favorites
-        byId(`${ean}-${menuOpen}`).innerHTML = 'star';
-        byId(`${ean}-${menuOpen}`).innerHTML = 'star';
+        byId(ean).innerHTML = 'star';
 
         for(var i = 0; i < productsInList.length; i++) {
             if(productsInList[i].ean == ean) {
@@ -776,12 +800,11 @@ function createListItem(product, location) {
     if(sale == undefined) { // Hides sale price in favorites menu
         displaySale = 'style="display:none;"'
     }
-
     var str = document.createElement('DIV');
     str.setAttribute("class", "listItem");
     str.innerHTML =`
     <img class="listImage" src="${image}"/>
-    <i class="material-icons favoriteIcon" id="${ean}-${menuOpen}" onclick="addFavorite(${ean})">${star}</i>
+    <i class="material-icons favoriteIcon" id="${ean}" onclick="addFavorite(${ean})">${star}</i>
     <ins class="listName" id="1-name" style="font-size:${fontSize}vw">${name}</ins>
     <br />
     <ins class="listDesc">${description}</ins>
