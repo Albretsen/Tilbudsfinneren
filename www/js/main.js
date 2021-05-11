@@ -426,6 +426,7 @@ function openSortBy() { // Opens or closes sort by dropdown
 }
 
 function chooseSort(which) {
+    byId('onlyDiscountsCheck').checked = true;
     sort = which;
     if(menuOpen == 'listMenu') {
         page_ = 1;
@@ -737,6 +738,8 @@ function addFavorite(ean) {
                 favoritesObjects[favoritesObjects.length] = productsInList[i];
             }
         }
+
+        AddFavoriteToDB('123', ean);
     }
 
     save(); // Saves locally
@@ -768,6 +771,10 @@ function createListItem(product, location) {
         madeEans[itemsMade] = ean;
         productsInList[itemsMade] = product;
         itemsMade++;
+    }
+
+    if(sale_text != undefined && sale_text.length > 15) {
+        return;
     }
 
     var star = 'star_border';
