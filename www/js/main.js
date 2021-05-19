@@ -143,7 +143,7 @@ db.collection("week15").get().then((querySnapshot) => {
 /*=====================================================================================
 									 DATABASE
 =======================================================================================*/
-const db_base_url_with_http = "http://18.224.108.235"
+const db_base_url_with_http = "http://18.222.126.131"
 
 function AddUserToDatabase(id, email) {
     const Http = new XMLHttpRequest();
